@@ -1,6 +1,7 @@
 import findListOverturn from './findListOverturn';
 import findListTwoNum from './findListTwoNum';
 import findPosFirstAndTwo from './findPosFirstAndTwo';
+import handleTextKeo from './handleTextKeo';
 import shortenText from './shortenText';
 
 function convertContentDetail(content) {
@@ -10,8 +11,11 @@ function convertContentDetail(content) {
     let mien = '';
 
     let contentTmp = shortenText(content);
-
     console.log('Làm gọn: ', contentTmp);
+    
+    contentTmp = handleTextKeo(contentTmp);
+    console.log('Làm gọn sau kéo: ', contentTmp);
+
 
     // Lấy miền ở đây
 
@@ -94,7 +98,6 @@ function convertContentDetail(content) {
 
                 let kdSS = kdanh.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
                 let kdanhMain = '';
-
 
                 if (kdSS === 'dx' || kdSS === 'đx' || kdSS === 'đax' || kdSS === 'da' || kdSS === 'đa') {
                     if (dai.includes('2') || dai.includes('3') || dai.includes('4')) {
