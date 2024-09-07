@@ -1,14 +1,23 @@
 import { useState } from 'react';
 import convertContentDetail from './utils/convertContentDetail';
+import payBySms from './utils/payBySms';
+import info from '~/database/infoPlayer';
+import ketquaxosomiennam from '~/database/ketquaxosomiennam';
 
 function Sms() {
     const [content, setContent] = useState('');
     const [contentDetail, setContentDetail] = useState([]);
 
     const handleContent = () => {
-        const arr = convertContentDetail(content);
+        let infoPlayer = info;
+        let kqxs = ketquaxosomiennam;
+
+        let arr = convertContentDetail(content);
+
+        arr = payBySms(arr, infoPlayer, kqxs);
 
         console.log(arr);
+
         setContentDetail(arr);
     };
 
@@ -47,7 +56,7 @@ function Sms() {
             <div className="mt-[16px]">
                 <label className="text-[12px] font-[600]">Chi tiết:</label>
                 {contentDetail.map((e, index) => (
-                    <p key={index}>{e.mien}</p>
+                    <p key={index}>{`${index + 1}  -  ${e.dai}.${e.so}.${e.kieuDanh}.${e.tien}ngan`}</p>
                 ))}
             </div>
         </div>

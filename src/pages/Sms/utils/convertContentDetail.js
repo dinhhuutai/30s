@@ -1,6 +1,7 @@
 import findListOverturn from './findListOverturn';
 import findListTwoNum from './findListTwoNum';
 import findPosFirstAndTwo from './findPosFirstAndTwo';
+import handleDai from './handleDai';
 import handleTextKeo from './handleTextKeo';
 import shortenText from './shortenText';
 
@@ -12,10 +13,9 @@ function convertContentDetail(content) {
 
     let contentTmp = shortenText(content);
     console.log('Làm gọn: ', contentTmp);
-    
+
     contentTmp = handleTextKeo(contentTmp);
     console.log('Làm gọn sau kéo: ', contentTmp);
-
 
     // Lấy miền ở đây
 
@@ -66,6 +66,8 @@ function convertContentDetail(content) {
 
             if (isFinite(Number(cloChild[i + 1]))) {
                 dai = dai.replace(/[.,:]/g, '');
+
+                dai = handleDai(dai);
                 break;
             }
         }
@@ -111,7 +113,7 @@ function convertContentDetail(content) {
                     // eslint-disable-next-line no-loop-func
                     mangSoDa.map((soDa) => {
                         const obj = {
-                            mien: '',
+                            mien: 'mn',
                             dai: dai,
                             so: soDa,
                             kieuDanh: kdanhMain,
@@ -126,6 +128,8 @@ function convertContentDetail(content) {
                     // eslint-disable-next-line no-loop-func
                     mangSo.map((so) => {
                         if (
+                            kdSS === 'l' ||
+                            kdSS === 'lo' ||
                             kdSS === 'b' ||
                             kdSS === 'bl' ||
                             kdSS === 'blo' ||
@@ -136,7 +140,7 @@ function convertContentDetail(content) {
                             kdanhMain = 'baolo';
 
                             const obj = {
-                                mien: '',
+                                mien: 'mn',
                                 dai: dai,
                                 so: so,
                                 kieuDanh: kdanhMain,
@@ -149,6 +153,10 @@ function convertContentDetail(content) {
                         }
 
                         if (
+                            kdSS === 'dl' ||
+                            kdSS === 'dlo' ||
+                            kdSS === 'ld' ||
+                            kdSS === 'lod' ||
                             kdSS === 'db' ||
                             kdSS === 'đb' ||
                             kdSS === 'dbl' ||
@@ -170,7 +178,7 @@ function convertContentDetail(content) {
 
                             mangSoDao.map((soDao) => {
                                 const obj = {
-                                    mien: '',
+                                    mien: 'mn',
                                     dai: dai,
                                     so: soDao,
                                     kieuDanh: kdanhMain,
@@ -196,7 +204,7 @@ function convertContentDetail(content) {
                             kdanhMain = 'dauduoi';
 
                             const obj = {
-                                mien: '',
+                                mien: 'mn',
                                 dai: dai,
                                 so: so,
                                 kieuDanh: kdanhMain,
@@ -212,7 +220,7 @@ function convertContentDetail(content) {
                             kdanhMain = 'xiuchu';
 
                             const obj = {
-                                mien: '',
+                                mien: 'mn',
                                 dai: dai,
                                 so: so,
                                 kieuDanh: kdanhMain,
@@ -225,12 +233,28 @@ function convertContentDetail(content) {
                         }
 
                         if (
+                            kdSS === 'daoxc' ||
+                            kdSS === 'daox' ||
+                            kdSS === 'dxchu' ||
+                            kdSS === 'dx' ||
+                            kdSS === 'dxc' ||
                             kdSS === 'xd' ||
                             kdSS === 'xdao' ||
                             kdSS === 'xcd' ||
                             kdSS === 'xcdao' ||
                             kdSS === 'xiuchudao' ||
-                            kdSS === 'xỉuchủdao'
+                            kdSS === 'xỉuchủdao' ||
+                            kdSS === 'đaoxc' ||
+                            kdSS === 'đaox' ||
+                            kdSS === 'đxchu' ||
+                            kdSS === 'đx' ||
+                            kdSS === 'đxc' ||
+                            kdSS === 'xđ' ||
+                            kdSS === 'xđao' ||
+                            kdSS === 'xcđ' ||
+                            kdSS === 'xcđao' ||
+                            kdSS === 'xiuchuđao' ||
+                            kdSS === 'xỉuchủđao'
                         ) {
                             kdanhMain = 'xiuchudao';
 
@@ -238,7 +262,7 @@ function convertContentDetail(content) {
 
                             mangSoDao.map((soDao) => {
                                 const obj = {
-                                    mien: '',
+                                    mien: 'mn',
                                     dai: dai,
                                     so: soDao,
                                     kieuDanh: kdanhMain,
@@ -251,11 +275,11 @@ function convertContentDetail(content) {
                             });
                         }
 
-                        if (kdSS === 'dau' || kdSS === 'đầu' || kdSS === 'đâu') {
+                        if (kdSS === 'dau' || kdSS === 'đau' || kdSS === 'đầu' || kdSS === 'đâu') {
                             kdanhMain = 'dau';
 
                             const obj = {
-                                mien: '',
+                                mien: 'mn',
                                 dai: dai,
                                 so: so,
                                 kieuDanh: kdanhMain,
@@ -271,7 +295,7 @@ function convertContentDetail(content) {
                             kdanhMain = 'duoi';
 
                             const obj = {
-                                mien: '',
+                                mien: 'mn',
                                 dai: dai,
                                 so: so,
                                 kieuDanh: kdanhMain,
@@ -287,7 +311,7 @@ function convertContentDetail(content) {
                             kdanhMain = 'dau';
 
                             const obj = {
-                                mien: '',
+                                mien: 'mn',
                                 dai: dai,
                                 so: so,
                                 kieuDanh: kdanhMain,
@@ -301,7 +325,7 @@ function convertContentDetail(content) {
                             kdanhMain = 'duoi';
 
                             const obj = {
-                                mien: '',
+                                mien: 'mn',
                                 dai: dai,
                                 so: so,
                                 kieuDanh: kdanhMain,

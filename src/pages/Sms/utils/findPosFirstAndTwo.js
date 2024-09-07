@@ -1,5 +1,5 @@
 function findPosFirstAndTwo(content) {
-    const searchChars = ['2d', '2đ', '3d', '3đ', '4d', '4đ', 'st', 'dc'];
+    const searchChars = ['2d', '2đ', '3d', '3đ', '4d', '4đ', 'bp', 'hg', 'dc', 'tp', 'la'];
 
     function findPositions(char) {
         let positions = [];
