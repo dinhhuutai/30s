@@ -3,14 +3,14 @@ function shortenText(content) {
 
     contentTmp = contentTmp
         .replace(/[\r\n]+/g, '.')
-        .replace(/[.,:; ]/g, '.')
+        .replace(/[.,:;+ ]/g, '.')
         .replace(/-/g, '.')
-        .replace(/nghìn/g, '.')
-        .replace(/nghin/g, '.')
-        .replace(/ngàn/g, '.')
-        .replace(/ngan/g, '.')
-        .replace(/ng/g, '.')
-        .replace(/n/g, '.')
+        .replace(/(\d)\s*nghìn/g, '$1.')
+        .replace(/(\d)\s*nghin/g, '$1.')
+        .replace(/(\d)\s*ngàn/g, '$1.')
+        .replace(/(\d)\s*ngan/g, '$1.')
+        .replace(/(\d)\s*ng/g, '$1.')
+        .replace(/(\d)\s*n/g, '$1.')
         .replace(/\.{2,}/g, '.')
         .replace(/^\.+/, '');
 

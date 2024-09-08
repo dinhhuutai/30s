@@ -1,6 +1,7 @@
 import findListOverturn from './findListOverturn';
 import findListTwoNum from './findListTwoNum';
 import findPosFirstAndTwo from './findPosFirstAndTwo';
+import handleConvertSymbol from './handleConvertSymbol';
 import handleDai from './handleDai';
 import handleTextKeo from './handleTextKeo';
 import shortenText from './shortenText';
@@ -20,6 +21,9 @@ function convertContentDetail(content) {
     // Lấy miền ở đây
 
     //
+
+    contentTmp = handleConvertSymbol(contentTmp);
+    console.log('Làm gọn sau viết tắc: ', contentTmp);
 
     let bd = 0;
     let kth = 0;
@@ -95,6 +99,7 @@ function convertContentDetail(content) {
             if (!fSo && !fKdanh && (cloChild[i] === '.' || !isFinite(Number(cloChild[i])))) {
                 if (cloChild[i] !== '.') {
                     cloChild = cloChild.slice(0, i) + '.' + cloChild.slice(i);
+                    contentTmp = contentTmp.slice(0, i) + '.' + contentTmp.slice(i);
                     kth += 1;
                 }
 
@@ -107,6 +112,8 @@ function convertContentDetail(content) {
                     kdSS === 'đax' ||
                     kdSS === 'da' ||
                     kdSS === 'đa' ||
+                    kdSS === 'dat' ||
+                    kdSS === 'đat' ||
                     kdSS === 'dax'
                 ) {
                     if (dai.length >= 2) {
@@ -142,6 +149,7 @@ function convertContentDetail(content) {
                             kdSS === 'blo' ||
                             kdSS === 'blô' ||
                             kdSS === 'baolo' ||
+                            kdSS === 'bao' ||
                             kdSS === 'baolô'
                         ) {
                             kdanhMain = 'baolo';
@@ -176,6 +184,8 @@ function convertContentDetail(content) {
                             kdSS === 'baolodao' ||
                             kdSS === 'bldao' ||
                             kdSS === 'bdao' ||
+                            kdSS === 'baodao' ||
+                            kdSS === 'baođao' ||
                             kdSS === 'bđao' ||
                             kdSS === 'bld'
                         ) {
@@ -344,7 +354,14 @@ function convertContentDetail(content) {
                             console.log(`${dai}.${so}.${kdanhMain}.${gtien}ngan`);
                         }
 
-                        if (kdSS === 'duoi' || kdSS === 'đuôi' || kdSS === 'duôi' || kdSS === 'đuoi') {
+                        if (
+                            kdSS === 'duoi' ||
+                            kdSS === 'đuôi' ||
+                            kdSS === 'duôi' ||
+                            kdSS === 'đuoi' ||
+                            kdSS === 'dui' ||
+                            kdSS === 'đui'
+                        ) {
                             kdanhMain = 'duoi';
 
                             const obj = {
