@@ -5,7 +5,7 @@ function findPosFirstAndTwo(content) {
         let positions = [];
         let index = content.indexOf(char);
 
-        while (index !== -1) {
+        while (index !== -1 && !isFinite(Number(content[index - 1]))) {
             positions.push(index);
             index = content.indexOf(char, index + 1);
         }

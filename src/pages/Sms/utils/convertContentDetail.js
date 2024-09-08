@@ -101,8 +101,15 @@ function convertContentDetail(content) {
                 let kdSS = kdanh.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
                 let kdanhMain = '';
 
-                if (kdSS === 'dx' || kdSS === 'đx' || kdSS === 'đax' || kdSS === 'da' || kdSS === 'đa') {
-                    if (dai.includes('2') || dai.includes('3') || dai.includes('4')) {
+                if (
+                    kdSS === 'dx' ||
+                    kdSS === 'đx' ||
+                    kdSS === 'đax' ||
+                    kdSS === 'da' ||
+                    kdSS === 'đa' ||
+                    kdSS === 'dax'
+                ) {
+                    if (dai.length >= 2) {
                         kdanhMain = 'da(xien)';
                     } else {
                         kdanhMain = 'da(thang)';
@@ -218,6 +225,52 @@ function convertContentDetail(content) {
 
                         if (kdanh === 'x' || kdanh === 'xc' || kdanh === 'xiuchu' || kdanh === 'xỉuchủ') {
                             kdanhMain = 'xiuchu';
+
+                            const obj = {
+                                mien: 'mn',
+                                dai: dai,
+                                so: so,
+                                kieuDanh: kdanhMain,
+                                tien: gtien,
+                            };
+
+                            arr = [...arr, obj];
+
+                            console.log(`${dai}.${so}.${kdanhMain}.${gtien}ngan`);
+                        }
+
+                        if (
+                            kdanh === 'xdau' ||
+                            kdanh === 'xcdau' ||
+                            kdanh === 'xiuchudau' ||
+                            kdanh === 'xđau' ||
+                            kdanh === 'xcđau' ||
+                            kdanh === 'xiuchuđau'
+                        ) {
+                            kdanhMain = 'xiuchudau';
+
+                            const obj = {
+                                mien: 'mn',
+                                dai: dai,
+                                so: so,
+                                kieuDanh: kdanhMain,
+                                tien: gtien,
+                            };
+
+                            arr = [...arr, obj];
+
+                            console.log(`${dai}.${so}.${kdanhMain}.${gtien}ngan`);
+                        }
+
+                        if (
+                            kdanh === 'xduoi' ||
+                            kdanh === 'xcduoi' ||
+                            kdanh === 'xiuchuduoi' ||
+                            kdanh === 'xđuoi' ||
+                            kdanh === 'xcđuoi' ||
+                            kdanh === 'xiuchuđuoi'
+                        ) {
+                            kdanhMain = 'xiuchuduoi';
 
                             const obj = {
                                 mien: 'mn',

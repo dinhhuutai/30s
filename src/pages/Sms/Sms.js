@@ -18,6 +18,16 @@ function Sms() {
 
         console.log(arr);
 
+        let tongxac = 0;
+        let tongtrung = 0;
+
+        arr.map((e) => {
+            tongxac += e.tienxac;
+            tongtrung += e.tientrung;
+        });
+
+        console.log('Tong xac: ', tongxac.toFixed(2), '---- Tong trung: ', tongtrung.toFixed(2));
+
         setContentDetail(arr);
     };
 
@@ -56,7 +66,9 @@ function Sms() {
             <div className="mt-[16px]">
                 <label className="text-[12px] font-[600]">Chi tiết:</label>
                 {contentDetail.map((e, index) => (
-                    <p key={index}>{`${index + 1}  -  ${e.dai}.${e.so}.${e.kieuDanh}.${e.tien}ngan`}</p>
+                    <p key={index}>{`${index + 1}  -  ${e.dai}.${e.so}.${e.kieuDanh}.${
+                        e.tien
+                    }ngan  ---   ${e.tienxac.toFixed(1)} || ${e.tientrung.toFixed(1)}`}</p>
                 ))}
             </div>
         </div>
