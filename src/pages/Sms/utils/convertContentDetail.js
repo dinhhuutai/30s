@@ -3,6 +3,7 @@ import findListTwoNum from './findListTwoNum';
 import findPosFirstAndTwo from './findPosFirstAndTwo';
 import handleConvertSymbol from './handleConvertSymbol';
 import handleDai from './handleDai';
+import handleDeleteMien from './handleDeleteMien';
 import handleMien from './handleMien';
 import handleTextKeo from './handleTextKeo';
 import shortenText from './shortenText';
@@ -42,6 +43,9 @@ function convertContentDetail(content) {
     console.log('Miền: ', mien);
 
     //
+
+    contentTmp = handleDeleteMien(contentTmp);
+    console.log('Làm gọn sau khi xóa các miền còn dư: ', contentTmp);
 
     contentTmp = handleConvertSymbol(contentTmp, mien, dayOfWeek);
     console.log('Làm gọn sau viết tắc: ', contentTmp);

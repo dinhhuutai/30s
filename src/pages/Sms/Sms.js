@@ -10,6 +10,11 @@ function Sms() {
     const [content, setContent] = useState('');
     const [contentDetail, setContentDetail] = useState([]);
 
+    const [tongxacS, setTongXac] = useState(0);
+    const [tongtrungS, setTongTrung] = useState(0);
+    const [tongdiemS, setTongDiem] = useState(0);
+    const [thuS, setThu] = useState(0);
+
     const handleContent = () => {
         let infoPlayer = info;
 
@@ -32,6 +37,11 @@ function Sms() {
             tongtrung += e.tientrung;
             tongdiem += e.diem;
         });
+
+        setTongDiem(tongdiem);
+        setTongXac(tongxac);
+        setTongTrung(tongtrung);
+        setThu(tongxac - tongtrung);
 
         console.log(
             'Tong diem: ',
@@ -80,6 +90,11 @@ function Sms() {
             </div>
 
             <div className="mt-[16px]">
+                <div>{`Tong diem: ${tongdiemS.toFixed(2)}`}</div>
+                <div>{`Tong xac: ${tongxacS.toFixed(2)}`}</div>
+                <div>{`Tong trung: ${tongtrungS.toFixed(2)}`}</div>
+                <div>{`Thu/trả: ${thuS}`}</div>
+
                 <label className="text-[12px] font-[600]">Chi tiết:</label>
                 {contentDetail.map((e, index) => (
                     <p key={index}>{`${index + 1}  -  ${e.dai}.${e.so}.${e.kieuDanh}.${
