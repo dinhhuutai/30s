@@ -84,8 +84,8 @@ function handleMien(content) {
         const now = new Date();
 
         // Lấy giờ và phút hiện tại
-        const currentHour = 18; //now.getHours();
-        const currentMinute = 10; //now.getMinutes();
+        const currentHour = now.getHours();
+        const currentMinute = now.getMinutes();
 
         if (currentHour < 16 || (currentHour === 16 && currentMinute < 15)) {
             mienMain = 'mn';

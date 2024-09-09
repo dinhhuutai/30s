@@ -43,7 +43,7 @@ function convertContentDetail(content) {
 
     //
 
-    contentTmp = handleConvertSymbol(contentTmp);
+    contentTmp = handleConvertSymbol(contentTmp, mien, dayOfWeek);
     console.log('Làm gọn sau viết tắc: ', contentTmp);
 
     let bd = 0;

@@ -1,4 +1,4 @@
-function handleConvertSymbol(content) {
+function handleConvertSymbol(content, mien, dayOfWeek) {
     let contentTmp = content;
 
     contentTmp = contentTmp
@@ -59,7 +59,7 @@ function handleConvertSymbol(content) {
         'qg',
         'do',
         'kt',
-        'mb'
+        'mb',
     ];
 
     let dai = '';
@@ -404,6 +404,27 @@ function handleConvertSymbol(content) {
             vtkt = i;
 
             daiMain = dai;
+
+            if(dai === 'dl' && mien === 'mn' && dayOfWeek === 1) {
+                daiMain = 'lt';
+            }
+
+            if(dai === 'bd' && mien === 'mn' && dayOfWeek === 6) {
+                daiMain = 'bu';
+            }
+            
+            if(dai === 'qn' && mien === 'mt' && dayOfWeek === 7) {
+                daiMain = 'qg';
+            }
+            
+            if(dai === 'bt' && dayOfWeek === 3) {
+                daiMain = 'br';
+            }
+            
+            if(dai === 'dn' && mien === 'mt') {
+                daiMain = 'dg';
+            }
+
 
             contentTmp = contentTmp.slice(0, vtbd) + daiMain + contentTmp.slice(vtkt);
 
