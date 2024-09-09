@@ -421,7 +421,7 @@ function convertContentDetail(content) {
                             kdSS === 'dxchu' ||
                             kdSS === 'dxch' ||
                             kdSS === 'dxiuc' ||
-                            kdSS === 'dxiuch' ||
+                            kdSS === 'dxiuch'
                         ) {
                             kdanhMain = 'xiuchudao';
 
