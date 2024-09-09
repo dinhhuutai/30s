@@ -3,6 +3,8 @@ import convertContentDetail from './utils/convertContentDetail';
 import payBySms from './utils/payBySms';
 import info from '~/database/infoPlayer';
 import ketquaxosomiennam from '~/database/ketquaxosomiennam';
+import ketquaxosomientrung from '~/database/ketquaxosomientrung';
+import ketquaxosomienbac from '~/database/ketquaxosomienbac';
 
 function Sms() {
     const [content, setContent] = useState('');
@@ -10,9 +12,12 @@ function Sms() {
 
     const handleContent = () => {
         let infoPlayer = info;
-        let kqxs = ketquaxosomiennam;
 
         let arr = convertContentDetail(content);
+
+        let mien = arr[0].mien;
+
+        let kqxs = mien === 'mn' ? ketquaxosomiennam : mien === 'mt' ? ketquaxosomientrung : ketquaxosomienbac;
 
         arr = payBySms(arr, infoPlayer, kqxs);
 

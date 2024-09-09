@@ -25,7 +25,27 @@ function payBaoLo(content, info, kqxs) {
             : 1) *
         content.dai.length;
 
-    tienxac = diem * (lengthSo === 2 ? info.co2con : lengthSo === 3 ? info.co3con : lengthSo === 4 ? info.co4con : 1);
+    tienxac =
+        diem *
+        (lengthSo === 2
+            ? content.mien === 'mn'
+                ? info.co2conMN
+                : content.mien === 'mt'
+                ? info.co2conMT
+                : info.co2conMB
+            : lengthSo === 3
+            ? content.mien === 'mn'
+                ? info.co3conMN
+                : content.mien === 'mt'
+                ? info.co3conMT
+                : info.co3conMB
+            : lengthSo === 4
+            ? content.mien === 'mn'
+                ? info.co4conMN
+                : content.mien === 'mt'
+                ? info.co4conMT
+                : info.co4conMB
+            : 1);
 
     kqxs.map((eKq) => {
         if (content.dai.includes(eKq.dai)) {
@@ -40,10 +60,26 @@ function payBaoLo(content, info, kqxs) {
     tientrung =
         content.tien *
         quantitySoTrung *
-        (lengthSo === 2 ? info.trung2con : lengthSo === 3 ? info.trung3con : lengthSo === 4 ? info.trung4con : 1);
+        (lengthSo === 2
+            ? content.mien === 'mn'
+                ? info.trung2conMN
+                : content.mien === 'mt'
+                ? info.trung2conMT
+                : info.trung2conMB
+            : lengthSo === 3
+            ? content.mien === 'mn'
+                ? info.trung3conMN
+                : content.mien === 'mt'
+                ? info.trung3conMT
+                : info.trung3conMB
+            : lengthSo === 4
+            ? content.mien === 'mn'
+                ? info.trung4conMN
+                : content.mien === 'mt'
+                ? info.trung4conMT
+                : info.trung4conMB
+            : 1);
 
-    
-    
     console.log('soluongGiong: ', quantitySoTrung);
     console.log('diem: ', diem);
     console.log('tienxac: ', tienxac);

@@ -13,19 +13,28 @@ function payXiuChu(content, info, kqxs) {
         (content.mien === 'mn' || content.mien === 'mt' ? 2 : content.mien === 'mb' ? 4 : 1) *
         content.dai.length;
 
-    tienxac = diem * info.coxiuchu;
+    tienxac =
+        diem * (content.mien === 'mn' ? info.coxiuchuMN : content.mien === 'mt' ? info.coxiuchuMT : info.coxiuchuMB);
 
     kqxs.map((eKq) => {
         if (content.dai.includes(eKq.dai)) {
             eKq.kq.map((s, i) => {
-                if (s.length >= content.so.length && s.endsWith(content.so) && (i === 1 || i === 17)) {
+                if (
+                    s.length >= content.so.length &&
+                    s.endsWith(content.so) &&
+                    (((i === 1 || i === 17) && (content.mien === 'mn' || content.mien === 'mt')) ||
+                        (content.mien === 'mb' && (i === 19 || i === 20 || i === 21 || i === 26)))
+                ) {
                     quantitySoTrung += 1;
                 }
             });
         }
     });
 
-    tientrung = content.tien * quantitySoTrung * info.trungxiuchu;
+    tientrung =
+        content.tien *
+        quantitySoTrung *
+        (content.mien === 'mn' ? info.trungxiuchuMN : content.mien === 'mt' ? info.trungxiuchuMT : info.trungxiuchuMB);
 
     console.log('soluongGiong: ', quantitySoTrung);
     console.log('diem: ', diem);

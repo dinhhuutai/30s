@@ -59,6 +59,7 @@ function handleConvertSymbol(content) {
         'qg',
         'do',
         'kt',
+        'mb'
     ];
 
     let dai = '';

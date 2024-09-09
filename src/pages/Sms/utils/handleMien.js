@@ -60,9 +60,11 @@ function handleMien(content) {
                 mien === 'hnoi' ||
                 mien === 'han'
             ) {
+                vtkt = i;
+
                 mienMain = 'mb';
 
-                contentTmp = contentTmp.slice(vtbd);
+                contentTmp = mienMain + contentTmp.slice(vtkt);
 
                 if (contentTmp[0] === '.') {
                     contentTmp = contentTmp.slice(1);
@@ -82,8 +84,8 @@ function handleMien(content) {
         const now = new Date();
 
         // Lấy giờ và phút hiện tại
-        const currentHour = now.getHours();
-        const currentMinute = now.getMinutes();
+        const currentHour = 18; //now.getHours();
+        const currentMinute = 10; //now.getMinutes();
 
         if (currentHour < 16 || (currentHour === 16 && currentMinute < 15)) {
             mienMain = 'mn';
@@ -91,6 +93,8 @@ function handleMien(content) {
             mienMain = 'mt';
         } else if (currentHour < 18 || (currentHour === 18 && currentMinute < 15)) {
             mienMain = 'mb';
+
+            contentTmp = mienMain + '.' + contentTmp;
         } else {
             mienMain = 'mn';
         }

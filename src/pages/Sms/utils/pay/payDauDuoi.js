@@ -13,19 +13,32 @@ function payDauDuoi(content, info, kqxs) {
         (content.mien === 'mn' || content.mien === 'mt' ? 2 : content.mien === 'mb' ? 5 : 1) *
         content.dai.length;
 
-    tienxac = diem * info.codauduoi;
+    tienxac =
+        diem * (content.mien === 'mn' ? info.codauduoiMN : content.mien === 'mt' ? info.codauduoiMT : info.codauduoiMB);
 
     kqxs.map((eKq) => {
         if (content.dai.includes(eKq.dai)) {
             eKq.kq.map((s, i) => {
-                if (s.length >= content.so.length && s.endsWith(content.so) && (i === 0 || i === 17)) {
+                if (
+                    s.length >= content.so.length &&
+                    s.endsWith(content.so) &&
+                    (((i === 0 || i === 17) && (content.mien === 'mn' || content.mien === 'mt')) ||
+                        (content.mien === 'mb' && (i === 22 || i === 23 || i === 24 || i === 25 || i === 26)))
+                ) {
                     quantitySoTrung += 1;
                 }
             });
         }
     });
 
-    tientrung = content.tien * quantitySoTrung * info.trungdauduoi;
+    tientrung =
+        content.tien *
+        quantitySoTrung *
+        (content.mien === 'mn'
+            ? info.trungdauduoiMN
+            : content.mien === 'mt'
+            ? info.trungdauduoiMT
+            : info.trungdauduoiMB);
 
     console.log('soluongGiong: ', quantitySoTrung);
     console.log('diem: ', diem);

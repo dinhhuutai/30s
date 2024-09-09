@@ -8,7 +8,8 @@ function payDaThang(content, info, kqxs) {
 
     diem = content.tien * 2 * (content.mien === 'mn' || content.mien === 'mt' ? 18 : content.mien === 'mb' ? 27 : 1);
 
-    tienxac = diem * info.codathang;
+    tienxac =
+        diem * (content.mien === 'mn' ? info.codathangMN : content.mien === 'mt' ? info.codathangMT : info.codathangMB);
 
     let hasSo1 = false;
     let hasSo2 = false;
@@ -35,7 +36,14 @@ function payDaThang(content, info, kqxs) {
         quantitySoTrung = 0;
     }
 
-    tientrung = content.tien * quantitySoTrung * info.trungdathang;
+    tientrung =
+        content.tien *
+        quantitySoTrung *
+        (content.mien === 'mn'
+            ? info.trungdathangMN
+            : content.mien === 'mt'
+            ? info.trungdathangMT
+            : info.trungdathangMB);
 
     console.log('soluongGiong: ', quantitySoTrung);
     console.log('diem: ', diem);

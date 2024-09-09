@@ -14,7 +14,7 @@ function payDaXien(content, info, kqxs) {
         (content.mien === 'mn' || content.mien === 'mt' ? 18 : content.mien === 'mb' ? 27 : 1) *
         content.dai.length;
 
-    tienxac = diem * info.codaxien;
+    tienxac = diem * (content.mien === 'mn' ? info.codaxienMN : content.mien === 'mt' ? info.codaxienMT : 1);
 
     let hasSo1 = false;
     let hasSo2 = false;
@@ -41,7 +41,10 @@ function payDaXien(content, info, kqxs) {
         quantitySoTrung = 0;
     }
 
-    tientrung = content.tien * quantitySoTrung * info.trungdaxien;
+    tientrung =
+        content.tien *
+        quantitySoTrung *
+        (content.mien === 'mn' ? info.trungdaxienMN : content.mien === 'mt' ? info.trungdaxienMT : 1);
 
     console.log('soluongGiong1: ', quantitySoTrung1);
     console.log('soluongGiong2: ', quantitySoTrung2);
