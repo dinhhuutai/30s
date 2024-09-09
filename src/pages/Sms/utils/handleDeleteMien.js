@@ -34,13 +34,9 @@ function handleDeleteMien(content) {
         .replace(/h.noi/g, '')
         .replace(/ha.n/g, '');
 
-    console.log(contentTmp);
     if (contentTmp[0] === 'm' && contentTmp[1] === 'b') {
         let strD = contentTmp.substring(0, 2);
         let strS = contentTmp.substring(2);
-
-        console.log(strD);
-        console.log(strS);
 
         strS = strS.replace(/mb/g, '');
 

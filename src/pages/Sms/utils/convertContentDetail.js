@@ -138,6 +138,12 @@ function convertContentDetail(content) {
                     kdSS === 'da' ||
                     kdSS === 'đa' ||
                     kdSS === 'dat' ||
+                    kdSS === 'dathang' ||
+                    kdSS === 'dath' ||
+                    kdSS === 'dth' ||
+                    kdSS === 'dthang' ||
+                    kdSS === 'daxien' ||
+                    kdSS === 'dxien' ||
                     kdSS === 'đat' ||
                     kdSS === 'dax'
                 ) {
@@ -177,6 +183,7 @@ function convertContentDetail(content) {
                             kdSS === 'blô' ||
                             kdSS === 'baolo' ||
                             kdSS === 'bao' ||
+                            kdSS === 'baol' ||
                             kdSS === 'baolô'
                         ) {
                             kdanhMain = 'baolo';
@@ -210,11 +217,19 @@ function convertContentDetail(content) {
                             kdSS === 'daobaolo' ||
                             kdSS === 'daobaolô' ||
                             kdSS === 'blodao' ||
+                            kdSS === 'daoblo' ||
                             kdSS === 'baolodao' ||
+                            kdSS === 'daobaolo' ||
                             kdSS === 'bldao' ||
+                            kdSS === 'daobl' ||
                             kdSS === 'bdao' ||
+                            kdSS === 'daob' ||
+                            kdSS === 'baoldao' ||
+                            kdSS === 'daobaol' ||
                             kdSS === 'baodao' ||
-                            kdSS === 'baođao' ||
+                            kdSS === 'daobao' ||
+                            kdSS === 'daolo' ||
+                            kdSS === 'lodao' ||
                             kdSS === 'bđao' ||
                             kdSS === 'bld'
                         ) {
@@ -243,6 +258,10 @@ function convertContentDetail(content) {
                             kdSS === 'dd' ||
                             kdSS === 'đđ' ||
                             kdSS === 'dauduoi' ||
+                            kdSS === 'daudui' ||
+                            kdSS === 'daud' ||
+                            kdSS === 'ddui' ||
+                            kdSS === 'dduoi' ||
                             kdSS === 'đd' ||
                             kdSS === 'dđ' ||
                             kdSS === 'đâuđuôi' ||
@@ -266,7 +285,15 @@ function convertContentDetail(content) {
                             console.log(`${dai}.${so}.${kdanhMain}.${gtien}ngan`);
                         }
 
-                        if (kdanh === 'x' || kdanh === 'xc' || kdanh === 'xiuchu' || kdanh === 'xỉuchủ') {
+                        if (
+                            kdanh === 'x' ||
+                            kdanh === 'xc' ||
+                            kdanh === 'xiuchu' ||
+                            kdanh === 'xiuch' ||
+                            kdanh === 'xiuc' ||
+                            kdanh === 'xch' ||
+                            kdanh === 'xchu'
+                        ) {
                             kdanhMain = 'xiuchu';
 
                             const obj = {
@@ -287,7 +314,11 @@ function convertContentDetail(content) {
                         if (
                             kdanh === 'xdau' ||
                             kdanh === 'xcdau' ||
+                            kdanh === 'xchdau' ||
+                            kdanh === 'xchudau' ||
                             kdanh === 'xiuchudau' ||
+                            kdanh === 'xiuchdau' ||
+                            kdanh === 'xiucdau' ||
                             kdanh === 'xđau' ||
                             kdanh === 'xcđau' ||
                             kdanh === 'xiuchuđau'
@@ -310,12 +341,26 @@ function convertContentDetail(content) {
                         }
 
                         if (
-                            kdanh === 'xduoi' ||
-                            kdanh === 'xcduoi' ||
-                            kdanh === 'xiuchuduoi' ||
-                            kdanh === 'xđuoi' ||
-                            kdanh === 'xcđuoi' ||
-                            kdanh === 'xiuchuđuoi'
+                            kdanh === 'xdauduoi' ||
+                            kdanh === 'xcdauduoi' ||
+                            kdanh === 'xchdauduoi' ||
+                            kdanh === 'xchudauduoi' ||
+                            kdanh === 'xiuchudauduoi' ||
+                            kdanh === 'xiuchdauduoi' ||
+                            kdanh === 'xiucdauduoi' ||
+                            kdanh === 'xđauduoi' ||
+                            kdanh === 'xcđauduoi' ||
+                            kdanh === 'xiuchuđauduoi' ||
+                            kdanh === 'xdaudui' ||
+                            kdanh === 'xcdaudui' ||
+                            kdanh === 'xchdaudui' ||
+                            kdanh === 'xchudaudui' ||
+                            kdanh === 'xiuchudaudui' ||
+                            kdanh === 'xiuchdaudui' ||
+                            kdanh === 'xiucdaudui' ||
+                            kdanh === 'xđaudui' ||
+                            kdanh === 'xcđaudui' ||
+                            kdanh === 'xiuchuđaudui'
                         ) {
                             kdanhMain = 'xiuchuduoi';
 
@@ -342,10 +387,18 @@ function convertContentDetail(content) {
                             kdSS === 'dxc' ||
                             kdSS === 'xd' ||
                             kdSS === 'xdao' ||
-                            kdSS === 'xcd' ||
                             kdSS === 'xcdao' ||
                             kdSS === 'xiuchudao' ||
-                            kdSS === 'xỉuchủdao' ||
+                            kdSS === 'xchudao' ||
+                            kdSS === 'xchdao' ||
+                            kdSS === 'xiucdao' ||
+                            kdSS === 'xiuchdao' ||
+                            kdSS === 'xcd' ||
+                            kdSS === 'xiuchud' ||
+                            kdSS === 'xchud' ||
+                            kdSS === 'xchd' ||
+                            kdSS === 'xiucd' ||
+                            kdSS === 'xiuchd' ||
                             kdSS === 'đaoxc' ||
                             kdSS === 'đaox' ||
                             kdSS === 'đxchu' ||
@@ -356,7 +409,19 @@ function convertContentDetail(content) {
                             kdSS === 'xcđ' ||
                             kdSS === 'xcđao' ||
                             kdSS === 'xiuchuđao' ||
-                            kdSS === 'xỉuchủđao'
+                            kdSS === 'daox' ||
+                            kdSS === 'daoxc' ||
+                            kdSS === 'daoxiuchu' ||
+                            kdSS === 'daoxchu' ||
+                            kdSS === 'daoxch' ||
+                            kdSS === 'daoxiuc' ||
+                            kdSS === 'daoxiuch' ||
+                            kdSS === 'dxc' ||
+                            kdSS === 'dxiuchu' ||
+                            kdSS === 'dxchu' ||
+                            kdSS === 'dxch' ||
+                            kdSS === 'dxiuc' ||
+                            kdSS === 'dxiuch' ||
                         ) {
                             kdanhMain = 'xiuchudao';
 
