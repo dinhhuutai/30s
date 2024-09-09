@@ -15,47 +15,136 @@ function handleConvertSymbol(content) {
 
     let length = contentTmp.length;
 
+    const searchChars = [
+        '2d',
+        '2đ',
+        '3d',
+        '3đ',
+        '4d',
+        '4đ',
+        'dc',
+        'dp',
+        'dt',
+        'tp',
+        'cm',
+        'br',
+        'vt',
+        'bi',
+        'dn',
+        'ct',
+        'st',
+        'tn',
+        'ag',
+        'bt',
+        'bu',
+        'vl',
+        'tv',
+        'la',
+        'bp',
+        'hg',
+        'tg',
+        'kg',
+        'lt',
+        'py',
+        'hu',
+        'dl',
+        'qn',
+        'dg',
+        'kh',
+        'qb',
+        'bd',
+        'qt',
+        'gl',
+        'nt',
+        'qg',
+        'do',
+        'kt',
+    ];
+
     let dai = '';
     let listDai = [
         'thanhpho',
+        'tpho',
+        'tph',
+        'thpho',
+        'thph',
+        'thp',
         'dongthap',
+        'dthap',
+        'dth',
         'camau',
+        'cmau',
         'bentre',
+        'btre',
         'vungtau',
+        'vtau',
         'baclieu',
+        'blieu',
         'dongnai',
+        'dnai',
         'cantho',
+        'ctho',
         'soctrang',
+        'strang',
         'tayninh',
+        'tninh',
         'angiang',
+        'ang',
+        'agiang',
         'binhthuan',
+        'bthuan',
         'binhduong',
+        'bduong',
         'vinhlong',
+        'vlong',
         'travinh',
+        'trvinh',
+        'tvinh',
         'longan',
+        'lan',
         'binhphuoc',
+        'bphuoc',
         'haugiang',
+        'hgiang',
         'tiengiang',
+        'tgiang',
         'kiengiang',
+        'kgiang',
         'dalat',
+        'dlat',
         'phuyen',
+        'pyen',
         'hue',
         'daklak',
+        'dlak',
+        'dlac',
         'daclac',
         'daclak',
         'daklac',
         'quangnam',
+        'qnam',
         'danang',
+        'dnang',
         'khanhhoa',
+        'khoa',
         'quangbinh',
+        'qbinh',
         'binhdinh',
+        'bdinh',
         'quangtri',
+        'qtri',
         'gialai',
+        'glai',
         'ninhthuan',
+        'nthuan',
         'quangngai',
+        'qngai',
         'dacnong',
+        'dnong',
+        'dno',
         'daknong',
         'kontum',
+        'ktum',
         'kontom',
     ];
 
@@ -77,7 +166,7 @@ function handleConvertSymbol(content) {
             }
         }
 
-        if ((contentTmp[i] === '.' || isFinite(Number(contentTmp[i]))) && dai.length >= 2) {
+        if ((contentTmp[i] === '.' || isFinite(Number(contentTmp[i]))) && dai.length > 2) {
             if (dai === 'dng') {
                 vtkt = i;
 
@@ -85,7 +174,7 @@ function handleConvertSymbol(content) {
 
                 contentTmp = contentTmp.slice(0, vtbd) + daiMain + contentTmp.slice(vtkt);
 
-                i = vtbd;
+                i = vtbd + 1;
                 length = contentTmp.length;
 
                 bDai = true;
@@ -96,7 +185,7 @@ function handleConvertSymbol(content) {
 
                 contentTmp = contentTmp.slice(0, vtbd) + daiMain + contentTmp.slice(vtkt);
 
-                i = vtbd;
+                i = vtbd + 1;
                 length = contentTmp.length;
 
                 bDai = true;
@@ -107,7 +196,7 @@ function handleConvertSymbol(content) {
 
                 contentTmp = contentTmp.slice(0, vtbd) + daiMain + contentTmp.slice(vtkt);
 
-                i = vtbd;
+                i = vtbd + 1;
                 length = contentTmp.length;
 
                 bDai = true;
@@ -118,7 +207,7 @@ function handleConvertSymbol(content) {
 
                 contentTmp = contentTmp.slice(0, vtbd) + daiMain + contentTmp.slice(vtkt);
 
-                i = vtbd;
+                i = vtbd + 1;
                 length = contentTmp.length;
 
                 bDai = true;
@@ -129,7 +218,7 @@ function handleConvertSymbol(content) {
 
                 contentTmp = contentTmp.slice(0, vtbd) + daiMain + contentTmp.slice(vtkt);
 
-                i = vtbd;
+                i = vtbd + 1;
                 length = contentTmp.length;
 
                 bDai = true;
@@ -140,7 +229,7 @@ function handleConvertSymbol(content) {
 
                 contentTmp = contentTmp.slice(0, vtbd) + daiMain + contentTmp.slice(vtkt);
 
-                i = vtbd;
+                i = vtbd + 1;
                 length = contentTmp.length;
 
                 bDai = true;
@@ -151,7 +240,7 @@ function handleConvertSymbol(content) {
 
                 contentTmp = contentTmp.slice(0, vtbd) + daiMain + contentTmp.slice(vtkt);
 
-                i = vtbd;
+                i = vtbd + 1;
                 length = contentTmp.length;
 
                 bDai = true;
@@ -162,82 +251,138 @@ function handleConvertSymbol(content) {
 
                 contentTmp = contentTmp.slice(0, vtbd) + daiMain + contentTmp.slice(vtkt);
 
-                i = vtbd;
+                i = vtbd + 1;
+                length = contentTmp.length;
+
+                bDai = true;
+            } else if (dai === 'dphu' || dai === 'daiphu' || dai === 'dph') {
+                vtkt = i;
+
+                daiMain = 'dp';
+
+                contentTmp = contentTmp.slice(0, vtbd) + daiMain + contentTmp.slice(vtkt);
+
+                i = vtbd + 1;
+                length = contentTmp.length;
+
+                bDai = true;
+            } else if (
+                dai === 'dch' ||
+                dai === 'chanh' ||
+                dai === 'chinh' ||
+                dai === 'daich' ||
+                dai === 'daichinh' ||
+                dai === 'daichih' ||
+                dai === 'daichin' ||
+                dai === 'daichi' ||
+                dai === 'daichanh' ||
+                dai === 'daichah' ||
+                dai === 'daicha' ||
+                dai === 'daic' ||
+                dai === 'dchinh' ||
+                dai === 'dchih' ||
+                dai === 'dchin' ||
+                dai === 'dchi' ||
+                dai === 'dchanh' ||
+                dai === 'dcha' ||
+                dai === 'dchah'
+            ) {
+                vtkt = i;
+
+                daiMain = 'dc';
+
+                contentTmp = contentTmp.slice(0, vtbd) + daiMain + contentTmp.slice(vtkt);
+
+                i = vtbd + 1;
                 length = contentTmp.length;
 
                 bDai = true;
             } else if (listDai.includes(dai)) {
                 vtkt = i;
 
-                if (dai === 'thanhpho') {
+                if (
+                    dai === 'thanhpho' ||
+                    dai === 'tpho' ||
+                    dai === 'tph' ||
+                    dai === 'thpho' ||
+                    dai === 'thph' ||
+                    dai === 'thp'
+                ) {
                     daiMain = 'tp';
-                } else if (dai === 'dongthap') {
+                } else if (dai === 'dongthap' || dai === 'dthap' || dai === 'dth') {
                     daiMain = 'dt';
-                } else if (dai === 'camau') {
+                } else if (dai === 'camau' || dai === 'cmau') {
                     daiMain = 'cm';
-                } else if (dai === 'bentre') {
+                } else if (dai === 'bentre' || dai === 'btre') {
                     daiMain = 'br';
-                } else if (dai === 'vungtau') {
+                } else if (dai === 'vungtau' || dai === 'vtau') {
                     daiMain = 'vt';
-                } else if (dai === 'baclieu') {
-                    daiMain = 'bl';
-                } else if (dai === 'dongnai') {
+                } else if (dai === 'baclieu' || dai === 'blieu') {
+                    daiMain = 'bi';
+                } else if (dai === 'dongnai' || dai === 'dnai') {
                     daiMain = 'dn';
-                } else if (dai === 'cantho') {
+                } else if (dai === 'cantho' || dai === 'ctho') {
                     daiMain = 'ct';
-                } else if (dai === 'soctrang') {
+                } else if (dai === 'soctrang' || dai === 'strang') {
                     daiMain = 'st';
-                } else if (dai === 'tayninh') {
+                } else if (dai === 'tayninh' || dai === 'tninh') {
                     daiMain = 'tn';
-                } else if (dai === 'angiang') {
+                } else if (dai === 'angiang' || dai === 'agiang' || dai === 'ang') {
                     daiMain = 'ag';
-                } else if (dai === 'binhthuan') {
+                } else if (dai === 'binhthuan' || dai === 'bthuan') {
                     daiMain = 'bt';
-                } else if (dai === 'binhduong') {
+                } else if (dai === 'binhduong' || dai === 'bduong') {
                     daiMain = 'bu';
-                } else if (dai === 'vinhlong') {
+                } else if (dai === 'vinhlong' || dai === 'vlong') {
                     daiMain = 'vl';
-                } else if (dai === 'travinh') {
+                } else if (dai === 'travinh' || dai === 'tvinh' || dai === 'trvinh') {
                     daiMain = 'tv';
-                } else if (dai === 'longan') {
+                } else if (dai === 'longan' || dai === 'lan') {
                     daiMain = 'la';
-                } else if (dai === 'binhphuoc') {
+                } else if (dai === 'binhphuoc' || dai === 'bphuoc') {
                     daiMain = 'bp';
-                } else if (dai === 'haugiang') {
+                } else if (dai === 'haugiang' || dai === 'hgiang') {
                     daiMain = 'hg';
-                } else if (dai === 'tiengiang') {
+                } else if (dai === 'tiengiang' || dai === 'tgiang') {
                     daiMain = 'tg';
-                } else if (dai === 'kiengiang') {
+                } else if (dai === 'kiengiang' || dai === 'kgiang') {
                     daiMain = 'kg';
-                } else if (dai === 'dalat') {
-                    daiMain = 'da';
-                } else if (dai === 'phuyen') {
+                } else if (dai === 'dalat' || dai === 'dlat') {
+                    daiMain = 'lt';
+                } else if (dai === 'phuyen' || dai === 'pyen') {
                     daiMain = 'py';
                 } else if (dai === 'hue') {
                     daiMain = 'hu';
-                } else if (dai === 'daklak' || dai === 'daclac' || dai === 'daclak' || dai === 'daklac') {
+                } else if (
+                    dai === 'dlac' ||
+                    dai === 'dlak' ||
+                    dai === 'daklak' ||
+                    dai === 'daclac' ||
+                    dai === 'daclak' ||
+                    dai === 'daklac'
+                ) {
                     daiMain = 'dl';
-                } else if (dai === 'quangnam') {
+                } else if (dai === 'quangnam' || dai === 'qnam') {
                     daiMain = 'qn';
-                } else if (dai === 'danang') {
+                } else if (dai === 'danang' || dai === 'dnang') {
                     daiMain = 'dg';
-                } else if (dai === 'khanhhoa') {
+                } else if (dai === 'khanhhoa' || dai === 'khoa') {
                     daiMain = 'kh';
-                } else if (dai === 'quangbinh') {
+                } else if (dai === 'quangbinh' || dai === 'qbinh') {
                     daiMain = 'qb';
-                } else if (dai === 'binhdinh') {
+                } else if (dai === 'binhdinh' || dai === 'bdinh') {
                     daiMain = 'bd';
-                } else if (dai === 'quangtri') {
+                } else if (dai === 'quangtri' || dai === 'qtri') {
                     daiMain = 'qt';
-                } else if (dai === 'gialai') {
+                } else if (dai === 'gialai' || dai === 'glai') {
                     daiMain = 'gl';
-                } else if (dai === 'ninhthuan') {
+                } else if (dai === 'ninhthuan' || dai === 'nthuan') {
                     daiMain = 'nt';
-                } else if (dai === 'quangngai') {
+                } else if (dai === 'quangngai' || dai === 'qngai') {
                     daiMain = 'qg';
-                } else if (dai === 'dacnong' || dai === 'daknong') {
+                } else if (dai === 'dacnong' || dai === 'daknong' || dai === 'dnong' || dai === 'dno') {
                     daiMain = 'do';
-                } else if (dai === 'kontum' || dai === 'kontom' || dai === 'ktum') {
+                } else if (dai === 'kontum' || dai === 'kontom' || dai === 'ktum' || dai === 'ktum') {
                     daiMain = 'kt';
                 }
 
@@ -250,6 +395,21 @@ function handleConvertSymbol(content) {
             } else {
                 bDai = false;
             }
+        } else if (
+            (contentTmp[i] === '.' || isFinite(Number(contentTmp[i]))) &&
+            dai.length === 2 &&
+            searchChars.includes(dai)
+        ) {
+            vtkt = i;
+
+            daiMain = dai;
+
+            contentTmp = contentTmp.slice(0, vtbd) + daiMain + contentTmp.slice(vtkt);
+
+            i = vtbd + 1;
+            length = contentTmp.length;
+
+            bDai = true;
         }
 
         if (isFinite(Number(contentTmp[i])) || (contentTmp[i] === '.' && isFinite(Number(contentTmp[i + 1])))) {

@@ -20,13 +20,24 @@ function Sms() {
 
         let tongxac = 0;
         let tongtrung = 0;
+        let tongdiem = 0;
 
         arr.map((e) => {
             tongxac += e.tienxac;
             tongtrung += e.tientrung;
+            tongdiem += e.diem;
         });
 
-        console.log('Tong xac: ', tongxac.toFixed(2), '---- Tong trung: ', tongtrung.toFixed(2));
+        console.log(
+            'Tong diem: ',
+            tongdiem.toFixed(2),
+            ' | Tong xac: ',
+            tongxac.toFixed(2),
+            ' | Tong trung: ',
+            tongtrung.toFixed(2),
+            ' | Thu/trả: ',
+            tongxac - tongtrung,
+        );
 
         setContentDetail(arr);
     };

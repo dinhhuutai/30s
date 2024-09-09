@@ -3,10 +3,23 @@ import findListTwoNum from './findListTwoNum';
 import findPosFirstAndTwo from './findPosFirstAndTwo';
 import handleConvertSymbol from './handleConvertSymbol';
 import handleDai from './handleDai';
+import handleMien from './handleMien';
 import handleTextKeo from './handleTextKeo';
 import shortenText from './shortenText';
 
 function convertContentDetail(content) {
+    const now = new Date('9-7-2024');
+
+    // Lấy ngày, tháng, năm
+    const day = now.getDate(); // Ngày trong tháng (1-31)
+    const month = now.getMonth() + 1; // Tháng (0-11), cộng thêm 1 để có giá trị tháng (1-12)
+    const year = now.getFullYear(); // Năm đầy đủ
+
+    const dayOfWeek = now.getDay() + 1;
+
+    console.log(`${day}/${month}/${year}`);
+    console.log('Thứ: ', dayOfWeek);
+
     let arr = [];
 
     let kt = true;
@@ -19,6 +32,14 @@ function convertContentDetail(content) {
     console.log('Làm gọn sau kéo: ', contentTmp);
 
     // Lấy miền ở đây
+
+    let objHandleMien = handleMien(contentTmp);
+
+    contentTmp = objHandleMien.content;
+    mien = objHandleMien.mien;
+
+    console.log('Làm gọn sau lấy miền: ', contentTmp);
+    console.log('Miền: ', mien);
 
     //
 
@@ -71,7 +92,7 @@ function convertContentDetail(content) {
             if (isFinite(Number(cloChild[i + 1]))) {
                 dai = dai.replace(/[.,:]/g, '');
 
-                dai = handleDai(dai);
+                dai = handleDai(dai, mien, dayOfWeek);
                 break;
             }
         }
@@ -127,11 +148,13 @@ function convertContentDetail(content) {
                     // eslint-disable-next-line no-loop-func
                     mangSoDa.map((soDa) => {
                         const obj = {
-                            mien: 'mn',
+                            mien: mien,
                             dai: dai,
                             so: soDa,
                             kieuDanh: kdanhMain,
                             tien: gtien,
+                            day: now,
+                            dayOfWeek: dayOfWeek,
                         };
 
                         arr = [...arr, obj];
@@ -155,11 +178,13 @@ function convertContentDetail(content) {
                             kdanhMain = 'baolo';
 
                             const obj = {
-                                mien: 'mn',
+                                mien: mien,
                                 dai: dai,
                                 so: so,
                                 kieuDanh: kdanhMain,
                                 tien: gtien,
+                                day: now,
+                                dayOfWeek: dayOfWeek,
                             };
 
                             arr = [...arr, obj];
@@ -195,11 +220,13 @@ function convertContentDetail(content) {
 
                             mangSoDao.map((soDao) => {
                                 const obj = {
-                                    mien: 'mn',
+                                    mien: mien,
                                     dai: dai,
                                     so: soDao,
                                     kieuDanh: kdanhMain,
                                     tien: gtien,
+                                    day: now,
+                                    dayOfWeek: dayOfWeek,
                                 };
 
                                 arr = [...arr, obj];
@@ -221,11 +248,13 @@ function convertContentDetail(content) {
                             kdanhMain = 'dauduoi';
 
                             const obj = {
-                                mien: 'mn',
+                                mien: mien,
                                 dai: dai,
                                 so: so,
                                 kieuDanh: kdanhMain,
                                 tien: gtien,
+                                day: now,
+                                dayOfWeek: dayOfWeek,
                             };
 
                             arr = [...arr, obj];
@@ -237,11 +266,13 @@ function convertContentDetail(content) {
                             kdanhMain = 'xiuchu';
 
                             const obj = {
-                                mien: 'mn',
+                                mien: mien,
                                 dai: dai,
                                 so: so,
                                 kieuDanh: kdanhMain,
                                 tien: gtien,
+                                day: now,
+                                dayOfWeek: dayOfWeek,
                             };
 
                             arr = [...arr, obj];
@@ -260,11 +291,13 @@ function convertContentDetail(content) {
                             kdanhMain = 'xiuchudau';
 
                             const obj = {
-                                mien: 'mn',
+                                mien: mien,
                                 dai: dai,
                                 so: so,
                                 kieuDanh: kdanhMain,
                                 tien: gtien,
+                                day: now,
+                                dayOfWeek: dayOfWeek,
                             };
 
                             arr = [...arr, obj];
@@ -283,11 +316,13 @@ function convertContentDetail(content) {
                             kdanhMain = 'xiuchuduoi';
 
                             const obj = {
-                                mien: 'mn',
+                                mien: mien,
                                 dai: dai,
                                 so: so,
                                 kieuDanh: kdanhMain,
                                 tien: gtien,
+                                day: now,
+                                dayOfWeek: dayOfWeek,
                             };
 
                             arr = [...arr, obj];
@@ -325,11 +360,13 @@ function convertContentDetail(content) {
 
                             mangSoDao.map((soDao) => {
                                 const obj = {
-                                    mien: 'mn',
+                                    mien: mien,
                                     dai: dai,
                                     so: soDao,
                                     kieuDanh: kdanhMain,
                                     tien: gtien,
+                                    day: now,
+                                    dayOfWeek: dayOfWeek,
                                 };
 
                                 arr = [...arr, obj];
@@ -342,11 +379,13 @@ function convertContentDetail(content) {
                             kdanhMain = 'dau';
 
                             const obj = {
-                                mien: 'mn',
+                                mien: mien,
                                 dai: dai,
                                 so: so,
                                 kieuDanh: kdanhMain,
                                 tien: gtien,
+                                day: now,
+                                dayOfWeek: dayOfWeek,
                             };
 
                             arr = [...arr, obj];
@@ -365,11 +404,13 @@ function convertContentDetail(content) {
                             kdanhMain = 'duoi';
 
                             const obj = {
-                                mien: 'mn',
+                                mien: mien,
                                 dai: dai,
                                 so: so,
                                 kieuDanh: kdanhMain,
                                 tien: gtien,
+                                day: now,
+                                dayOfWeek: dayOfWeek,
                             };
 
                             arr = [...arr, obj];
@@ -381,11 +422,13 @@ function convertContentDetail(content) {
                             kdanhMain = 'dau';
 
                             const obj = {
-                                mien: 'mn',
+                                mien: mien,
                                 dai: dai,
                                 so: so,
                                 kieuDanh: kdanhMain,
                                 tien: gtien,
+                                day: now,
+                                dayOfWeek: dayOfWeek,
                             };
 
                             arr = [...arr, obj];
@@ -395,11 +438,13 @@ function convertContentDetail(content) {
                             kdanhMain = 'duoi';
 
                             const obj = {
-                                mien: 'mn',
+                                mien: mien,
                                 dai: dai,
                                 so: so,
                                 kieuDanh: kdanhMain,
                                 tien: gtien,
+                                day: now,
+                                dayOfWeek: dayOfWeek,
                             };
 
                             arr = [...arr, obj];
