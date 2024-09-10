@@ -63,7 +63,16 @@ function handleDai(dai, mien, dayOfWeek) {
         if (dayOfWeek === 7) {
             daiTmp = ['tp', 'la', 'bp', 'hg'];
         }
-    } else if (dai === 'dc' || dai === 'dch' || dai === 'đc' || dai === 'đch' || dai === 'dchanh' || dai === 'đchanh') {
+    } else if (
+        dai === 'dc' ||
+        dai === 'dch' ||
+        dai === 'đc' ||
+        dai === 'đch' ||
+        dai === 'dchanh' ||
+        dai === 'ch' ||
+        dai === 'chanh' ||
+        dai === 'đchanh'
+    ) {
         if (mien === 'mn') {
             if (dayOfWeek === 2) {
                 daiTmp = ['tp'];

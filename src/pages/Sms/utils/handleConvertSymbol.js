@@ -81,6 +81,8 @@ function handleConvertSymbol(content, mien, dayOfWeek) {
         'vtau',
         'baclieu',
         'blieu',
+        'bliu',
+        'bacliu',
         'dongnai',
         'dnai',
         'cantho',
@@ -256,7 +258,14 @@ function handleConvertSymbol(content, mien, dayOfWeek) {
                 length = contentTmp.length;
 
                 bDai = true;
-            } else if (dai === 'dphu' || dai === 'daiphu' || dai === 'dph') {
+            } else if (
+                dai === 'dphu' ||
+                dai === 'daiphu' ||
+                dai === 'dph' ||
+                dai === 'phu' ||
+                dai === 'daiph' ||
+                dai === 'daip'
+            ) {
                 vtkt = i;
 
                 daiMain = 'dp';
@@ -318,7 +327,7 @@ function handleConvertSymbol(content, mien, dayOfWeek) {
                     daiMain = 'br';
                 } else if (dai === 'vungtau' || dai === 'vtau') {
                     daiMain = 'vt';
-                } else if (dai === 'baclieu' || dai === 'blieu') {
+                } else if (dai === 'baclieu' || dai === 'blieu' || dai === 'bliu' || dai === 'bacliu') {
                     daiMain = 'bi';
                 } else if (dai === 'dongnai' || dai === 'dnai') {
                     daiMain = 'dn';
@@ -405,26 +414,25 @@ function handleConvertSymbol(content, mien, dayOfWeek) {
 
             daiMain = dai;
 
-            if(dai === 'dl' && mien === 'mn' && dayOfWeek === 1) {
+            if (dai === 'dl' && mien === 'mn' && dayOfWeek === 1) {
                 daiMain = 'lt';
             }
 
-            if(dai === 'bd' && mien === 'mn' && dayOfWeek === 6) {
+            if (dai === 'bd' && mien === 'mn' && dayOfWeek === 6) {
                 daiMain = 'bu';
             }
-            
-            if(dai === 'qn' && mien === 'mt' && dayOfWeek === 7) {
+
+            if (dai === 'qn' && mien === 'mt' && dayOfWeek === 7) {
                 daiMain = 'qg';
             }
-            
-            if(dai === 'bt' && dayOfWeek === 3) {
+
+            if (dai === 'bt' && dayOfWeek === 3) {
                 daiMain = 'br';
             }
-            
-            if(dai === 'dn' && mien === 'mt') {
+
+            if (dai === 'dn' && mien === 'mt') {
                 daiMain = 'dg';
             }
-
 
             contentTmp = contentTmp.slice(0, vtbd) + daiMain + contentTmp.slice(vtkt);
 

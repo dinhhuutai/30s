@@ -4,12 +4,13 @@ import findPosFirstAndTwo from './findPosFirstAndTwo';
 import handleConvertSymbol from './handleConvertSymbol';
 import handleDai from './handleDai';
 import handleDeleteMien from './handleDeleteMien';
+import handleDeleteStringFrontRedundant from './handleDeleteStringFrontRedundant';
 import handleMien from './handleMien';
 import handleTextKeo from './handleTextKeo';
 import shortenText from './shortenText';
 
 function convertContentDetail(content) {
-    const now = new Date('9-7-2024');
+    const now = new Date('9-10-2024');
 
     // Lấy ngày, tháng, năm
     const day = now.getDate(); // Ngày trong tháng (1-31)
@@ -44,11 +45,14 @@ function convertContentDetail(content) {
 
     //
 
-    contentTmp = handleDeleteMien(contentTmp);
+    contentTmp = handleDeleteMien(contentTmp, mien);
     console.log('Làm gọn sau khi xóa các miền còn dư: ', contentTmp);
 
     contentTmp = handleConvertSymbol(contentTmp, mien, dayOfWeek);
     console.log('Làm gọn sau viết tắc: ', contentTmp);
+
+    contentTmp = handleDeleteStringFrontRedundant(contentTmp);
+    console.log('Làm gọn sau xóa các chuỗi dư thừa phía trước: ', contentTmp);
 
     let bd = 0;
     let kth = 0;
@@ -292,7 +296,14 @@ function convertContentDetail(content) {
                             kdanh === 'xiuch' ||
                             kdanh === 'xiuc' ||
                             kdanh === 'xch' ||
-                            kdanh === 'xchu'
+                            kdanh === 'xchu' ||
+                            kdanh === 's' ||
+                            kdanh === 'sc' ||
+                            kdanh === 'siuchu' ||
+                            kdanh === 'siuch' ||
+                            kdanh === 'siuc' ||
+                            kdanh === 'sch' ||
+                            kdanh === 'schu'
                         ) {
                             kdanhMain = 'xiuchu';
 
@@ -341,26 +352,26 @@ function convertContentDetail(content) {
                         }
 
                         if (
-                            kdanh === 'xdauduoi' ||
-                            kdanh === 'xcdauduoi' ||
-                            kdanh === 'xchdauduoi' ||
-                            kdanh === 'xchudauduoi' ||
-                            kdanh === 'xiuchudauduoi' ||
-                            kdanh === 'xiuchdauduoi' ||
-                            kdanh === 'xiucdauduoi' ||
-                            kdanh === 'xđauduoi' ||
-                            kdanh === 'xcđauduoi' ||
-                            kdanh === 'xiuchuđauduoi' ||
-                            kdanh === 'xdaudui' ||
-                            kdanh === 'xcdaudui' ||
-                            kdanh === 'xchdaudui' ||
-                            kdanh === 'xchudaudui' ||
-                            kdanh === 'xiuchudaudui' ||
-                            kdanh === 'xiuchdaudui' ||
-                            kdanh === 'xiucdaudui' ||
-                            kdanh === 'xđaudui' ||
-                            kdanh === 'xcđaudui' ||
-                            kdanh === 'xiuchuđaudui'
+                            kdanh === 'xduoi' ||
+                            kdanh === 'xcduoi' ||
+                            kdanh === 'xchduoi' ||
+                            kdanh === 'xchuduoi' ||
+                            kdanh === 'xiuchuduoi' ||
+                            kdanh === 'xiuchduoi' ||
+                            kdanh === 'xiucduoi' ||
+                            kdanh === 'xduoi' ||
+                            kdanh === 'xcduoi' ||
+                            kdanh === 'xiuchuduoi' ||
+                            kdanh === 'xdui' ||
+                            kdanh === 'xcdui' ||
+                            kdanh === 'xchdui' ||
+                            kdanh === 'xchudui' ||
+                            kdanh === 'xiuchudui' ||
+                            kdanh === 'xiuchdui' ||
+                            kdanh === 'xiucdui' ||
+                            kdanh === 'xdui' ||
+                            kdanh === 'xcdui' ||
+                            kdanh === 'xiuchudui'
                         ) {
                             kdanhMain = 'xiuchuduoi';
 

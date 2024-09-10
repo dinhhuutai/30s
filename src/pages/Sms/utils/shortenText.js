@@ -3,8 +3,12 @@ function shortenText(content) {
 
     contentTmp = contentTmp
         .replace(/[\r\n]+/g, '.')
+        .replace(/[\t\n]+/g, '.')
+        .replace(/\s+/g, '.')
         .replace(/[.,:;+ ]/g, '.')
         .replace(/-/g, '.')
+        .replace(/…/g, '')
+        .replace(/₫/g, 'đ')
         .replace(/(\d)\s*nghìn/g, '$1.')
         .replace(/(\d)\s*nghin/g, '$1.')
         .replace(/(\d)\s*ngàn/g, '$1.')

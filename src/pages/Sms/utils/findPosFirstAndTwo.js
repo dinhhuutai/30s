@@ -51,7 +51,12 @@ function findPosFirstAndTwo(content) {
         let index = content.indexOf(char);
 
         while (index !== -1 && !isFinite(Number(content[index - 1]))) {
-            if ((content[index - 1] === '.' && isFinite(Number(content[index - 2]))) || index === 0) {
+            if (
+                (content[index - 1] === '.' &&
+                    isFinite(Number(content[index - 2])) &&
+                    (content[index + 2] === '.' || isFinite(Number(content[index + 2])))) ||
+                index === 0
+            ) {
                 positions.push(index);
             }
 
