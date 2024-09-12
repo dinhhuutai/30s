@@ -5,6 +5,7 @@ import handleConvertSymbol from './handleConvertSymbol';
 import handleDai from './handleDai';
 import handleDeleteMien from './handleDeleteMien';
 import handleDeleteStringFrontRedundant from './handleDeleteStringFrontRedundant';
+import handleListNumComboBao from './handleListNumComboBao';
 import handleMien from './handleMien';
 import handleTextKeo from './handleTextKeo';
 import shortenText from './shortenText';
@@ -90,7 +91,10 @@ function convertContentDetail(content) {
 
         let fSo = true;
         let fKdanh = true;
+        let fGtienDecimal = false;
         let ddCh = true;
+
+        let cbBl = false;
 
         let dai = '';
 
@@ -113,6 +117,7 @@ function convertContentDetail(content) {
             if (isFinite(Number(cloChild[i - 1])) && fSo && (cloChild[i] === '.' || !isFinite(Number(cloChild[i])))) {
                 mangSo.push(so.toString());
                 so = '';
+                cbBl = false;
             }
 
             if (mangSo.length > 0 && fKdanh && cloChild[i] !== '.' && !isFinite(Number(cloChild[i]))) {
@@ -125,11 +130,26 @@ function convertContentDetail(content) {
                 fKdanh = false;
             }
 
-            if (!fSo && !fKdanh && (cloChild[i] === '.' || !isFinite(Number(cloChild[i])))) {
+            if (gtien > 0 && cloChild[i] === '.' && isFinite(Number(cloChild[i + 1])) && cloChild[i + 2] === '.') {
+                fGtienDecimal = true;
+            }
+
+            if (
+                !fSo &&
+                !fKdanh &&
+                !(isFinite(Number(cloChild[i + 1])) && cloChild[i + 2] === '.') &&
+                (cloChild[i] === '.' || !isFinite(Number(cloChild[i])))
+            ) {
                 if (cloChild[i] !== '.') {
                     cloChild = cloChild.slice(0, i) + '.' + cloChild.slice(i);
                     contentTmp = contentTmp.slice(0, i) + '.' + contentTmp.slice(i);
                     kth += 1;
+                }
+
+                if (fGtienDecimal) {
+                    gtien /= 10;
+
+                    fGtienDecimal = false;
                 }
 
                 let kdSS = kdanh.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -176,8 +196,24 @@ function convertContentDetail(content) {
                         console.log(`${dai}.${soDa[0]},${soDa[1]}.${kdanhMain}.${gtien}ngan`);
                     });
                 } else {
+                    if (
+                        (kdSS === 'l' ||
+                            kdSS === 'lo' ||
+                            kdSS === 'b' ||
+                            kdSS === 'bl' ||
+                            kdSS === 'blo' ||
+                            kdSS === 'blô' ||
+                            kdSS === 'baolo' ||
+                            kdSS === 'bao' ||
+                            kdSS === 'baol' ||
+                            kdSS === 'baolô') &&
+                        cbBl
+                    ) {
+                        mangSo = handleListNumComboBao(mangSo);
+                    }
+
                     // eslint-disable-next-line no-loop-func
-                    mangSo.map((so) => {
+                    mangSo.map((eSo) => {
                         if (
                             kdSS === 'l' ||
                             kdSS === 'lo' ||
@@ -195,7 +231,7 @@ function convertContentDetail(content) {
                             const obj = {
                                 mien: mien,
                                 dai: dai,
-                                so: so,
+                                so: eSo,
                                 kieuDanh: kdanhMain,
                                 tien: gtien,
                                 day: now,
@@ -204,7 +240,9 @@ function convertContentDetail(content) {
 
                             arr = [...arr, obj];
 
-                            console.log(`${dai}.${so}.${kdanhMain}.${gtien}ngan`);
+                            console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
+
+                            cbBl = true;
                         }
 
                         if (
@@ -239,7 +277,7 @@ function convertContentDetail(content) {
                         ) {
                             kdanhMain = 'baolodao';
 
-                            let mangSoDao = findListOverturn(so);
+                            let mangSoDao = findListOverturn(eSo);
 
                             mangSoDao.map((soDao) => {
                                 const obj = {
@@ -277,7 +315,7 @@ function convertContentDetail(content) {
                             const obj = {
                                 mien: mien,
                                 dai: dai,
-                                so: so,
+                                so: eSo,
                                 kieuDanh: kdanhMain,
                                 tien: gtien,
                                 day: now,
@@ -286,7 +324,7 @@ function convertContentDetail(content) {
 
                             arr = [...arr, obj];
 
-                            console.log(`${dai}.${so}.${kdanhMain}.${gtien}ngan`);
+                            console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
                         }
 
                         if (
@@ -310,7 +348,7 @@ function convertContentDetail(content) {
                             const obj = {
                                 mien: mien,
                                 dai: dai,
-                                so: so,
+                                so: eSo,
                                 kieuDanh: kdanhMain,
                                 tien: gtien,
                                 day: now,
@@ -319,7 +357,7 @@ function convertContentDetail(content) {
 
                             arr = [...arr, obj];
 
-                            console.log(`${dai}.${so}.${kdanhMain}.${gtien}ngan`);
+                            console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
                         }
 
                         if (
@@ -332,14 +370,24 @@ function convertContentDetail(content) {
                             kdanh === 'xiucdau' ||
                             kdanh === 'xđau' ||
                             kdanh === 'xcđau' ||
-                            kdanh === 'xiuchuđau'
+                            kdanh === 'xiuchuđau' ||
+                            kdanh === 'sdau' ||
+                            kdanh === 'scdau' ||
+                            kdanh === 'schdau' ||
+                            kdanh === 'schudau' ||
+                            kdanh === 'siuchudau' ||
+                            kdanh === 'siuchdau' ||
+                            kdanh === 'siucdau' ||
+                            kdanh === 'sđau' ||
+                            kdanh === 'scđau' ||
+                            kdanh === 'siuchuđau'
                         ) {
                             kdanhMain = 'xiuchudau';
 
                             const obj = {
                                 mien: mien,
                                 dai: dai,
-                                so: so,
+                                so: eSo,
                                 kieuDanh: kdanhMain,
                                 tien: gtien,
                                 day: now,
@@ -348,7 +396,7 @@ function convertContentDetail(content) {
 
                             arr = [...arr, obj];
 
-                            console.log(`${dai}.${so}.${kdanhMain}.${gtien}ngan`);
+                            console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
                         }
 
                         if (
@@ -371,14 +419,34 @@ function convertContentDetail(content) {
                             kdanh === 'xiucdui' ||
                             kdanh === 'xdui' ||
                             kdanh === 'xcdui' ||
-                            kdanh === 'xiuchudui'
+                            kdanh === 'xiuchudui' ||
+                            kdanh === 'sduoi' ||
+                            kdanh === 'scduoi' ||
+                            kdanh === 'schduoi' ||
+                            kdanh === 'schuduoi' ||
+                            kdanh === 'siuchuduoi' ||
+                            kdanh === 'siuchduoi' ||
+                            kdanh === 'siucduoi' ||
+                            kdanh === 'sduoi' ||
+                            kdanh === 'scduoi' ||
+                            kdanh === 'siuchuduoi' ||
+                            kdanh === 'sdui' ||
+                            kdanh === 'scdui' ||
+                            kdanh === 'schdui' ||
+                            kdanh === 'schudui' ||
+                            kdanh === 'siuchudui' ||
+                            kdanh === 'siuchdui' ||
+                            kdanh === 'siucdui' ||
+                            kdanh === 'sdui' ||
+                            kdanh === 'scdui' ||
+                            kdanh === 'siuchudui'
                         ) {
                             kdanhMain = 'xiuchuduoi';
 
                             const obj = {
                                 mien: mien,
                                 dai: dai,
-                                so: so,
+                                so: eSo,
                                 kieuDanh: kdanhMain,
                                 tien: gtien,
                                 day: now,
@@ -387,7 +455,7 @@ function convertContentDetail(content) {
 
                             arr = [...arr, obj];
 
-                            console.log(`${dai}.${so}.${kdanhMain}.${gtien}ngan`);
+                            console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
                         }
 
                         if (
@@ -432,11 +500,53 @@ function convertContentDetail(content) {
                             kdSS === 'dxchu' ||
                             kdSS === 'dxch' ||
                             kdSS === 'dxiuc' ||
-                            kdSS === 'dxiuch'
+                            kdSS === 'dxiuch' ||
+                            kdSS === 'daosc' ||
+                            kdSS === 'daos' ||
+                            kdSS === 'dschu' ||
+                            kdSS === 'ds' ||
+                            kdSS === 'dsc' ||
+                            kdSS === 'sd' ||
+                            kdSS === 'sdao' ||
+                            kdSS === 'scdao' ||
+                            kdSS === 'siuchudao' ||
+                            kdSS === 'schudao' ||
+                            kdSS === 'schdao' ||
+                            kdSS === 'siucdao' ||
+                            kdSS === 'siuchdao' ||
+                            kdSS === 'scd' ||
+                            kdSS === 'siuchud' ||
+                            kdSS === 'schud' ||
+                            kdSS === 'schd' ||
+                            kdSS === 'siucd' ||
+                            kdSS === 'siuchd' ||
+                            kdSS === 'đaosc' ||
+                            kdSS === 'đaos' ||
+                            kdSS === 'đschu' ||
+                            kdSS === 'đs' ||
+                            kdSS === 'đsc' ||
+                            kdSS === 'sđ' ||
+                            kdSS === 'sđao' ||
+                            kdSS === 'scđ' ||
+                            kdSS === 'scđao' ||
+                            kdSS === 'siuchuđao' ||
+                            kdSS === 'daos' ||
+                            kdSS === 'daosc' ||
+                            kdSS === 'daosiuchu' ||
+                            kdSS === 'daoschu' ||
+                            kdSS === 'daosch' ||
+                            kdSS === 'daosiuc' ||
+                            kdSS === 'daosiuch' ||
+                            kdSS === 'dsc' ||
+                            kdSS === 'dsiuchu' ||
+                            kdSS === 'dschu' ||
+                            kdSS === 'dsch' ||
+                            kdSS === 'dsiuc' ||
+                            kdSS === 'dsiuch'
                         ) {
                             kdanhMain = 'xiuchudao';
 
-                            let mangSoDao = findListOverturn(so);
+                            let mangSoDao = findListOverturn(eSo);
 
                             mangSoDao.map((soDao) => {
                                 const obj = {
@@ -461,7 +571,7 @@ function convertContentDetail(content) {
                             const obj = {
                                 mien: mien,
                                 dai: dai,
-                                so: so,
+                                so: eSo,
                                 kieuDanh: kdanhMain,
                                 tien: gtien,
                                 day: now,
@@ -470,7 +580,7 @@ function convertContentDetail(content) {
 
                             arr = [...arr, obj];
 
-                            console.log(`${dai}.${so}.${kdanhMain}.${gtien}ngan`);
+                            console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
                         }
 
                         if (
@@ -486,7 +596,7 @@ function convertContentDetail(content) {
                             const obj = {
                                 mien: mien,
                                 dai: dai,
-                                so: so,
+                                so: eSo,
                                 kieuDanh: kdanhMain,
                                 tien: gtien,
                                 day: now,
@@ -495,7 +605,7 @@ function convertContentDetail(content) {
 
                             arr = [...arr, obj];
 
-                            console.log(`${dai}.${so}.${kdanhMain}.${gtien}ngan`);
+                            console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
                         }
 
                         if ((kdSS === 'd' || kdSS === 'đ') && ddCh) {
@@ -504,7 +614,7 @@ function convertContentDetail(content) {
                             const obj = {
                                 mien: mien,
                                 dai: dai,
-                                so: so,
+                                so: eSo,
                                 kieuDanh: kdanhMain,
                                 tien: gtien,
                                 day: now,
@@ -513,14 +623,14 @@ function convertContentDetail(content) {
 
                             arr = [...arr, obj];
 
-                            console.log(`${dai}.${so}.${kdanhMain}.${gtien}ngan`);
+                            console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
                         } else if ((kdSS === 'd' || kdSS === 'đ') && !ddCh) {
                             kdanhMain = 'duoi';
 
                             const obj = {
                                 mien: mien,
                                 dai: dai,
-                                so: so,
+                                so: eSo,
                                 kieuDanh: kdanhMain,
                                 tien: gtien,
                                 day: now,
@@ -529,7 +639,7 @@ function convertContentDetail(content) {
 
                             arr = [...arr, obj];
 
-                            console.log(`${dai}.${so}.${kdanhMain}.${gtien}ngan`);
+                            console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
                         }
                     });
 

@@ -66,7 +66,6 @@ function handleDeleteStringFrontRedundant(content) {
         }
     }
 
-
     return contentTmp;
 }
 

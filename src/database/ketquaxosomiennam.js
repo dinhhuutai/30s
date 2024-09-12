@@ -1,6 +1,6 @@
 const ketquaxosomiennam = [
     {
-        ngay: '07/09/2024',
+        ngay: '10/09/2024',
         dai: 'br',
         kq: [
             '65',
@@ -24,7 +24,7 @@ const ketquaxosomiennam = [
         ],
     },
     {
-        ngay: '07/09/2024',
+        ngay: '10/09/2024',
         dai: 'vt',
         kq: [
             '34',
@@ -48,7 +48,7 @@ const ketquaxosomiennam = [
         ],
     },
     {
-        ngay: '07/09/2024',
+        ngay: '10/09/2024',
         dai: 'bi',
         kq: [
             '98',

@@ -16,7 +16,9 @@ function shortenText(content) {
         .replace(/(\d)\s*ng/g, '$1.')
         .replace(/(\d)\s*n/g, '$1.')
         .replace(/\.{2,}/g, '.')
-        .replace(/^\.+/, '');
+        .replace(/^\.+/, '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '');
 
     return contentTmp;
 }

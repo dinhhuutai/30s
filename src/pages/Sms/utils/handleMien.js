@@ -4,13 +4,19 @@ function handleMien(content) {
     let mien = '';
 
     var mienMain = '';
+    let length = contentTmp.length;
 
     var vtbd = 0;
     var fVtbd = true;
 
     var vtkt = 0;
 
-    for (var i = 0; i < 50; i++) {
+    if (contentTmp[length - 1] !== '.') {
+        contentTmp = contentTmp + '.';
+        length = contentTmp.length;
+    }
+
+    for (var i = 0; i < length; i++) {
         if (!isFinite(Number(contentTmp[i])) && contentTmp[i] !== '.') {
             mien += contentTmp[i];
 
@@ -26,7 +32,7 @@ function handleMien(content) {
 
                 mienMain = 'mn';
 
-                contentTmp = contentTmp.slice(vtkt);
+                contentTmp = mienMain + '.' + contentTmp;
 
                 if (contentTmp[0] === '.') {
                     contentTmp = contentTmp.slice(1);
@@ -44,7 +50,7 @@ function handleMien(content) {
 
                 mienMain = 'mt';
 
-                contentTmp = contentTmp.slice(vtkt);
+                contentTmp = mienMain + '.' + contentTmp;
 
                 if (contentTmp[0] === '.') {
                     contentTmp = contentTmp.slice(1);
@@ -64,7 +70,7 @@ function handleMien(content) {
 
                 mienMain = 'mb';
 
-                contentTmp = mienMain + contentTmp.slice(vtkt);
+                contentTmp = mienMain + '.' + contentTmp;
 
                 if (contentTmp[0] === '.') {
                     contentTmp = contentTmp.slice(1);
@@ -89,8 +95,12 @@ function handleMien(content) {
 
         if (currentHour < 16 || (currentHour === 16 && currentMinute < 15)) {
             mienMain = 'mn';
+
+            contentTmp = mienMain + '.' + contentTmp;
         } else if (currentHour < 17 || (currentHour === 17 && currentMinute < 15)) {
             mienMain = 'mt';
+
+            contentTmp = mienMain + '.' + contentTmp;
         } else if (currentHour < 18 || (currentHour === 18 && currentMinute < 15)) {
             mienMain = 'mb';
 

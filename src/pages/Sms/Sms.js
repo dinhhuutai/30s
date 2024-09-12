@@ -20,7 +20,7 @@ function Sms() {
 
         let arr = convertContentDetail(content);
 
-        let mien = arr[0].mien;
+        let mien = arr[0] && arr[0].mien;
 
         let kqxs = mien === 'mn' ? ketquaxosomiennam : mien === 'mt' ? ketquaxosomientrung : ketquaxosomienbac;
 
