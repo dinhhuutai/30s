@@ -36,7 +36,7 @@ function convertContentDetail(content) {
 
     // Lấy miền ở đây
 
-    let objHandleMien = handleMien(contentTmp);
+    let objHandleMien = handleMien(contentTmp, now);
 
     contentTmp = objHandleMien.content;
     mien = objHandleMien.mien;

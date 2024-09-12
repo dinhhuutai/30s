@@ -14,16 +14,26 @@
     }
 }
 
+@layer components {
+    .bg-active-path {
+        background-image: linear-gradient(to right, #259dba 0%, #2574ab 100%);
+    }
+}
+
 :root {
     --height-header: 64px;
     --width-sidebar: 220px;
     --min-h-page: calc(100vh - var(--height-header));
 
-    --bg-color-header: #20242d;
+    --bg-color-header: #262b36;
     --bg-color-page: #d8dce3;
+    --bg-color-logo: #20242d;
 
+    --color-logo: #259dba;
+    --color-logo-hover: #3ab9d8;
     --color-white: #fff;
     --color-black: #000;
+    --color-gray: #9fa8bc;
     --color-text-sidebar: #505b72;
     --color-text-header: #778395;
 }

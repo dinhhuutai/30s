@@ -52,7 +52,7 @@ function handleDeleteStringFrontRedundant(content) {
     let stringRedun = '';
 
     for (let i = 0; i < length; i++) {
-        if (contentTmp[i] !== '.') {
+        if (contentTmp[i] !== '.' && !(isFinite(Number(contentTmp[i])) && isFinite(Number(contentTmp[i + 1])))) {
             stringRedun += contentTmp[i];
         } else {
             if (searchChars.includes(stringRedun)) {

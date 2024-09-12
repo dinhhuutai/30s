@@ -1,8 +1,7 @@
-import Sms from '~/pages/Sms';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 
-function DefaultLayout() {
+function DefaultLayout({ children }) {
     return (
         <div className="">
             <div
@@ -11,11 +10,11 @@ function DefaultLayout() {
                 <Sidebar />
             </div>
             <div className="ml-[var(--width-sidebar)]">
-                <div className="h-[var(--height-header)] fixed top-[0px] left-[var(--width-sidebar)] right-[0px] bg-[var(--bg-color-header)] text-[var(--color-text-header)]">
+                <div className="h-[var(--height-header)] fixed top-[0px] left-[var(--width-sidebar)] right-[0px] z-[9999] bg-[var(--bg-color-header)] text-[var(--color-text-header)]">
                     <Header />
                 </div>
                 <div className="mt-[var(--height-header)]  min-h-[var(--min-h-page)] bg-[var(--bg-color-page)] p-[20px]">
-                    <Sms />
+                    {children}
                 </div>
             </div>
         </div>

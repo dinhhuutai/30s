@@ -1,4 +1,4 @@
-function handleMien(content) {
+function handleMien(content, now) {
     let contentTmp = content;
 
     let mien = '';
@@ -87,8 +87,6 @@ function handleMien(content) {
     }
 
     if (mienMain === '') {
-        const now = new Date();
-
         // Lấy giờ và phút hiện tại
         const currentHour = now.getHours();
         const currentMinute = now.getMinutes();
