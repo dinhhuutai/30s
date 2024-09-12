@@ -137,7 +137,7 @@ function convertContentDetail(content) {
             if (
                 !fSo &&
                 !fKdanh &&
-                !(isFinite(Number(cloChild[i + 1])) && cloChild[i + 2] === '.') &&
+                !(cloChild[i] === '.' && isFinite(Number(cloChild[i + 1])) && cloChild[i + 2] === '.') &&
                 (cloChild[i] === '.' || !isFinite(Number(cloChild[i])))
             ) {
                 if (cloChild[i] !== '.') {
