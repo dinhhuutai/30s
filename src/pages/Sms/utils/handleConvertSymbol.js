@@ -96,6 +96,7 @@ function handleConvertSymbol(content, mien, dayOfWeek) {
         'agiang',
         'binhthuan',
         'bthuan',
+        'bth',
         'binhduong',
         'bduong',
         'vinhlong',
@@ -339,7 +340,7 @@ function handleConvertSymbol(content, mien, dayOfWeek) {
                     daiMain = 'tn';
                 } else if (dai === 'angiang' || dai === 'agiang' || dai === 'ang') {
                     daiMain = 'ag';
-                } else if (dai === 'binhthuan' || dai === 'bthuan') {
+                } else if (dai === 'binhthuan' || dai === 'bthuan' || dai === 'bth') {
                     daiMain = 'bt';
                 } else if (dai === 'binhduong' || dai === 'bduong') {
                     daiMain = 'bu';
