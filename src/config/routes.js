@@ -3,6 +3,8 @@ const routes = {
     sms: '/sms',
     revenue: '/revenue',
     member: '/member',
+    login: '/login',
+    register: '/register',
 };
 
 export default routes;
