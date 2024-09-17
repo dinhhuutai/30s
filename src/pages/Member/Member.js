@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
-import { BsPencil, BsTrash } from 'react-icons/bs';
+import { BsPencil, BsTrash, BsCaretUpFill, BsCaretDownFill, BsCaretDown, BsCaretUp } from 'react-icons/bs';
 import useDebounce from '~/utils/useDebounce';
 import ModalCreate from './component/ModalCreate';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { userSelector } from '~/redux/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { noticeAdminSelector, userSelector } from '~/redux/selectors';
 import moment from 'moment';
 import ModalUpdate from './component/ModalUpdate';
+import Alert from '~/components/Alert';
+import noticeAdminSlice from '~/redux/slices/noticeAdminSlice';
+
+let setTimeoutTmp;
 
 function Member() {
     const [nameSearch, setNameSearch] = useState('');
@@ -15,6 +19,10 @@ function Member() {
     const [modalCreate, setModalCreate] = useState(false);
     const [modalUpdate, setModalUpdate] = useState(false);
     const [selecterMember, setSelecterMember] = useState({});
+
+    const [arrangeName, setArrangeName] = useState(true);
+    const [arrangeCreateDate, setArrangeCreateDate] = useState(false);
+    const [typeArrange, setTypeArrange] = useState('name');
 
     const tmp = useSelector(userSelector);
     const [user, setUser] = useState(tmp);
@@ -25,12 +33,18 @@ function Member() {
     const nameSearchDebounced = useDebounce(nameSearch, 500);
 
     useEffect(() => {
-        console.log(nameSearchDebounced);
-    }, [nameSearchDebounced]);
+        handleSearchMember();
+    }, [nameSearchDebounced, arrangeName, arrangeCreateDate]);
 
-    const handleFindMembers = async () => {
+    const handleSearchMember = async () => {
         const res = await axios.post(
-            `${process.env.REACT_APP_API_URL}/v1/member/findAllMemberByIdUser/${user.login.currentUser._id}`,
+            `${process.env.REACT_APP_API_URL}/v1/member/findMemberByNameAndPhone/${
+                user.login.currentUser._id
+            }?name=${nameSearchDebounced}&${
+                typeArrange === 'createDate'
+                    ? `sortCreateDate=${arrangeCreateDate ? '1' : '-1'}`
+                    : `sortName=${arrangeName ? '1' : '-1'}`
+            }`,
         );
 
         if (res.data.success) {
@@ -38,13 +52,35 @@ function Member() {
         }
     };
 
-    useState(() => {
-        handleFindMembers();
-    }, []);
 
     const handleUpdate = async (member) => {
-        setMembers(member);
+        setSelecterMember(member);
         setModalUpdate(true);
+    };
+
+    // const notice = useSelector(noticeAdminSelector);
+
+    // useEffect(() => {
+    //     if (!notice.state) {
+    //         clearTimeout(setTimeoutTmp);
+    //     }
+    // }, [notice.state]);
+
+    const dispatch = useDispatch();
+
+    const handleDelete = async (member) => {
+        dispatch(noticeAdminSlice.actions.processingNotice('Đang xóa người chơi'));
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/v1/member/delete/${member._id}`);
+
+        if (res.data.success) {
+            handleSearchMember();
+
+            dispatch(noticeAdminSlice.actions.successNotice('Xóa người chơi thành công'));
+
+            setTimeoutTmp = setTimeout(() => {
+                dispatch(noticeAdminSlice.actions.hiddenNotice());
+            }, [5000]);
+        }
     };
 
     return (
@@ -76,8 +112,36 @@ function Member() {
                     <thead>
                         <tr className="text-[12px] w-[100%] bg-[#d8dce3]">
                             <th className="w-[5%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">STT</th>
-                            <th className="w-[12%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
-                                người chơi
+                            <th
+                                onClick={() => {
+                                    setTypeArrange('name');
+                                    setArrangeName((prev) => !prev);
+                                }}
+                                className="w-[12%] py-[8px] border-[1px] border-solid border-[#fff] uppercase"
+                            >
+                                <div className="flex items-center justify-around cursor-pointer">
+                                    người chơi
+                                    <div className="flex items-center">
+                                        {typeArrange === 'name' ? (
+                                            arrangeName ? (
+                                                <>
+                                                    <BsCaretUp />
+                                                    <BsCaretDownFill />
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <BsCaretUpFill />
+                                                    <BsCaretDown />
+                                                </>
+                                            )
+                                        ) : (
+                                            <>
+                                                <BsCaretUp />
+                                                <BsCaretDown />
+                                            </>
+                                        )}
+                                    </div>
+                                </div>
                             </th>
                             <th className="w-[18%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
                                 số điện thoại
@@ -88,8 +152,36 @@ function Member() {
                             <th className="w-[7%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
                                 chạy số
                             </th>
-                            <th className="w-[15%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
-                                ngày tạo
+                            <th
+                                onClick={() => {
+                                    setTypeArrange('createDate');
+                                    setArrangeCreateDate((prev) => !prev);
+                                }}
+                                className="w-[15%] py-[8px] border-[1px] border-solid border-[#fff] uppercase"
+                            >
+                                <div className="flex items-center justify-around cursor-pointer">
+                                    ngày tạo
+                                    <div className="flex items-center">
+                                        {typeArrange === 'createDate' ? (
+                                            arrangeCreateDate ? (
+                                                <>
+                                                    <BsCaretUp />
+                                                    <BsCaretDownFill />
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <BsCaretUpFill />
+                                                    <BsCaretDown />
+                                                </>
+                                            )
+                                        ) : (
+                                            <>
+                                                <BsCaretUp />
+                                                <BsCaretDown />
+                                            </>
+                                        )}
+                                    </div>
+                                </div>
                             </th>
                             <th className="w-[15%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
                                 ngày cập nhật
@@ -101,7 +193,7 @@ function Member() {
                     </thead>
 
                     <tbody>
-                        {members.map((member, index) => (
+                        {members?.map((member, index) => (
                             <tr
                                 className={`text-[12px] font-[490] ${index % 2 === 0 ? 'bg-[#fff]' : 'bg-[#d8dce3]'}`}
                                 key={index}
@@ -146,9 +238,15 @@ function Member() {
                                         <div onClick={() => handleUpdate(member)} className="px-[4px] cursor-pointer">
                                             <BsPencil />
                                         </div>
-                                        <div className="px-[4px] cursor-pointer">
-                                            <BsTrash />
-                                        </div>
+                                        <Alert
+                                            funcHandle={() => handleDelete(member)}
+                                            title="Xóa Người Chơi"
+                                            content={`Bạn có chắc chắn muốn xóa người choi "${member.name}" không?`}
+                                        >
+                                            <div className="px-[4px] cursor-pointer">
+                                                <BsTrash />
+                                            </div>
+                                        </Alert>
                                     </div>
                                 </td>
                             </tr>
@@ -159,7 +257,7 @@ function Member() {
 
             {modalCreate && <ModalCreate setModalCreate={setModalCreate} setMembers={setMembers} />}
             {modalUpdate && (
-                <ModalUpdate setModalUpdate={setModalCreate} setMembers={setMembers} selecterMember={selecterMember} />
+                <ModalUpdate setModalUpdate={setModalUpdate} setMembers={setMembers} selecterMember={selecterMember} />
             )}
         </div>
     );

@@ -1,4 +1,5 @@
 import Header from './components/Header';
+import Notice from './components/Notice';
 import Sidebar from './components/Sidebar';
 
 function DefaultLayout({ children }) {
@@ -17,6 +18,7 @@ function DefaultLayout({ children }) {
                     {children}
                 </div>
             </div>
+            <Notice />
         </div>
     );
 }
