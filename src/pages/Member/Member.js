@@ -1,16 +1,51 @@
 import { useEffect, useState } from 'react';
-import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai';
+import { AiOutlineSearch } from 'react-icons/ai';
+import { BsPencil, BsTrash } from 'react-icons/bs';
 import useDebounce from '~/utils/useDebounce';
+import ModalCreate from './component/ModalCreate';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { userSelector } from '~/redux/selectors';
+import moment from 'moment';
+import ModalUpdate from './component/ModalUpdate';
 
 function Member() {
     const [nameSearch, setNameSearch] = useState('');
+    const [members, setMembers] = useState([]);
     const [modalCreate, setModalCreate] = useState(false);
+    const [modalUpdate, setModalUpdate] = useState(false);
+    const [selecterMember, setSelecterMember] = useState({});
 
-    const debounced = useDebounce(nameSearch, 500);
+    const tmp = useSelector(userSelector);
+    const [user, setUser] = useState(tmp);
+    useEffect(() => {
+        setUser(tmp);
+    }, [tmp]);
+
+    const nameSearchDebounced = useDebounce(nameSearch, 500);
 
     useEffect(() => {
-        console.log(debounced);
-    }, [debounced]);
+        console.log(nameSearchDebounced);
+    }, [nameSearchDebounced]);
+
+    const handleFindMembers = async () => {
+        const res = await axios.post(
+            `${process.env.REACT_APP_API_URL}/v1/member/findAllMemberByIdUser/${user.login.currentUser._id}`,
+        );
+
+        if (res.data.success) {
+            setMembers(res.data.members);
+        }
+    };
+
+    useState(() => {
+        handleFindMembers();
+    }, []);
+
+    const handleUpdate = async (member) => {
+        setMembers(member);
+        setModalUpdate(true);
+    };
 
     return (
         <div className="bg-[var(--color-white)] px-[16px] py-[14px] pb-[28px] rounded-[6px]">
@@ -36,21 +71,95 @@ function Member() {
                 </button>
             </div>
 
-            {modalCreate && (
-                <div className="fixed flex justify-center items-center top-0 left-0 right-0 bottom-0 z-[9999]">
-                    <div className="top-0 absolute left-0 right-0 bottom-0 bg-[#000] opacity-[.4] z-[99]"></div>
-                    <div className="fixed flex justify-center overflow-y-auto overflow-x-hidden top-0 left-0 right-0 bottom-0 pb-[60px] opacity-[1] z-[999]">
-                        <div className="bg-[#fff] text-[12px] w-[500px] min-h-[1000px] shadow-xl rounded-[6px] mt-[30px] py-[14px]">
-                            <div className="flex justify-between items-center pb-[12px] border-b-[1px] border-solid border-[#f0f0f0] px-[26px]">
-                                <h1 className="text-[14px] capitalize text-[#000] font-[620]">Thêm mới</h1>
-                                <div onClick={() => setModalCreate(false)} className="cursor-pointer">
-                                    <AiOutlineClose />
-                                </div>
-                            </div>
-                            <div className="mt-[12px px-[26px]"></div>
-                        </div>
-                    </div>
-                </div>
+            <div className="w-full mt-[26px]">
+                <table className="w-full rounded-[6px] overflow-hidden">
+                    <thead>
+                        <tr className="text-[12px] w-[100%] bg-[#d8dce3]">
+                            <th className="w-[5%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">STT</th>
+                            <th className="w-[12%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
+                                người chơi
+                            </th>
+                            <th className="w-[18%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
+                                số điện thoại
+                            </th>
+                            <th className="w-[15%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
+                                phòng telegram
+                            </th>
+                            <th className="w-[7%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
+                                chạy số
+                            </th>
+                            <th className="w-[15%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
+                                ngày tạo
+                            </th>
+                            <th className="w-[15%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
+                                ngày cập nhật
+                            </th>
+                            <th className="w-[12%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
+                                thao tác
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {members.map((member, index) => (
+                            <tr
+                                className={`text-[12px] font-[490] ${index % 2 === 0 ? 'bg-[#fff]' : 'bg-[#d8dce3]'}`}
+                                key={index}
+                            >
+                                <td className="px-[10px] py-[6px] w-[5%] border-[1px] border-solid border-[#fff]">
+                                    <div className="flex justify-center items-center">{index + 1}</div>
+                                </td>
+                                <td className="px-[10px] py-[6px] w-[12%] border-[1px] border-solid border-[#fff]">
+                                    <div>{member.name}</div>
+                                </td>
+                                <td className="px-[10px] py-[6px] w-[18%] border-[1px] border-solid border-[#fff]">
+                                    <div className="flex gap-[2px]">
+                                        {member.phone.map((ph, i) => (
+                                            <div className="w-fit text-[10px] px-[6px] rounded-[12px] bg-[#2574ab] text-[#fff]">
+                                                +{ph}
+                                            </div>
+                                        ))}
+                                    </div>
+                                </td>
+                                <td className="px-[10px] py-[6px] w-[15%] border-[1px] border-solid border-[#fff]">
+                                    <div>{member.idTelegram}</div>
+                                </td>
+                                <td className="px-[10px] py-[6px] w-[7%] border-[1px] border-solid border-[#fff]">
+                                    <div className="flex justify-center items-center">
+                                        <div
+                                            className={`uppercase w-fit text-[10px] px-[8px] py-[2px] rounded-[14px] text-[#fff] ${
+                                                member.runNumber ? 'bg-[#2574ab]' : 'bg-[#828282]'
+                                            }`}
+                                        >
+                                            {member.runNumber ? 'bật' : 'tắt'}
+                                        </div>
+                                    </div>
+                                </td>
+                                <td className="px-[10px] py-[6px] w-[15%] border-[1px] border-solid border-[#fff]">
+                                    <div>{moment(member.createDate).format('DD-MM-YY hh:mm A')}</div>
+                                </td>
+                                <td className="px-[10px] py-[6px] w-[15%] border-[1px] border-solid border-[#fff]">
+                                    <div>{moment(member.updateDate).format('DD-MM-YY hh:mm A')}</div>
+                                </td>
+                                <td className="px-[10px] py-[6px] w-[12%] border-[1px] border-solid border-[#fff]">
+                                    <div className="flex items-center justify-center gap-[10px] text-[#4b4a4a]">
+                                        <div onClick={() => handleUpdate(member)} className="px-[4px] cursor-pointer">
+                                            <BsPencil />
+                                        </div>
+                                        <div className="px-[4px] cursor-pointer">
+                                            <BsTrash />
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+
+            {modalCreate && <ModalCreate setModalCreate={setModalCreate} setMembers={setMembers} />}
+            {modalUpdate && (
+                <ModalUpdate setModalUpdate={setModalCreate} setMembers={setMembers} selecterMember={selecterMember} />
             )}
         </div>
     );
