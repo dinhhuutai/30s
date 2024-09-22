@@ -8,12 +8,14 @@ import { AiOutlineMenu, AiOutlineUser, AiOutlineLogout } from 'react-icons/ai';
 import { BsFillCaretUpFill, BsFillCaretDownFill, BsFillGearFill } from 'react-icons/bs';
 import authSlice from '~/redux/slices/authSlice';
 import axios from 'axios';
+import ModalInfor from './component/ModalInfor';
 
 function Header() {
     const tmp = useSelector(userSelector);
     const [user, setUser] = useState(tmp);
     const [downUser, setDownUser] = useState(false);
     const [sidebarWidth, setSidebarWidth] = useState('220px');
+    const [modalInfor, setModalInfor] = useState(false);
 
     useEffect(() => {
         setUser(tmp);
@@ -68,37 +70,42 @@ function Header() {
                     >
                         <ul>
                             <li>
-                                <div className="flex gap-[8px] text-[#505b72] py-[6px] items-center px-[14px] rounded-[4px] cursor-pointer hover:bg-[#262b36] hover:text-[#9fa8bc]">
+                                <button
+                                    onClick={() => setModalInfor(true)}
+                                    className="flex gap-[8px] text-[#505b72] py-[6px] items-center px-[14px] rounded-[4px] cursor-pointer hover:bg-[#262b36] hover:text-[#9fa8bc]"
+                                >
                                     <BsFillGearFill />
                                     <span>Thông tin cá nhân</span>
-                                </div>
+                                </button>
                             </li>
 
                             <li>
-                                <div
+                                <button
                                     onClick={handleLogout}
-                                    className="flex gap-[8px] text-[#505b72] py-[6px] items-center px-[14px] rounded-[4px] cursor-pointer hover:bg-[#262b36] hover:text-[#9fa8bc]"
+                                    className="flex gap-[8px] w-full text-[#505b72] py-[6px] items-center px-[14px] rounded-[4px] cursor-pointer hover:bg-[#262b36] hover:text-[#9fa8bc]"
                                 >
                                     <AiOutlineLogout />
                                     <span>Đăng xuất</span>
-                                </div>
+                                </button>
                             </li>
                         </ul>
                     </div>
                 )}
             >
-                <div
-                    className="flex gap-[10px] items-center justify-center"
+                <button
+                    className="flex gap-[10px] items-center hover:opacity-[0.8] justify-center cursor-pointer"
                     onClick={() => setDownUser((prev) => !prev)}
                 >
-                    <div className="cursor-pointer overflow-hidden hover:opacity-[0.8] h-[20px] w-[20px] bg-[#f3e3e6] rounded-[50%] text-[#544f4f] flex items-center justify-center">
+                    <div className="cursor-pointer overflow-hidden h-[20px] w-[20px] bg-[#f3e3e6] rounded-[50%] text-[#544f4f] flex items-center justify-center">
                         <AiOutlineUser />
                     </div>
                     <div className="text-[14px]">{user.login.currentUser.name}</div>
 
                     <div className="">{!downUser ? <BsFillCaretDownFill /> : <BsFillCaretUpFill />}</div>
-                </div>
+                </button>
             </HeadlessTippy>
+
+            {modalInfor && <ModalInfor setUser={setUser} setModalInfor={setModalInfor} user={user.login.currentUser} />}
         </div>
     );
 }

@@ -103,14 +103,17 @@ function handleMien(content, now) {
             mienMain = 'mb';
 
             contentTmp = mienMain + '.' + contentTmp;
+        }
+
+        if (isFinite(Number(contentTmp[1]))) {
+            mienMain = 'mb';
+
+            contentTmp = mienMain + '.' + contentTmp;
         } else {
+            //Ưu tiên nếu ngta không có ghi miền thì là miền nam
             mienMain = 'mn';
             contentTmp = mienMain + '.' + contentTmp;
         }
-
-        //Ưu tiên nếu ngta không có ghi miền thì là miền nam
-        mienMain = 'mn';
-        contentTmp = mienMain + '.' + contentTmp;
     }
 
     return {

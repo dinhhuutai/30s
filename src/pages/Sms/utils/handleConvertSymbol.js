@@ -112,8 +112,10 @@ function handleConvertSymbol(content, mien, dayOfWeek) {
         'hgiang',
         'tiengiang',
         'tgiang',
+        'tgi',
         'kiengiang',
         'kgiang',
+        'kgi',
         'dalat',
         'dlat',
         'phuyen',
@@ -354,9 +356,9 @@ function handleConvertSymbol(content, mien, dayOfWeek) {
                     daiMain = 'bp';
                 } else if (dai === 'haugiang' || dai === 'hgiang') {
                     daiMain = 'hg';
-                } else if (dai === 'tiengiang' || dai === 'tgiang') {
+                } else if (dai === 'tiengiang' || dai === 'tgiang' || dai === 'tgi') {
                     daiMain = 'tg';
-                } else if (dai === 'kiengiang' || dai === 'kgiang') {
+                } else if (dai === 'kiengiang' || dai === 'kgiang' || dai === 'kgi') {
                     daiMain = 'kg';
                 } else if (dai === 'dalat' || dai === 'dlat') {
                     daiMain = 'lt';

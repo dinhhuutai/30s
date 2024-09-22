@@ -146,12 +146,12 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                 );
 
                 if (res.data.success) {
-                    const res = await axios.post(
+                    const res1 = await axios.post(
                         `${process.env.REACT_APP_API_URL}/v1/member/findAllMemberByIdUser/${user.login.currentUser._id}`,
                     );
 
-                    if (res.data.success) {
-                        setMembers(res.data.members);
+                    if (res1.data.success) {
+                        setMembers(res1.data.members);
                     }
 
                     setLoading(false);

@@ -23,7 +23,6 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
     const [kqxsMN, setKqxsMN] = useState([]);
     const [kqxsMT, setKqxsMT] = useState([]);
 
-    
     const notice = useSelector(noticeAdminSelector);
     useEffect(() => {
         if (!notice.state) {
@@ -73,7 +72,9 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
                 });
             }
 
-            let smsDetailList = convertContentDetail(content, dateCreate);
+            let { arr, errorSyntax } = convertContentDetail(content, dateCreate);
+            let smsDetailList = arr;
+
             let mien = smsDetailList[0] && smsDetailList[0].domain;
             let kqxs = mien === 'mn' ? mn : mien === 'mt' ? mt : mb;
 
@@ -125,7 +126,7 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
                     resultDate: formattedDate,
                 });
 
-                if (resRevenue.data.revenue.length > 0) {
+                if (resRevenue.data.revenue.length > 0 && !errorSyntax) {
                     await axios.post(
                         `${process.env.REACT_APP_API_URL}/v1/revenue/update/${resRevenue.data.revenue[0]._id}`,
                         {
@@ -136,7 +137,7 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
                             revenue: revenue + resRevenue.data.revenue[0].revenue,
                         },
                     );
-                } else {
+                } else if (!errorSyntax) {
                     const formRevenue = {
                         idMember,
                         idUser: user.login.currentUser._id,
@@ -157,7 +158,7 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
                     idMember,
                     domain: mien,
                     content,
-                    statusSms: 'Đã xổ',
+                    statusSms: errorSyntax ? 'Chưa xử lý' : 'Đã xổ',
                     resultDate: dateTmp,
                     diem2con,
                     diem34con,
@@ -172,7 +173,7 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
                     idMember,
                     domain: mien,
                     content,
-                    statusSms: 'Đang xử lý',
+                    statusSms: errorSyntax ? 'Chưa xử lý' : 'Đang xử lý',
                     resultDate: dateTmp,
                     diem2con,
                     diem34con,

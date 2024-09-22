@@ -2,7 +2,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { useEffect, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
-import { BsArrowRepeat } from 'react-icons/bs';
+import { BsArrowRepeat, BsArrowRightCircleFill } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import noticeAdminSlice from '~/redux/slices/noticeAdminSlice';
 import convertContentDetail from '../../utils/convertContentDetail';
@@ -18,7 +18,7 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
     const [contentEdit, setContentEdit] = useState(selectorSmsTmp.sm.contentEdit);
 
     const [loading, setLoading] = useState(false);
-    
+
     const notice = useSelector(noticeAdminSelector);
     useEffect(() => {
         if (!notice.state) {
@@ -70,13 +70,28 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
 
             const date = new Date(selectorSms.sm.resultDate);
 
-            let smsDetailList = convertContentDetail(contentEdit, date);
+            let { arr, errorSyntax } = convertContentDetail(contentEdit, date);
+            let smsDetailList = arr;
+
+            if (errorSyntax) {
+                dispatch(noticeAdminSlice.actions.errorNotice('Lỗi cú pháp!!!'));
+
+                setTimeoutTmp = setTimeout(() => {
+                    setLoading(false);
+                    dispatch(noticeAdminSlice.actions.hiddenNotice());
+                }, [5000]);
+
+                return;
+            }
+
             let mien = smsDetailList[0] && smsDetailList[0].domain;
             let kqxs = mien === 'mn' ? mn : mien === 'mt' ? mt : mb;
 
             const resMember = await axios.post(
-                `${process.env.REACT_APP_API_URL}/v1/member/findMemberById/${selectorSms.sm.idMember._id}`,
+                `${process.env.REACT_APP_API_URL}/v1/member/findMemberById/${selecMember}`,
             );
+
+            console.log('MEMBER: ', resMember?.data?.member);
             smsDetailList = payBySms(smsDetailList, resMember?.data?.member, kqxs);
 
             let tongxac = 0;
@@ -110,16 +125,17 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
                 (mien === 'mn' && mn.length >= 3) ||
                 (mien === 'mt' && mt.length >= 2) ||
                 (mien === 'mb' && mb.length === 1) ||
-                mien !== selectorSms?.sm?.domain
+                mien !== selectorSms?.sm?.domain ||
+                selectorSmsTmp.sm.idMember._id !== selecMember
             ) {
                 let revenue = resMember?.data?.member.runNumber ? 0 - (tongxac - tongtrung) : tongxac - tongtrung;
 
                 console.log('Tin cũ: ', selectorSms);
 
-                if (mien !== selectorSms?.sm?.domain) {
+                if (selectorSmsTmp.sm.idMember._id !== selecMember) {
                     const resRevenue = await axios.post(`${process.env.REACT_APP_API_URL}/v1/revenue/findRevenueBy`, {
-                        idMember: selecMember,
-                        domain: selectorSms?.sm?.domain,
+                        idMember: selectorSmsTmp?.sm?.idMember?._id,
+                        domain: selectorSmsTmp?.sm?.domain,
                         resultDate: formattedDate,
                     });
 
@@ -173,46 +189,117 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
                             await axios.post(`${process.env.REACT_APP_API_URL}/v1/revenue/create`, formRevenue);
                         }
                     }
-                } else {
-                    const resRevenue = await axios.post(`${process.env.REACT_APP_API_URL}/v1/revenue/findRevenueBy`, {
-                        idMember: selecMember,
-                        domain: mien,
-                        resultDate: formattedDate,
-                    });
 
-                    if (resRevenue.data.revenue.length > 0) {
-                        await axios.post(
-                            `${process.env.REACT_APP_API_URL}/v1/revenue/update/${resRevenue.data.revenue[0]._id}`,
+                    setModalUpdate(false);
+                } else {
+                    if (mien !== selectorSms?.sm?.domain) {
+                        const resRevenue = await axios.post(
+                            `${process.env.REACT_APP_API_URL}/v1/revenue/findRevenueBy`,
                             {
-                                diem2con: diem2con + (resRevenue.data.revenue[0]?.diem2con - selectorSms?.sm?.diem2con),
-                                diem34con:
-                                    diem34con + (resRevenue.data.revenue[0]?.diem34con - selectorSms?.sm?.diem34con),
-                                tongxac: tongxac + (resRevenue.data.revenue[0]?.tongxac - selectorSms?.sm?.tongxac),
-                                tongtrung:
-                                    tongtrung + (resRevenue.data.revenue[0]?.tongtrung - selectorSms?.sm?.tongtrung),
-                                revenue: revenue + (resRevenue.data.revenue[0]?.revenue - selectorSms?.sm?.revenue),
+                                idMember: selecMember,
+                                domain: selectorSms?.sm?.domain,
+                                resultDate: formattedDate,
                             },
                         );
-                    } else {
-                        const formRevenue = {
-                            idMember: selecMember,
-                            idUser: resMember?.data?.member?.idUser,
-                            domain: mien,
-                            diem2con,
-                            diem34con,
-                            tongxac,
-                            tongtrung,
-                            revenue,
-                            resultDate: formattedDate,
-                        };
 
-                        await axios.post(`${process.env.REACT_APP_API_URL}/v1/revenue/create`, formRevenue);
+                        if (resRevenue.data.revenue.length > 0) {
+                            await axios.post(
+                                `${process.env.REACT_APP_API_URL}/v1/revenue/update/${resRevenue.data.revenue[0]._id}`,
+                                {
+                                    diem2con: resRevenue.data.revenue[0]?.diem2con - selectorSms?.sm?.diem2con,
+                                    diem34con: resRevenue.data.revenue[0]?.diem34con - selectorSms?.sm?.diem34con,
+                                    tongxac: resRevenue.data.revenue[0]?.tongxac - selectorSms?.sm?.tongxac,
+                                    tongtrung: resRevenue.data.revenue[0]?.tongtrung - selectorSms?.sm?.tongtrung,
+                                    revenue: resRevenue.data.revenue[0]?.revenue - selectorSms?.sm?.revenue,
+                                },
+                            );
+                        }
+
+                        if ([mien].length >= 1) {
+                            const resRevenueNew = await axios.post(
+                                `${process.env.REACT_APP_API_URL}/v1/revenue/findRevenueBy`,
+                                {
+                                    idMember: selecMember,
+                                    domain: mien,
+                                    resultDate: formattedDate,
+                                },
+                            );
+
+                            if (resRevenueNew.data.revenue.length > 0) {
+                                await axios.post(
+                                    `${process.env.REACT_APP_API_URL}/v1/revenue/update/${resRevenueNew.data.revenue[0]._id}`,
+                                    {
+                                        diem2con: diem2con + resRevenueNew.data.revenue[0]?.diem2con,
+                                        diem34con: diem34con + resRevenueNew.data.revenue[0]?.diem34con,
+                                        tongxac: tongxac + resRevenueNew.data.revenue[0]?.tongxac,
+                                        tongtrung: tongtrung + resRevenueNew.data.revenue[0]?.tongtrung,
+                                        revenue: revenue + resRevenueNew.data.revenue[0]?.revenue,
+                                    },
+                                );
+                            } else {
+                                const formRevenue = {
+                                    idMember: selecMember,
+                                    idUser: resMember?.data?.member?.idUser,
+                                    domain: mien,
+                                    diem2con,
+                                    diem34con,
+                                    tongxac,
+                                    tongtrung,
+                                    revenue,
+                                    resultDate: formattedDate,
+                                };
+
+                                await axios.post(`${process.env.REACT_APP_API_URL}/v1/revenue/create`, formRevenue);
+                            }
+                        }
+                    } else {
+                        const resRevenue = await axios.post(
+                            `${process.env.REACT_APP_API_URL}/v1/revenue/findRevenueBy`,
+                            {
+                                idMember: selecMember,
+                                domain: mien,
+                                resultDate: formattedDate,
+                            },
+                        );
+
+                        if (resRevenue.data.revenue.length > 0) {
+                            await axios.post(
+                                `${process.env.REACT_APP_API_URL}/v1/revenue/update/${resRevenue.data.revenue[0]._id}`,
+                                {
+                                    diem2con:
+                                        diem2con + (resRevenue.data.revenue[0]?.diem2con - selectorSms?.sm?.diem2con),
+                                    diem34con:
+                                        diem34con +
+                                        (resRevenue.data.revenue[0]?.diem34con - selectorSms?.sm?.diem34con),
+                                    tongxac: tongxac + (resRevenue.data.revenue[0]?.tongxac - selectorSms?.sm?.tongxac),
+                                    tongtrung:
+                                        tongtrung +
+                                        (resRevenue.data.revenue[0]?.tongtrung - selectorSms?.sm?.tongtrung),
+                                    revenue: revenue + (resRevenue.data.revenue[0]?.revenue - selectorSms?.sm?.revenue),
+                                },
+                            );
+                        } else {
+                            const formRevenue = {
+                                idMember: selecMember,
+                                idUser: resMember?.data?.member?.idUser,
+                                domain: mien,
+                                diem2con,
+                                diem34con,
+                                tongxac,
+                                tongtrung,
+                                revenue,
+                                resultDate: formattedDate,
+                            };
+
+                            await axios.post(`${process.env.REACT_APP_API_URL}/v1/revenue/create`, formRevenue);
+                        }
                     }
                 }
 
                 form = {
+                    idMember: selecMember,
                     contentEdit,
-                    statusSms: 'Đã xổ',
+                    statusSms: errorSyntax ? 'Chưa xử lý' : 'Đã xổ',
                     domain: mien,
                     diem2con,
                     diem34con,
@@ -223,8 +310,9 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
                 };
             } else {
                 form = {
+                    idMember: selecMember,
                     contentEdit,
-                    statusSms: 'Đã xử lý',
+                    statusSms: errorSyntax ? 'Chưa xử lý' : 'Đã xử lý',
                     domain: mien,
                     diem2con,
                     diem34con,
@@ -336,7 +424,11 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
                                 className="px-[4px] ml-[8px] py-[4px] w-[150px] text-[#000] font-[500] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                             >
                                 {members?.map((member, index) => {
-                                    return <option key={index} value={`${member._id}`}>{`${member.name}`}</option>;
+                                    return (
+                                        <option key={index} value={`${member._id}`}>
+                                            {`${member.name}`}
+                                        </option>
+                                    );
                                 })}
                             </select>
                         </div>
@@ -630,7 +722,11 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
                                                 ).toLocaleString()})`}</div>
                                             </td>
                                             <td className="px-[10px] py-[8px] w-[10%] border-[1px] border-solid border-[#fff]">
-                                                <div className="flex items-center justify-center gap-[10px] text-[14px] font-[650] text-[#d9534f]">
+                                                <div
+                                                    className={`flex items-center justify-center gap-[10px] text-[14px] font-[650] ${
+                                                        sms.tientrung > 0 ? 'text-[#00f]' : 'text-[#d9534f]'
+                                                    }`}
+                                                >
                                                     {sms.tientrung.toLocaleString()}
                                                 </div>
                                             </td>

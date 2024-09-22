@@ -24,6 +24,7 @@ import noticeAdminSlice from '~/redux/slices/noticeAdminSlice';
 import Tippy from '@tippyjs/react';
 import convertContentDetail from './utils/convertContentDetail';
 import payBySms from './utils/payBySms';
+import HeaderPage from '../component/HeaderPage';
 
 let setTimeoutTmp;
 
@@ -329,7 +330,10 @@ function Sms() {
                         res.data.sms?.map(async (sms) => {
                             const dateRestore = new Date(sms.resultDate);
 
-                            let smsDetailList = convertContentDetail(sms.contentEdit, dateRestore);
+                            let { arr, errorSyntax } = convertContentDetail(sms.contentEdit, dateRestore);
+
+                            let smsDetailList = arr;
+
                             let mien = smsDetailList[0] && smsDetailList[0].domain;
                             let kqxs = mien === 'mn' ? mn : mien === 'mt' ? mt : mb;
 
@@ -360,7 +364,7 @@ function Sms() {
                                 : tongxacRestore - tongtrungRestore;
 
                             const form = {
-                                statusSms: 'Đã xổ',
+                                statusSms: errorSyntax ? 'Chưa xử lý' : 'Đã xổ',
                                 diem2conRestore,
                                 diem34conRestore,
                                 tongdiemRestore,
@@ -374,7 +378,7 @@ function Sms() {
                                 form,
                             );
 
-                            if (resSms.data.success) {
+                            if (resSms.data.success && !errorSyntax) {
                                 let resRevenue = await axios.post(
                                     `${process.env.REACT_APP_API_URL}/v1/revenue/findRevenueBy`,
                                     {
@@ -476,7 +480,9 @@ function Sms() {
                         res.data.sms?.map(async (sms) => {
                             const dateRestore = new Date(sms.resultDate);
 
-                            let smsDetailList = convertContentDetail(sms.contentEdit, dateRestore);
+                            let { arr, errorSyntax } = convertContentDetail(sms.contentEdit, dateRestore);
+                            let smsDetailList = arr;
+
                             let mien = smsDetailList[0] && smsDetailList[0].domain;
                             let kqxs = mien === 'mn' ? mn : mien === 'mt' ? mt : mb;
 
@@ -507,7 +513,7 @@ function Sms() {
                                 : tongxacRestore - tongtrungRestore;
 
                             const form = {
-                                statusSms: 'Đã xổ',
+                                statusSms: errorSyntax ? 'Chưa xử lý' : 'Đã xổ',
                                 diem2conRestore,
                                 diem34conRestore,
                                 tongdiemRestore,
@@ -521,7 +527,7 @@ function Sms() {
                                 form,
                             );
 
-                            if (resSms.data.success) {
+                            if (resSms.data.success && !errorSyntax) {
                                 let resRevenue = await axios.post(
                                     `${process.env.REACT_APP_API_URL}/v1/revenue/findRevenueBy`,
                                     {
@@ -626,412 +632,420 @@ function Sms() {
     }, [listCheck]);
 
     return (
-        <div className="bg-[var(--color-white)] px-[16px] py-[14px] pb-[28px] rounded-[6px]">
-            <div>
-                <button
-                    onClick={() => setModalCreate(true)}
-                    className={`hover:opacity-[.9] uppercase font-[620] text-[12px] w-[120px] h-[30px] flex justify-center items-center bg-[#2574ab] rounded-[4px] text-[#fff] active:opacity-[.7]`}
-                >
-                    Thêm mới
-                </button>
-            </div>
-
-            <div className="mt-[10px] flex gap-[8px]">
+        <div>
+            <HeaderPage pageCurr={'Quản Lý Tin Nhắn'} />
+            <div className="bg-[var(--color-white)] px-[16px] mt-[12px] py-[14px] pb-[28px] rounded-[6px]">
                 <div>
-                    <DatePicker
-                        maxDate={new Date()}
-                        selected={date}
-                        dateFormat="dd-MM-yyyy"
-                        onChange={handleDateChange}
-                        className="border-[1px] border-solid px-[6px] py-[4px] outline-none rounded-[4px] text-[12px] border-[#ccc]"
-                    />
-                </div>
-                <select
-                    value={idMember}
-                    onChange={handleMember}
-                    className="px-[4px] py-[4px] w-[150px] text-[#000] font-[500] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
-                >
-                    <option className="font-[500]" value={0}>
-                        Tất cả
-                    </option>
-                    {members?.map((member, index) => {
-                        return <option key={index} value={`${member._id}`}>{`${member.name}`}</option>;
-                    })}
-                </select>
-                <div className="flex items-center gap-[4px] ml-[10px]">
-                    <input checked={deleted} onChange={(e) => setDeleted(e.target.checked)} type="checkbox" />
-                    <label className="text-[12px] text-[#000]">Đã xóa</label>
+                    <button
+                        onClick={() => setModalCreate(true)}
+                        className={`hover:opacity-[.9] uppercase font-[620] text-[12px] w-[120px] h-[30px] flex justify-center items-center bg-[#2574ab] rounded-[4px] text-[#fff] active:opacity-[.7]`}
+                    >
+                        Thêm mới
+                    </button>
                 </div>
 
-                <div className="ml-[4px]">
-                    {deleted ? (
-                        <Alert
-                            funcHandle={() => handleRestoreMany()}
-                            title="Phục hồi Tin Nhắn"
-                            content={`Phục hồi các tin nhắn?`}
-                        >
-                            <button
-                                disabled={!(listIdSelector.length > 0) || loadingRes}
-                                className={`gap-[6px] uppercase font-[620] text-[12px] w-[100px] h-[30px] flex justify-center items-center bg-[#3892ad] ${
-                                    listIdSelector.length > 0 || loadingRes
-                                        ? 'hover:opacity-[.9] active:opacity-[.7]'
-                                        : 'opacity-[.6]'
-                                } rounded-[4px] text-[#fff]`}
+                <div className="mt-[10px] flex gap-[8px]">
+                    <div>
+                        <DatePicker
+                            maxDate={new Date()}
+                            selected={date}
+                            dateFormat="dd-MM-yyyy"
+                            onChange={handleDateChange}
+                            className="border-[1px] border-solid px-[6px] py-[4px] outline-none rounded-[4px] text-[12px] border-[#ccc]"
+                        />
+                    </div>
+                    <select
+                        value={idMember}
+                        onChange={handleMember}
+                        className="px-[4px] py-[4px] w-[150px] text-[#000] font-[500] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
+                    >
+                        <option className="font-[500]" value={0}>
+                            Tất cả
+                        </option>
+                        {members?.map((member, index) => {
+                            return <option key={index} value={`${member._id}`}>{`${member.name}`}</option>;
+                        })}
+                    </select>
+                    <div className="flex items-center gap-[4px] ml-[10px]">
+                        <input checked={deleted} onChange={(e) => setDeleted(e.target.checked)} type="checkbox" />
+                        <label className="text-[12px] text-[#000]">Đã xóa</label>
+                    </div>
+
+                    <div className="ml-[4px]">
+                        {deleted ? (
+                            <Alert
+                                funcHandle={() => handleRestoreMany()}
+                                title="Phục hồi Tin Nhắn"
+                                content={`Phục hồi các tin nhắn?`}
                             >
-                                {loadingRes ? (
-                                    <div className="text-[20px] animate-loading">
-                                        <BsArrowRepeat />
-                                    </div>
-                                ) : (
-                                    <>
-                                        <div className="text-[14px]">
-                                            <BsArrowCounterclockwise />
+                                <button
+                                    disabled={!(listIdSelector.length > 0) || loadingRes}
+                                    className={`gap-[6px] uppercase font-[620] text-[12px] w-[100px] h-[30px] flex justify-center items-center bg-[#3892ad] ${
+                                        listIdSelector.length > 0 || loadingRes
+                                            ? 'hover:opacity-[.9] active:opacity-[.7]'
+                                            : 'opacity-[.6]'
+                                    } rounded-[4px] text-[#fff]`}
+                                >
+                                    {loadingRes ? (
+                                        <div className="text-[20px] animate-loading">
+                                            <BsArrowRepeat />
                                         </div>
-                                        Phục hồi
-                                    </>
-                                )}
-                            </button>
-                        </Alert>
-                    ) : (
-                        <Alert
-                            funcHandle={() => handleDeleteMany()}
-                            title="Xóa Tin Nhắn"
-                            content={`Các tin nhắn đã chọn sẽ bị xóa?`}
+                                    ) : (
+                                        <>
+                                            <div className="text-[14px]">
+                                                <BsArrowCounterclockwise />
+                                            </div>
+                                            Phục hồi
+                                        </>
+                                    )}
+                                </button>
+                            </Alert>
+                        ) : (
+                            <Alert
+                                funcHandle={() => handleDeleteMany()}
+                                title="Xóa Tin Nhắn"
+                                content={`Các tin nhắn đã chọn sẽ bị xóa?`}
+                            >
+                                <button
+                                    disabled={!(listIdSelector.length > 0) || loadingDele}
+                                    className={`gap-[6px] uppercase font-[620] text-[12px] w-[70px] h-[30px] flex justify-center items-center bg-[#d9534f] ${
+                                        listIdSelector.length > 0 || loadingDele
+                                            ? 'hover:opacity-[.9] active:opacity-[.7]'
+                                            : 'opacity-[.6]'
+                                    } rounded-[4px] text-[#fff]`}
+                                >
+                                    {loadingDele ? (
+                                        <div className="text-[20px] animate-loading">
+                                            <BsArrowRepeat />
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <BsTrash />
+                                            Xóa
+                                        </>
+                                    )}
+                                </button>
+                            </Alert>
+                        )}
+                    </div>
+                </div>
+
+                <div className="mt-[26px] flex justify-between">
+                    <div className="">
+                        <button
+                            onClick={() => setDomain('mn')}
+                            className={`text-[12px] font-[600] rounded-tl-[6px] uppercase px-[18px] py-[5px] border-[1px] border-solid border-[#ccc] ${
+                                domain === 'mn' ? 'bg-[#fff]' : 'bg-[#9fa8bc]'
+                            }`}
                         >
-                            <button
-                                disabled={!(listIdSelector.length > 0) || loadingDele}
-                                className={`gap-[6px] uppercase font-[620] text-[12px] w-[70px] h-[30px] flex justify-center items-center bg-[#d9534f] ${
-                                    listIdSelector.length > 0 || loadingDele
-                                        ? 'hover:opacity-[.9] active:opacity-[.7]'
-                                        : 'opacity-[.6]'
-                                } rounded-[4px] text-[#fff]`}
-                            >
-                                {loadingDele ? (
-                                    <div className="text-[20px] animate-loading">
-                                        <BsArrowRepeat />
-                                    </div>
-                                ) : (
-                                    <>
-                                        <BsTrash />
-                                        Xóa
-                                    </>
-                                )}
-                            </button>
-                        </Alert>
-                    )}
-                </div>
-            </div>
-
-            <div className="mt-[26px] flex justify-between">
-                <div className="">
-                    <button
-                        onClick={() => setDomain('mn')}
-                        className={`text-[12px] font-[600] rounded-tl-[6px] uppercase px-[18px] py-[5px] border-[1px] border-solid border-[#ccc] ${
-                            domain === 'mn' ? 'bg-[#fff]' : 'bg-[#9fa8bc]'
-                        }`}
-                    >
-                        M.nam
-                    </button>
-                    <button
-                        onClick={() => setDomain('mt')}
-                        className={`text-[12px] font-[600] uppercase px-[18px] py-[5px] border-[1px] border-solid border-[#ccc] ${
-                            domain === 'mt' ? 'bg-[#fff]' : 'bg-[#9fa8bc]'
-                        }`}
-                    >
-                        M.trung
-                    </button>
-                    <button
-                        onClick={() => setDomain('mb')}
-                        className={`text-[12px] font-[600] uppercase px-[18px] py-[5px] border-[1px] border-solid border-[#ccc] ${
-                            domain === 'mb' ? 'bg-[#fff]' : 'bg-[#9fa8bc]'
-                        }`}
-                    >
-                        M.bắc
-                    </button>
-                    <button
-                        onClick={() => setDomain('other')}
-                        className={`text-[12px] font-[600] rounded-tr-[6px] uppercase px-[18px] py-[5px] border-[1px] border-solid border-[#ccc] ${
-                            domain === 'other' ? 'bg-[#fff]' : 'bg-[#9fa8bc]'
-                        }`}
-                    >
-                        khác
-                    </button>
-                </div>
-
-                <div className="text-[12px] flex items-center gap-[30px] font-[500] mr-[20px]">
-                    <div className="flex">
-                        <label>Số lượng tin: </label>
-                        <div className="ml-[4px]">{sms.length}</div>
+                            M.nam
+                        </button>
+                        <button
+                            onClick={() => setDomain('mt')}
+                            className={`text-[12px] font-[600] uppercase px-[18px] py-[5px] border-[1px] border-solid border-[#ccc] ${
+                                domain === 'mt' ? 'bg-[#fff]' : 'bg-[#9fa8bc]'
+                            }`}
+                        >
+                            M.trung
+                        </button>
+                        <button
+                            onClick={() => setDomain('mb')}
+                            className={`text-[12px] font-[600] uppercase px-[18px] py-[5px] border-[1px] border-solid border-[#ccc] ${
+                                domain === 'mb' ? 'bg-[#fff]' : 'bg-[#9fa8bc]'
+                            }`}
+                        >
+                            M.bắc
+                        </button>
+                        <button
+                            onClick={() => setDomain('other')}
+                            className={`text-[12px] font-[600] rounded-tr-[6px] uppercase px-[18px] py-[5px] border-[1px] border-solid border-[#ccc] ${
+                                domain === 'other' ? 'bg-[#fff]' : 'bg-[#9fa8bc]'
+                            }`}
+                        >
+                            khác
+                        </button>
                     </div>
-                    <div className="flex items-center gap-[4px]">
-                        <div className="h-[14px] w-[14px] bg-[#e0ff31] border-[1px] border-solid border-[#dfdfdf]"></div>
-                        <span>Tin nhắn có số trúng</span>
+
+                    <div className="text-[12px] flex items-center gap-[30px] font-[500] mr-[20px]">
+                        <div className="flex">
+                            <label>Số lượng tin: </label>
+                            <div className="ml-[4px]">{sms.length}</div>
+                        </div>
+                        <div className="flex items-center gap-[4px]">
+                            <div className="h-[14px] w-[14px] bg-[#e0ff31] border-[1px] border-solid border-[#dfdfdf]"></div>
+                            <span>Tin nhắn có số trúng</span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div className="w-full mt-[4px] overflow-x-auto">
-                <table className="w-full rounded-[6px] overflow-hidden">
-                    <thead>
-                        <tr className="text-[12px] w-[100%] bg-[#d8dce3]">
-                            <td className="w-[3%] py-[8px] border-[1px] border-solid border-[#fff]">
-                                <div className="flex items-center justify-center">
-                                    <input
-                                        className="h-[14px] w-[14px]"
-                                        ref={refInputAll}
-                                        onChange={(e) => handleCheckInput(e)}
-                                        type="checkbox"
-                                    />
-                                </div>
-                            </td>
-                            <th className="w-[5%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">STT</th>
-                            <th
-                                onClick={() => {
-                                    setTypeArrange('name');
-                                    setArrangeName((prev) => !prev);
-                                }}
-                                className="w-[17%] py-[8px] border-[1px] border-solid border-[#fff] uppercase"
-                            >
-                                <button className="flex items-center justify-around w-full uppercase cursor-pointer">
-                                    người chơi
-                                    <div className="flex items-center">
-                                        {typeArrange === 'name' ? (
-                                            arrangeName ? (
-                                                <>
-                                                    <BsCaretUp />
-                                                    <BsCaretDownFill />
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <BsCaretUpFill />
-                                                    <BsCaretDown />
-                                                </>
-                                            )
-                                        ) : (
-                                            <>
-                                                <BsCaretUp />
-                                                <BsCaretDown />
-                                            </>
-                                        )}
-                                    </div>
-                                </button>
-                            </th>
-                            <th className="w-[15%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
-                                nội dung
-                            </th>
-                            <th className="w-[8%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
-                                loại tin
-                            </th>
-                            <th className="w-[15%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">Đặt</th>
-                            <th className="w-[10%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
-                                trạng thái
-                            </th>
-                            <th
-                                onClick={() => {
-                                    setTypeArrange('createDate');
-                                    setArrangeCreateDate((prev) => !prev);
-                                }}
-                                className="w-[18%] py-[8px] border-[1px] border-solid border-[#fff] uppercase"
-                            >
-                                <button className="flex items-center justify-around w-full uppercase cursor-pointer">
-                                    thời gian nhận
-                                    <div className="flex items-center">
-                                        {typeArrange === 'createDate' ? (
-                                            arrangeCreateDate ? (
-                                                <>
-                                                    <BsCaretUpFill />
-                                                    <BsCaretDown />
-                                                </>
-                                            ) : (
-                                                <>
-                                                    <BsCaretUp />
-                                                    <BsCaretDownFill />
-                                                </>
-                                            )
-                                        ) : (
-                                            <>
-                                                <BsCaretUp />
-                                                <BsCaretDown />
-                                            </>
-                                        )}
-                                    </div>
-                                </button>
-                            </th>
-                            <th className="w-[8%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
-                                thao tác
-                            </th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {sms?.map((sm, index) => (
-                            <tr className={`text-[12px] font-[490] bg-[#f0f1f4]`} key={index}>
-                                <td className="px-[10px] py-[8px] w-[3%] border-[1px] border-solid border-[#fff]">
-                                    <div className="flex justify-center items-center">
+                <div className="w-full mt-[4px] overflow-x-auto">
+                    <table className="w-full rounded-[6px] overflow-hidden">
+                        <thead>
+                            <tr className="text-[12px] w-[100%] bg-[#d8dce3]">
+                                <td className="w-[3%] py-[8px] border-[1px] border-solid border-[#fff]">
+                                    <div className="flex items-center justify-center">
                                         <input
-                                            checked={listCheck.includes(index)}
-                                            onChange={(e) => handleCheckItem(index, e)}
-                                            data-id={listCheck.includes(index) ? sm._id : null}
-                                            name="inputCheckboxArtistList"
-                                            type="checkbox"
                                             className="h-[14px] w-[14px]"
+                                            ref={refInputAll}
+                                            onChange={(e) => handleCheckInput(e)}
+                                            type="checkbox"
                                         />
                                     </div>
                                 </td>
-                                <td
-                                    className={`px-[10px] py-[8px] w-[5%] border-[1px] border-solid border-[#fff] ${
-                                        sm.tongtrung > 0 ? 'bg-[#e0ff31]' : 'bg-[#f0f1f4]'
-                                    }`}
+                                <th className="w-[5%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
+                                    STT
+                                </th>
+                                <th
+                                    onClick={() => {
+                                        setTypeArrange('name');
+                                        setArrangeName((prev) => !prev);
+                                    }}
+                                    className="w-[17%] py-[8px] border-[1px] border-solid border-[#fff] uppercase"
                                 >
-                                    <div className="flex justify-center items-center">{index + 1}</div>
-                                </td>
-                                <td className="px-[10px] py-[8px] w-[17%] border-[1px] border-solid border-[#fff]">
-                                    <div
-                                        onClick={() => setIdMember(sm.idMember._id)}
-                                        className="text-[#259dba] flex items-center font-[500] hover:text-[#505b72] cursor-pointer"
-                                    >
-                                        {sm.idMember?.name}
-                                        {sm.idMember?.runNumber && (
-                                            <div className="ml-[2px] text-[#000] text-[10px]">
-                                                <BsArrowRightCircleFill />
-                                            </div>
-                                        )}
-                                    </div>
-                                </td>
-                                <td className="px-[10px] py-[8px] w-[15%] border-[1px] border-solid border-[#fff]">
-                                    <div
-                                        onClick={() => {
-                                            setModalContent(true);
-                                            setSelectorContent({
-                                                index: index + 1,
-                                                content: sm.contentEdit,
-                                            });
-                                        }}
-                                        className="text-[#259dba] whitespace-nowrap text-ellipsis w-[120px] overflow-hidden hover:text-[#505b72] cursor-pointer"
-                                    >
-                                        {sm.contentEdit}
-                                    </div>
-                                </td>
-                                <td className="px-[10px] py-[8px] w-[8%] border-[1px] border-solid border-[#fff]">
-                                    <div className="capitalize text-[12px]">{sm.typeSms}</div>
-                                </td>
-                                <td className="px-[10px] py-[8px] w-[15%] border-[1px] border-solid border-[#fff]">
-                                    <div className="text-[12px] flex">
-                                        2c: <span className="font-[600] ml-[2px]">{sm.diem2con.toLocaleString()}</span>
-                                        <div className="mx-[6px]"></div>
-                                        3,4c:{' '}
-                                        <span className="font-[600] ml-[2px]">{sm.diem34con.toLocaleString()}</span>
-                                    </div>
-                                </td>
-                                <td className="px-[10px] py-[8px] w-[10%] border-[1px] border-solid border-[#fff]">
-                                    <div className="flex justify-center">
-                                        <div
-                                            className={`text-[10px] px-[6px] font-[550] rounded-[14px] w-fit text-[#fff] ${
-                                                sm.statusSms === 'Chưa xử lý' ? 'bg-[#d9534f]' : 'bg-[#259dba]'
-                                            }`}
-                                        >
-                                            {sm.statusSms}
+                                    <button className="flex items-center justify-around w-full uppercase cursor-pointer">
+                                        người chơi
+                                        <div className="flex items-center">
+                                            {typeArrange === 'name' ? (
+                                                arrangeName ? (
+                                                    <>
+                                                        <BsCaretUp />
+                                                        <BsCaretDownFill />
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <BsCaretUpFill />
+                                                        <BsCaretDown />
+                                                    </>
+                                                )
+                                            ) : (
+                                                <>
+                                                    <BsCaretUp />
+                                                    <BsCaretDown />
+                                                </>
+                                            )}
                                         </div>
-                                    </div>
-                                </td>
-                                <td className="px-[10px] py-[8px] w-[18%] border-[1px] border-solid border-[#fff]">
-                                    <div className="text-[12px] font-[500]">
-                                        {moment(sm.createDate).format('HH:mm')}
-                                    </div>
-                                </td>
-                                <td className="px-[10px] py-[8px] w-[8%] border-[1px] border-solid border-[#fff]">
-                                    <div className="flex items-center justify-center gap-[10px] text-[#4b4a4a]">
-                                        {deleted ? (
-                                            <Alert
-                                                funcHandle={() => handleRestore(sm)}
-                                                title="Phục hồi Tin Nhắn"
-                                                content={`Phục hồi tin nhắn STT #${index + 1}?`}
+                                    </button>
+                                </th>
+                                <th className="w-[15%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
+                                    nội dung
+                                </th>
+                                <th className="w-[8%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
+                                    loại tin
+                                </th>
+                                <th className="w-[15%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
+                                    Đặt
+                                </th>
+                                <th className="w-[10%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
+                                    trạng thái
+                                </th>
+                                <th
+                                    onClick={() => {
+                                        setTypeArrange('createDate');
+                                        setArrangeCreateDate((prev) => !prev);
+                                    }}
+                                    className="w-[18%] py-[8px] border-[1px] border-solid border-[#fff] uppercase"
+                                >
+                                    <button className="flex items-center justify-around w-full uppercase cursor-pointer">
+                                        thời gian nhận
+                                        <div className="flex items-center">
+                                            {typeArrange === 'createDate' ? (
+                                                arrangeCreateDate ? (
+                                                    <>
+                                                        <BsCaretUpFill />
+                                                        <BsCaretDown />
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <BsCaretUp />
+                                                        <BsCaretDownFill />
+                                                    </>
+                                                )
+                                            ) : (
+                                                <>
+                                                    <BsCaretUp />
+                                                    <BsCaretDown />
+                                                </>
+                                            )}
+                                        </div>
+                                    </button>
+                                </th>
+                                <th className="w-[8%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
+                                    thao tác
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {sms?.map((sm, index) => (
+                                <tr className={`text-[12px] font-[490] bg-[#f0f1f4]`} key={index}>
+                                    <td className="px-[10px] py-[8px] w-[3%] border-[1px] border-solid border-[#fff]">
+                                        <div className="flex justify-center items-center">
+                                            <input
+                                                checked={listCheck.includes(index)}
+                                                onChange={(e) => handleCheckItem(index, e)}
+                                                data-id={listCheck.includes(index) ? sm._id : null}
+                                                name="inputCheckboxArtistList"
+                                                type="checkbox"
+                                                className="h-[14px] w-[14px]"
+                                            />
+                                        </div>
+                                    </td>
+                                    <td
+                                        className={`px-[10px] py-[8px] w-[5%] border-[1px] border-solid border-[#fff] ${
+                                            sm.tongtrung > 0 ? 'bg-[#e0ff31]' : 'bg-[#f0f1f4]'
+                                        }`}
+                                    >
+                                        <div className="flex justify-center items-center">{index + 1}</div>
+                                    </td>
+                                    <td className="px-[10px] py-[8px] w-[17%] border-[1px] border-solid border-[#fff]">
+                                        <div
+                                            onClick={() => setIdMember(sm.idMember._id)}
+                                            className="text-[#259dba] flex items-center font-[500] hover:text-[#505b72] cursor-pointer"
+                                        >
+                                            {sm.idMember?.name}
+                                            {sm.idMember?.runNumber && (
+                                                <div className="ml-[2px] text-[#000] text-[10px]">
+                                                    <BsArrowRightCircleFill />
+                                                </div>
+                                            )}
+                                        </div>
+                                    </td>
+                                    <td className="px-[10px] py-[8px] w-[15%] border-[1px] border-solid border-[#fff]">
+                                        <div
+                                            onClick={() => {
+                                                setModalContent(true);
+                                                setSelectorContent({
+                                                    index: index + 1,
+                                                    content: sm.contentEdit,
+                                                });
+                                            }}
+                                            className="text-[#259dba] whitespace-nowrap text-ellipsis w-[120px] overflow-hidden hover:text-[#505b72] cursor-pointer"
+                                        >
+                                            {sm.contentEdit}
+                                        </div>
+                                    </td>
+                                    <td className="px-[10px] py-[8px] w-[8%] border-[1px] border-solid border-[#fff]">
+                                        <div className="capitalize text-[12px]">{sm.typeSms}</div>
+                                    </td>
+                                    <td className="px-[10px] py-[8px] w-[15%] border-[1px] border-solid border-[#fff]">
+                                        <div className="text-[12px] flex">
+                                            2c:{' '}
+                                            <span className="font-[600] ml-[2px]">{sm.diem2con.toLocaleString()}</span>
+                                            <div className="mx-[6px]"></div>
+                                            3,4c:{' '}
+                                            <span className="font-[600] ml-[2px]">{sm.diem34con.toLocaleString()}</span>
+                                        </div>
+                                    </td>
+                                    <td className="px-[10px] py-[8px] w-[10%] border-[1px] border-solid border-[#fff]">
+                                        <div className="flex justify-center">
+                                            <div
+                                                className={`text-[10px] px-[6px] font-[550] rounded-[14px] w-fit text-[#fff] ${
+                                                    sm.statusSms === 'Chưa xử lý' ? 'bg-[#d9534f]' : 'bg-[#259dba]'
+                                                }`}
                                             >
-                                                <Tippy
-                                                    placement="bottom-start"
-                                                    arrow={false}
-                                                    content={
-                                                        <span className="text-[10px] px-[6px] rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
-                                                            Phục hồi tin nhắn
-                                                        </span>
-                                                    }
-                                                >
-                                                    <div className="px-[4px] text-[14px] cursor-pointer hover:text-[#7588b1]">
-                                                        <BsArrowCounterclockwise />
-                                                    </div>
-                                                </Tippy>
-                                            </Alert>
-                                        ) : (
-                                            <>
-                                                <Tippy
-                                                    placement="bottom-start"
-                                                    arrow={false}
-                                                    content={
-                                                        <span className="text-[10px] px-[6px] rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
-                                                            Chỉnh sửa tin nhắn
-                                                        </span>
-                                                    }
-                                                >
-                                                    <div
-                                                        onClick={() => {
-                                                            setModalUpdate(true);
-                                                            setSelectorSms({
-                                                                index: index + 1,
-                                                                sm,
-                                                            });
-                                                        }}
-                                                        className="px-[4px] cursor-pointer hover:text-[#7588b1]"
-                                                    >
-                                                        <BsPencil />
-                                                    </div>
-                                                </Tippy>
+                                                {sm.statusSms}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td className="px-[10px] py-[8px] w-[18%] border-[1px] border-solid border-[#fff]">
+                                        <div className="text-[12px] font-[500]">
+                                            {moment(sm.createDate).format('HH:mm')}
+                                        </div>
+                                    </td>
+                                    <td className="px-[10px] py-[8px] w-[8%] border-[1px] border-solid border-[#fff]">
+                                        <div className="flex items-center justify-center gap-[10px] text-[#4b4a4a]">
+                                            {deleted ? (
                                                 <Alert
-                                                    funcHandle={() => handleDelete(sm)}
-                                                    title="Xóa Tin Nhắn"
-                                                    content={`Tin nhắn STT #${index + 1} sẽ bị xóa?`}
+                                                    funcHandle={() => handleRestore(sm)}
+                                                    title="Phục hồi Tin Nhắn"
+                                                    content={`Phục hồi tin nhắn STT #${index + 1}?`}
                                                 >
                                                     <Tippy
                                                         placement="bottom-start"
                                                         arrow={false}
                                                         content={
                                                             <span className="text-[10px] px-[6px] rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
-                                                                Xóa tin nhắn
+                                                                Phục hồi tin nhắn
                                                             </span>
                                                         }
                                                     >
-                                                        <div className="px-[4px] cursor-pointer hover:text-[#7588b1]">
-                                                            <BsTrash />
+                                                        <div className="px-[4px] text-[14px] cursor-pointer hover:text-[#7588b1]">
+                                                            <BsArrowCounterclockwise />
                                                         </div>
                                                     </Tippy>
                                                 </Alert>
-                                            </>
-                                        )}
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                                            ) : (
+                                                <>
+                                                    <Tippy
+                                                        placement="bottom-start"
+                                                        arrow={false}
+                                                        content={
+                                                            <span className="text-[10px] px-[6px] rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
+                                                                Chỉnh sửa tin nhắn
+                                                            </span>
+                                                        }
+                                                    >
+                                                        <div
+                                                            onClick={() => {
+                                                                setModalUpdate(true);
+                                                                setSelectorSms({
+                                                                    index: index + 1,
+                                                                    sm,
+                                                                });
+                                                            }}
+                                                            className="px-[4px] cursor-pointer hover:text-[#7588b1]"
+                                                        >
+                                                            <BsPencil />
+                                                        </div>
+                                                    </Tippy>
+                                                    <Alert
+                                                        funcHandle={() => handleDelete(sm)}
+                                                        title="Xóa Tin Nhắn"
+                                                        content={`Tin nhắn STT #${index + 1} sẽ bị xóa?`}
+                                                    >
+                                                        <Tippy
+                                                            placement="bottom-start"
+                                                            arrow={false}
+                                                            content={
+                                                                <span className="text-[10px] px-[6px] rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
+                                                                    Xóa tin nhắn
+                                                                </span>
+                                                            }
+                                                        >
+                                                            <div className="px-[4px] cursor-pointer hover:text-[#7588b1]">
+                                                                <BsTrash />
+                                                            </div>
+                                                        </Tippy>
+                                                    </Alert>
+                                                </>
+                                            )}
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+
+                {modalCreate && (
+                    <ModalCreate
+                        setModalCreate={setModalCreate}
+                        handleFindSms={handleFindSms}
+                        members={members}
+                        date={date}
+                    />
+                )}
+
+                {modalContent && <ModalContent setModalContent={setModalContent} selectorContent={selectorContent} />}
+                {modalUpdate && (
+                    <ModalUpdate
+                        setModalUpdate={setModalUpdate}
+                        handleFindSms={handleFindSms}
+                        selectorSmsTmp={selectorSms}
+                        members={members}
+                    />
+                )}
             </div>
-
-            {modalCreate && (
-                <ModalCreate
-                    setModalCreate={setModalCreate}
-                    handleFindSms={handleFindSms}
-                    members={members}
-                    date={date}
-                />
-            )}
-
-            {modalContent && <ModalContent setModalContent={setModalContent} selectorContent={selectorContent} />}
-            {modalUpdate && (
-                <ModalUpdate
-                    setModalUpdate={setModalUpdate}
-                    handleFindSms={handleFindSms}
-                    selectorSmsTmp={selectorSms}
-                    members={members}
-                />
-            )}
         </div>
     );
 }

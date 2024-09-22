@@ -23,6 +23,8 @@ function convertContentDetail(content, date) {
     console.log(`${day}/${month}/${year}`);
     console.log('Thứ: ', dayOfWeek);
 
+    let errorSyntax = false;
+
     let arr = [];
 
     let kt = true;
@@ -60,6 +62,8 @@ function convertContentDetail(content, date) {
 
     while (kt) {
         const pos = findPosFirstAndTwo(contentTmp);
+
+        let firstArrLength = arr.length;
 
         bd = pos[0];
         kth = pos[1];
@@ -136,14 +140,23 @@ function convertContentDetail(content, date) {
                 }
             }
 
-            if (gtien > 0 && cloChild[i] === '.' && isFinite(Number(cloChild[i + 1])) && cloChild[i + 2] === '.') {
+            if (
+                gtien > 0 &&
+                cloChild[i] === '.' &&
+                isFinite(Number(cloChild[i + 1])) &&
+                (cloChild[i + 2] === '.' || !isFinite(Number(cloChild[i + 2])))
+            ) {
                 fGtienDecimal = true;
             }
 
             if (
                 !fSo &&
                 !fKdanh &&
-                !(cloChild[i] === '.' && isFinite(Number(cloChild[i + 1])) && cloChild[i + 2] === '.') &&
+                !(
+                    cloChild[i] === '.' &&
+                    isFinite(Number(cloChild[i + 1])) &&
+                    (cloChild[i + 2] === '.' || !isFinite(Number(cloChild[i + 2])))
+                ) &&
                 (cloChild[i] === '.' || !isFinite(Number(cloChild[i])))
             ) {
                 if (cloChild[i] !== '.') {
@@ -191,6 +204,19 @@ function convertContentDetail(content, date) {
                         // eslint-disable-next-line no-loop-func
                         daiTmps.map((daiTmp) => {
                             mangSoDa.map((soDa) => {
+                                if (
+                                    kdSS === 'dat' ||
+                                    kdSS === 'dathang' ||
+                                    kdSS === 'dath' ||
+                                    kdSS === 'dth' ||
+                                    kdSS === 'dthang' ||
+                                    kdSS === 'đat' ||
+                                    soDa[0].length < 2 ||
+                                    soDa[1].length < 2
+                                ) {
+                                    errorSyntax = true;
+                                }
+
                                 const obj = {
                                     content: `${daiTmp}.${soDa[0]},${soDa[1]}.${kdanhMain}.${gtien}ngan`,
                                     domain: mien,
@@ -210,6 +236,19 @@ function convertContentDetail(content, date) {
                     } else {
                         // eslint-disable-next-line no-loop-func
                         mangSoDa.map((soDa) => {
+                            if (
+                                kdSS === 'dx' ||
+                                kdSS === 'đx' ||
+                                kdSS === 'đax' ||
+                                kdSS === 'daxien' ||
+                                kdSS === 'dxien' ||
+                                kdSS === 'dax' ||
+                                soDa[0].length < 2 ||
+                                soDa[1].length < 2
+                            ) {
+                                errorSyntax = true;
+                            }
+
                             const obj = {
                                 content: `${dai}.${soDa[0]},${soDa[1]}.${kdanhMain}.${gtien}ngan`,
                                 domain: mien,
@@ -245,6 +284,10 @@ function convertContentDetail(content, date) {
 
                     // eslint-disable-next-line no-loop-func
                     mangSo.map((eSo) => {
+                        if (eSo.length < 2) {
+                            errorSyntax = true;
+                        }
+
                         if (
                             kdSS === 'l' ||
                             kdSS === 'lo' ||
@@ -312,6 +355,9 @@ function convertContentDetail(content, date) {
                             let mangSoDao = findListOverturn(eSo);
 
                             mangSoDao.map((soDao) => {
+                                if (soDao.length < 2) {
+                                    errorSyntax = true;
+                                }
                                 const obj = {
                                     content: `${dai}.${soDao}.${kdanhMain}.${gtien}ngan`,
                                     domain: mien,
@@ -705,10 +751,16 @@ function convertContentDetail(content, date) {
             }
         }
 
+        if (firstArrLength === arr.length) {
+            errorSyntax = true;
+        }
+
         contentTmp = contentTmp.slice(ktThemCham ? kth - 1 : kth);
     }
 
-    return arr;
+    console.log('errorSyntax: ', errorSyntax);
+
+    return { arr, errorSyntax };
 }
 
 export default convertContentDetail;

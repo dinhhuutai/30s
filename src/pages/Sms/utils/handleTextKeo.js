@@ -83,78 +83,81 @@ function handleTextKeo(content) {
 
     index = contentTmp.indexOf('k');
 
-    while (
+    if (
         index !== -1 &&
-        (contentTmp[index - 1] === '.' || isFinite(Number(contentTmp[index - 1]))) &&
-        isFinite(
-            Number(contentTmp[index - 2]) &&
-                (contentTmp[index + 1] === '.' || isFinite(Number(contentTmp[index + 1]))) &&
-                isFinite(Number(contentTmp[index + 2])),
-        )
+        (contentTmp[index + 1] === '.' ||
+            (isFinite(Number(contentTmp[index + 1])) && contentTmp[index - 1] === '.') ||
+            isFinite(Number(contentTmp[index - 1])))
     ) {
-        let length = contentTmp.length;
+        while (
+            index !== -1 &&
+            (contentTmp[index - 1] === '.' || isFinite(Number(contentTmp[index - 1]))) &&
+            (contentTmp[index + 1] === '.' || isFinite(Number(contentTmp[index + 1])))
+        ) {
+            let length = contentTmp.length;
 
-        let mangSoKeo = [];
-        let soSau = '';
-        let soTruoc = '';
+            let mangSoKeo = [];
+            let soSau = '';
+            let soTruoc = '';
 
-        //Lấy số sau k
-        for (let i = index + 1; i < length; i++) {
-            if (isFinite(Number(contentTmp[i]))) {
-                soSau = soSau + contentTmp[i];
+            //Lấy số sau k
+            for (let i = index + 1; i < length; i++) {
+                if (isFinite(Number(contentTmp[i]))) {
+                    soSau = soSau + contentTmp[i];
+                }
+
+                if (soSau.length > 0 && !isFinite(Number(contentTmp[i]))) {
+                    break;
+                }
             }
 
-            if (soSau.length > 0 && !isFinite(Number(contentTmp[i]))) {
-                break;
+            //Lấy số trước k
+            for (let i = index - 1; i >= 0; i--) {
+                if (isFinite(Number(contentTmp[i]))) {
+                    soTruoc = contentTmp[i] + soTruoc;
+                }
+
+                if (soTruoc.length > 0 && !isFinite(Number(contentTmp[i]))) {
+                    break;
+                }
             }
-        }
 
-        //Lấy số trước k
-        for (let i = index - 1; i >= 0; i--) {
-            if (isFinite(Number(contentTmp[i]))) {
-                soTruoc = contentTmp[i] + soTruoc;
+            let vitriTrung = 0;
+
+            for (let i = 0; i < soTruoc.length; i++) {
+                if (soTruoc[i] !== soSau[i]) {
+                    vitriTrung = i;
+                }
             }
 
-            if (soTruoc.length > 0 && !isFinite(Number(contentTmp[i]))) {
-                break;
+            let soSauKhac = Number(soSau[vitriTrung]);
+            let soTruocKhac = Number(soTruoc[vitriTrung]);
+
+            for (let i = soTruocKhac + 1; i < soSauKhac; i++) {
+                mangSoKeo.push(soTruoc.slice(0, vitriTrung) + i + soTruoc.slice(vitriTrung + 1));
             }
-        }
 
-        let vitriTrung = 0;
+            console.log('Mang so keo: ', mangSoKeo);
 
-        for (let i = 0; i < soTruoc.length; i++) {
-            if (soTruoc[i] !== soSau[i]) {
-                vitriTrung = i;
+            let chuoiSoKeo = mangSoKeo.join('.');
+
+            // Cắt chuỗi gốc từ đầu đến vị trí bắt đầu
+            let before = contentTmp.slice(0, index);
+            if (before.endsWith('.')) {
+                // Nếu có, cắt bỏ dấu chấm
+                before = before.slice(0, -1);
             }
+
+            // Cắt chuỗi gốc từ vị trí kết thúc của phần cần thay thế
+            let after = contentTmp.slice(index + 1);
+            if (after.startsWith('.')) {
+                // Nếu có, cắt dấu chấm
+                after = after.slice(1);
+            }
+            contentTmp = before + '.' + chuoiSoKeo + '.' + after;
+
+            index = contentTmp.indexOf('k');
         }
-
-        let soSauKhac = Number(soSau[vitriTrung]);
-        let soTruocKhac = Number(soTruoc[vitriTrung]);
-
-        for (let i = soTruocKhac + 1; i < soSauKhac; i++) {
-            mangSoKeo.push(soTruoc.slice(0, vitriTrung) + i + soTruoc.slice(vitriTrung + 1));
-        }
-
-        console.log('Mang so keo: ', mangSoKeo);
-
-        let chuoiSoKeo = mangSoKeo.join('.');
-
-        // Cắt chuỗi gốc từ đầu đến vị trí bắt đầu
-        let before = contentTmp.slice(0, index);
-        if (before.endsWith('.')) {
-            // Nếu có, cắt bỏ dấu chấm
-            before = before.slice(0, -1);
-        }
-
-        // Cắt chuỗi gốc từ vị trí kết thúc của phần cần thay thế
-        let after = contentTmp.slice(index + 1);
-        if (after.startsWith('.')) {
-            // Nếu có, cắt dấu chấm
-            after = after.slice(1);
-        }
-        contentTmp = before + '.' + chuoiSoKeo + '.' + after;
-
-        index = contentTmp.indexOf('k');
     }
 
     return contentTmp;

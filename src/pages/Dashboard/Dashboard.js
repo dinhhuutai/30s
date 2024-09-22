@@ -6,6 +6,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import TableKqxsMN from './component/TableKqxsMN';
 import TableKqxsMT from './component/TableKqxsMT';
 import TableKqxsMB from './component/TableKqxsMB';
+import HeaderPage from '../component/HeaderPage';
 
 function Dashboard() {
     const [kqxsMB, setKqxsMB] = useState([]);
@@ -158,29 +159,32 @@ function Dashboard() {
     };
 
     return (
-        <div className="bg-[var(--color-white)] px-[16px] py-[14px] pb-[28px] rounded-[6px]">
-            <div>
-                <DatePicker
-                    maxDate={new Date()}
-                    selected={date}
-                    dateFormat="dd-MM-yyyy"
-                    onChange={handleDateChange}
-                    className="border-[1px] border-solid px-[6px] py-[4px] outline-none rounded-[4px] text-[12px] border-[#ccc]"
-                />
-            </div>
-
-            <div className="grid grid-cols-3 gap-[10px] mt-[30px]">
-                <div className="text-center">
-                    <h2 className="text-[16px] uppercase font-[650]">miền nam</h2>
-                    {kqxsMN && <TableKqxsMN kqxsMN={kqxsMN} day={day} />}
+        <div>
+            <HeaderPage pageCurr={'Kết Quả Xổ Số'} />
+            <div className="bg-[var(--color-white)] px-[16px] mt-[12px] py-[14px] pb-[28px] rounded-[6px]">
+                <div>
+                    <DatePicker
+                        maxDate={new Date()}
+                        selected={date}
+                        dateFormat="dd-MM-yyyy"
+                        onChange={handleDateChange}
+                        className="border-[1px] border-solid px-[6px] py-[4px] outline-none rounded-[4px] text-[12px] border-[#ccc]"
+                    />
                 </div>
-                <div className="text-center">
-                    <h2 className="text-[16px] uppercase font-[650]">miền trung</h2>
-                    {kqxsMT && <TableKqxsMT kqxsMT={kqxsMT} day={day} />}
-                </div>
-                <div className="text-center">
-                    <h2 className="text-[16px] uppercase font-[650]">miền bắc</h2>
-                    {kqxsMB && <TableKqxsMB kqxsMB={kqxsMB} />}
+    
+                <div className="grid grid-cols-3 gap-[10px] mt-[30px]">
+                    <div className="text-center">
+                        <h2 className="text-[16px] uppercase font-[650]">miền nam</h2>
+                        {kqxsMN && <TableKqxsMN kqxsMN={kqxsMN} day={day} />}
+                    </div>
+                    <div className="text-center">
+                        <h2 className="text-[16px] uppercase font-[650]">miền trung</h2>
+                        {kqxsMT && <TableKqxsMT kqxsMT={kqxsMT} day={day} />}
+                    </div>
+                    <div className="text-center">
+                        <h2 className="text-[16px] uppercase font-[650]">miền bắc</h2>
+                        {kqxsMB && <TableKqxsMB kqxsMB={kqxsMB} />}
+                    </div>
                 </div>
             </div>
         </div>

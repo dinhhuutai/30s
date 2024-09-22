@@ -5,7 +5,7 @@ function shortenText(content) {
         .replace(/[\r\n]+/g, '.')
         .replace(/[\t\n]+/g, '.')
         .replace(/\s+/g, '.')
-        .replace(/[.,:;+ ]/g, '.')
+        .replace(/[.,:;+= ]/g, '.')
         .replace(/-/g, '.')
         .replace(/…/g, '')
         .replace(/₫/g, 'đ')
