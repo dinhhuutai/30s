@@ -161,6 +161,7 @@ function Dashboard() {
         <div className="bg-[var(--color-white)] px-[16px] py-[14px] pb-[28px] rounded-[6px]">
             <div>
                 <DatePicker
+                    maxDate={new Date()}
                     selected={date}
                     dateFormat="dd-MM-yyyy"
                     onChange={handleDateChange}

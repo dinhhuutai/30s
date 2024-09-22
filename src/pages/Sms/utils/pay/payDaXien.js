@@ -6,28 +6,27 @@ function payDaXien(content, info, kqxs) {
     let quantitySoTrung1 = 0;
     let quantitySoTrung2 = 0;
 
-    console.log(content);
 
     diem =
-        content.tien *
+        content.price *
         2 *
-        (content.mien === 'mn' || content.mien === 'mt' ? 18 : content.mien === 'mb' ? 27 : 1) *
-        content.dai.length;
+        (content.domain === 'mn' || content.domain === 'mt' ? 18 : content.domain === 'mb' ? 27 : 1) *
+        content.province.length;
 
-    tienxac = diem * (content.mien === 'mn' ? info.codaxienMN : content.mien === 'mt' ? info.codaxienMT : 1);
+    tienxac = diem * (content.domain === 'mn' ? info.codaxienMN : content.domain === 'mt' ? info.codaxienMT : 1);
 
     let hasSo1 = false;
     let hasSo2 = false;
 
     kqxs.map((eKq) => {
-        if (content.dai.includes(eKq.dai)) {
-            eKq.kq.map((s, i) => {
-                if (s.length >= content.so[0].length && s.endsWith(content.so[0])) {
+        if (content.province.includes(eKq.province)) {
+            eKq.result.map((s, i) => {
+                if (s.length >= content.number[0].length && s.endsWith(content.number[0])) {
                     quantitySoTrung1 += 1;
                     hasSo1 = true;
                 }
 
-                if (s.length >= content.so[1].length && s.endsWith(content.so[1])) {
+                if (s.length >= content.number[1].length && s.endsWith(content.number[1])) {
                     quantitySoTrung2 += 1;
                     hasSo2 = true;
                 }
@@ -42,22 +41,16 @@ function payDaXien(content, info, kqxs) {
     }
 
     tientrung =
-        content.tien *
+        content.price *
         quantitySoTrung *
-        (content.mien === 'mn' ? info.trungdaxienMN : content.mien === 'mt' ? info.trungdaxienMT : 1);
+        (content.domain === 'mn' ? info.trungdaxienMN : content.domain === 'mt' ? info.trungdaxienMT : 1);
 
-    console.log('soluongGiong1: ', quantitySoTrung1);
-    console.log('soluongGiong2: ', quantitySoTrung2);
-    console.log('soluongGiong: ', quantitySoTrung);
-    console.log('diem: ', diem);
-    console.log('tienxac: ', tienxac);
-    console.log('tientrung: ', tientrung);
 
     return {
         diem: diem,
         tienxac: tienxac,
         tientrung: tientrung,
-        soluongGiong: quantitySoTrung,
+        quantityLike: quantitySoTrung,
     };
 }
 

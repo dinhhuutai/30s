@@ -47,6 +47,8 @@ function handleDai(dai, mien, dayOfWeek) {
                 daiTmp = ['tn', 'ag', 'bt'];
             } else if (dayOfWeek === 6) {
                 daiTmp = ['vl', 'bu', 'tv'];
+            } else if (dayOfWeek === 7) {
+                daiTmp = ['tp', 'la', 'bp'];
             } else if (dayOfWeek === 1) {
                 daiTmp = ['tg', 'kg', 'lt'];
             }

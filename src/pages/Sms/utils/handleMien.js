@@ -105,7 +105,12 @@ function handleMien(content, now) {
             contentTmp = mienMain + '.' + contentTmp;
         } else {
             mienMain = 'mn';
+            contentTmp = mienMain + '.' + contentTmp;
         }
+
+        //Ưu tiên nếu ngta không có ghi miền thì là miền nam
+        mienMain = 'mn';
+        contentTmp = mienMain + '.' + contentTmp;
     }
 
     return {

@@ -10,8 +10,8 @@ import handleMien from './handleMien';
 import handleTextKeo from './handleTextKeo';
 import shortenText from './shortenText';
 
-function convertContentDetail(content) {
-    const now = new Date('9-10-2024');
+function convertContentDetail(content, date) {
+    const now = date;
 
     // Lấy ngày, tháng, năm
     const day = now.getDate(); // Ngày trong tháng (1-31)
@@ -88,6 +88,7 @@ function convertContentDetail(content) {
         let so = '';
         let kdanh = '';
         let gtien = 0;
+        let ktNumZeroFirt = false;
 
         let fSo = true;
         let fKdanh = true;
@@ -128,6 +129,11 @@ function convertContentDetail(content) {
             if (isFinite(Number(cloChild[i])) && !fSo) {
                 gtien = gtien * 10 + Number(cloChild[i]);
                 fKdanh = false;
+
+                if (gtien === 0 && !ktNumZeroFirt) {
+                    fGtienDecimal = true;
+                    ktNumZeroFirt = true;
+                }
             }
 
             if (gtien > 0 && cloChild[i] === '.' && isFinite(Number(cloChild[i + 1])) && cloChild[i + 2] === '.') {
@@ -179,22 +185,47 @@ function convertContentDetail(content) {
 
                     let mangSoDa = findListTwoNum(mangSo);
 
-                    // eslint-disable-next-line no-loop-func
-                    mangSoDa.map((soDa) => {
-                        const obj = {
-                            mien: mien,
-                            dai: dai,
-                            so: soDa,
-                            kieuDanh: kdanhMain,
-                            tien: gtien,
-                            day: now,
-                            dayOfWeek: dayOfWeek,
-                        };
+                    let daiTmps = findListTwoNum(dai);
 
-                        arr = [...arr, obj];
+                    if (dai.length > 2) {
+                        // eslint-disable-next-line no-loop-func
+                        daiTmps.map((daiTmp) => {
+                            mangSoDa.map((soDa) => {
+                                const obj = {
+                                    content: `${daiTmp}.${soDa[0]},${soDa[1]}.${kdanhMain}.${gtien}ngan`,
+                                    domain: mien,
+                                    province: daiTmp,
+                                    number: soDa,
+                                    typePlay: kdanhMain,
+                                    price: gtien,
+                                    resultDate: now,
+                                    dayOfWeek: dayOfWeek,
+                                };
 
-                        console.log(`${dai}.${soDa[0]},${soDa[1]}.${kdanhMain}.${gtien}ngan`);
-                    });
+                                arr = [...arr, obj];
+
+                                console.log(`${daiTmp}.${soDa[0]},${soDa[1]}.${kdanhMain}.${gtien}ngan`);
+                            });
+                        });
+                    } else {
+                        // eslint-disable-next-line no-loop-func
+                        mangSoDa.map((soDa) => {
+                            const obj = {
+                                content: `${dai}.${soDa[0]},${soDa[1]}.${kdanhMain}.${gtien}ngan`,
+                                domain: mien,
+                                province: dai,
+                                number: soDa,
+                                typePlay: kdanhMain,
+                                price: gtien,
+                                resultDate: now,
+                                dayOfWeek: dayOfWeek,
+                            };
+
+                            arr = [...arr, obj];
+
+                            console.log(`${dai}.${soDa[0]},${soDa[1]}.${kdanhMain}.${gtien}ngan`);
+                        });
+                    }
                 } else {
                     if (
                         (kdSS === 'l' ||
@@ -229,12 +260,13 @@ function convertContentDetail(content) {
                             kdanhMain = 'baolo';
 
                             const obj = {
-                                mien: mien,
-                                dai: dai,
-                                so: eSo,
-                                kieuDanh: kdanhMain,
-                                tien: gtien,
-                                day: now,
+                                content: `${dai}.${eSo}.${kdanhMain}.${gtien}ngan`,
+                                domain: mien,
+                                province: dai,
+                                number: [eSo],
+                                typePlay: kdanhMain,
+                                price: gtien,
+                                resultDate: now,
                                 dayOfWeek: dayOfWeek,
                             };
 
@@ -281,12 +313,13 @@ function convertContentDetail(content) {
 
                             mangSoDao.map((soDao) => {
                                 const obj = {
-                                    mien: mien,
-                                    dai: dai,
-                                    so: soDao,
-                                    kieuDanh: kdanhMain,
-                                    tien: gtien,
-                                    day: now,
+                                    content: `${dai}.${soDao}.${kdanhMain}.${gtien}ngan`,
+                                    domain: mien,
+                                    province: dai,
+                                    number: [soDao],
+                                    typePlay: kdanhMain,
+                                    price: gtien,
+                                    resultDate: now,
                                     dayOfWeek: dayOfWeek,
                                 };
 
@@ -313,12 +346,13 @@ function convertContentDetail(content) {
                             kdanhMain = 'dauduoi';
 
                             const obj = {
-                                mien: mien,
-                                dai: dai,
-                                so: eSo,
-                                kieuDanh: kdanhMain,
-                                tien: gtien,
-                                day: now,
+                                content: `${dai}.${eSo}.${kdanhMain}.${gtien}ngan`,
+                                domain: mien,
+                                province: dai,
+                                number: [eSo],
+                                typePlay: kdanhMain,
+                                price: gtien,
+                                resultDate: now,
                                 dayOfWeek: dayOfWeek,
                             };
 
@@ -346,12 +380,13 @@ function convertContentDetail(content) {
                             kdanhMain = 'xiuchu';
 
                             const obj = {
-                                mien: mien,
-                                dai: dai,
-                                so: eSo,
-                                kieuDanh: kdanhMain,
-                                tien: gtien,
-                                day: now,
+                                content: `${dai}.${eSo}.${kdanhMain}.${gtien}ngan`,
+                                domain: mien,
+                                province: dai,
+                                number: [eSo],
+                                typePlay: kdanhMain,
+                                price: gtien,
+                                resultDate: now,
                                 dayOfWeek: dayOfWeek,
                             };
 
@@ -385,12 +420,13 @@ function convertContentDetail(content) {
                             kdanhMain = 'xiuchudau';
 
                             const obj = {
-                                mien: mien,
-                                dai: dai,
-                                so: eSo,
-                                kieuDanh: kdanhMain,
-                                tien: gtien,
-                                day: now,
+                                content: `${dai}.${eSo}.${kdanhMain}.${gtien}ngan`,
+                                domain: mien,
+                                province: dai,
+                                number: [eSo],
+                                typePlay: kdanhMain,
+                                price: gtien,
+                                resultDate: now,
                                 dayOfWeek: dayOfWeek,
                             };
 
@@ -444,12 +480,13 @@ function convertContentDetail(content) {
                             kdanhMain = 'xiuchuduoi';
 
                             const obj = {
-                                mien: mien,
-                                dai: dai,
-                                so: eSo,
-                                kieuDanh: kdanhMain,
-                                tien: gtien,
-                                day: now,
+                                content: `${dai}.${eSo}.${kdanhMain}.${gtien}ngan`,
+                                domain: mien,
+                                province: dai,
+                                number: [eSo],
+                                typePlay: kdanhMain,
+                                price: gtien,
+                                resultDate: now,
                                 dayOfWeek: dayOfWeek,
                             };
 
@@ -550,12 +587,13 @@ function convertContentDetail(content) {
 
                             mangSoDao.map((soDao) => {
                                 const obj = {
-                                    mien: mien,
-                                    dai: dai,
-                                    so: soDao,
-                                    kieuDanh: kdanhMain,
-                                    tien: gtien,
-                                    day: now,
+                                    content: `${dai}.${soDao}.${kdanhMain}.${gtien}ngan`,
+                                    domain: mien,
+                                    province: dai,
+                                    number: [soDao],
+                                    typePlay: kdanhMain,
+                                    price: gtien,
+                                    resultDate: now,
                                     dayOfWeek: dayOfWeek,
                                 };
 
@@ -569,12 +607,13 @@ function convertContentDetail(content) {
                             kdanhMain = 'dau';
 
                             const obj = {
-                                mien: mien,
-                                dai: dai,
-                                so: eSo,
-                                kieuDanh: kdanhMain,
-                                tien: gtien,
-                                day: now,
+                                content: `${dai}.${eSo}.${kdanhMain}.${gtien}ngan`,
+                                domain: mien,
+                                province: dai,
+                                number: [eSo],
+                                typePlay: kdanhMain,
+                                price: gtien,
+                                resultDate: now,
                                 dayOfWeek: dayOfWeek,
                             };
 
@@ -594,12 +633,13 @@ function convertContentDetail(content) {
                             kdanhMain = 'duoi';
 
                             const obj = {
-                                mien: mien,
-                                dai: dai,
-                                so: eSo,
-                                kieuDanh: kdanhMain,
-                                tien: gtien,
-                                day: now,
+                                content: `${dai}.${eSo}.${kdanhMain}.${gtien}ngan`,
+                                domain: mien,
+                                province: dai,
+                                number: [eSo],
+                                typePlay: kdanhMain,
+                                price: gtien,
+                                resultDate: now,
                                 dayOfWeek: dayOfWeek,
                             };
 
@@ -612,12 +652,13 @@ function convertContentDetail(content) {
                             kdanhMain = 'dau';
 
                             const obj = {
-                                mien: mien,
-                                dai: dai,
-                                so: eSo,
-                                kieuDanh: kdanhMain,
-                                tien: gtien,
-                                day: now,
+                                content: `${dai}.${eSo}.${kdanhMain}.${gtien}ngan`,
+                                domain: mien,
+                                province: dai,
+                                number: [eSo],
+                                typePlay: kdanhMain,
+                                price: gtien,
+                                resultDate: now,
                                 dayOfWeek: dayOfWeek,
                             };
 
@@ -628,12 +669,13 @@ function convertContentDetail(content) {
                             kdanhMain = 'duoi';
 
                             const obj = {
-                                mien: mien,
-                                dai: dai,
-                                so: eSo,
-                                kieuDanh: kdanhMain,
-                                tien: gtien,
-                                day: now,
+                                content: `${dai}.${eSo}.${kdanhMain}.${gtien}ngan`,
+                                domain: mien,
+                                province: dai,
+                                number: [eSo],
+                                typePlay: kdanhMain,
+                                price: gtien,
+                                resultDate: now,
                                 dayOfWeek: dayOfWeek,
                             };
 
@@ -655,6 +697,7 @@ function convertContentDetail(content) {
                 kdanh = '';
                 gtien = 0;
                 so = '';
+                ktNumZeroFirt = false;
 
                 if (cloChild[i] === '.' && isFinite(Number(cloChild[i + 1]))) {
                     mangSo = [];

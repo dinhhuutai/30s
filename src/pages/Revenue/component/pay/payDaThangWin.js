@@ -1,14 +1,6 @@
-function payDaThang(content, info, kqxs) {
-    let diem = 0;
-    let tienxac = 0;
+function payDaThangWin(content, info, kqxs) {
     let tientrung = 0;
     let quantitySoTrung = 0;
-
-
-    diem = content.price * 2 * (content.domain === 'mn' || content.domain === 'mt' ? 18 : content.domain === 'mb' ? 27 : 1);
-
-    tienxac =
-        diem * (content.domain === 'mn' ? info.codathangMN : content.domain === 'mt' ? info.codathangMT : info.codathangMB);
 
     let hasSo1 = false;
     let hasSo2 = false;
@@ -45,11 +37,9 @@ function payDaThang(content, info, kqxs) {
             : info.trungdathangMB);
 
     return {
-        diem: diem,
-        tienxac: tienxac,
         tientrung: tientrung,
         quantityLike: quantitySoTrung,
     };
 }
 
-export default payDaThang;
+export default payDaThangWin;

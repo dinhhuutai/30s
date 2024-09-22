@@ -1,19 +1,8 @@
-function payXiuChuDuoi(content, info, kqxs) {
-    let diem = 0;
-    let tienxac = 0;
+function payXiuChuDuoiWin(content, info, kqxs) {
     let tientrung = 0;
     let quantitySoTrung = 0;
 
     let lengthSo = content.number[0].length;
-
-    diem =
-        content.price *
-        (content.domain === 'mn' || content.domain === 'mt' ? 1 : content.domain === 'mb' ? 1 : 1) *
-        content.province.length;
-
-    tienxac =
-        diem *
-        (content.domain === 'mn' ? info.coxiuchuMN : content.domain === 'mt' ? info.coxiuchuMT : info.coxiuchuMB);
 
     kqxs.map((eKq) => {
         if (content.province.includes(eKq.province)) {
@@ -40,11 +29,8 @@ function payXiuChuDuoi(content, info, kqxs) {
             : info.trungxiuchuMB);
 
     return {
-        diem: diem,
-        tienxac: tienxac,
         tientrung: tientrung,
         quantityLike: quantitySoTrung,
     };
 }
-
-export default payXiuChuDuoi;
+export default payXiuChuDuoiWin;

@@ -9,28 +9,27 @@ import payXiuChuDau from './pay/payXiuChuDau';
 import payXiuChuDuoi from './pay/payXiuChuDuoi';
 
 function payBySms(sms, infoPlayer, kqxs) {
-    console.log(sms, infoPlayer, kqxs);
 
     sms = sms.map((e, index) => {
         let pay = {};
 
-        if (e.kieuDanh === 'baolo' || e.kieuDanh === 'baolodao') {
+        if (e.typePlay === 'baolo' || e.typePlay === 'baolodao') {
             pay = payBaoLo(e, infoPlayer, kqxs);
-        } else if (e.kieuDanh === 'dauduoi') {
+        } else if (e.typePlay === 'dauduoi') {
             pay = payDauDuoi(e, infoPlayer, kqxs);
-        } else if (e.kieuDanh === 'xiuchu' || e.kieuDanh === 'xiuchudao') {
+        } else if (e.typePlay === 'xiuchu' || e.typePlay === 'xiuchudao') {
             pay = payXiuChu(e, infoPlayer, kqxs);
-        } else if (e.kieuDanh === 'dau') {
+        } else if (e.typePlay === 'dau') {
             pay = payDau(e, infoPlayer, kqxs);
-        } else if (e.kieuDanh === 'duoi') {
+        } else if (e.typePlay === 'duoi') {
             pay = payDuoi(e, infoPlayer, kqxs);
-        } else if (e.kieuDanh === 'xiuchudau') {
+        } else if (e.typePlay === 'xiuchudau') {
             pay = payXiuChuDau(e, infoPlayer, kqxs);
-        } else if (e.kieuDanh === 'xiuchuduoi') {
+        } else if (e.typePlay === 'xiuchuduoi') {
             pay = payXiuChuDuoi(e, infoPlayer, kqxs);
-        } else if (e.kieuDanh === 'da(thang)') {
+        } else if (e.typePlay === 'da(thang)') {
             pay = payDaThang(e, infoPlayer, kqxs);
-        } else if (e.kieuDanh === 'da(xien)') {
+        } else if (e.typePlay === 'da(xien)') {
             pay = payDaXien(e, infoPlayer, kqxs);
         }
 

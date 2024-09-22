@@ -1,35 +1,30 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { noticeAdminSelector } from "~/redux/selectors";
-import { BsXOctagonFill, BsX, BsFillPatchCheckFill, BsGearFill } from "react-icons/bs";
-import noticeAdminSlice from "~/redux/slices/noticeAdminSlice";
-
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { noticeAdminSelector } from '~/redux/selectors';
+import { BsXOctagonFill, BsX, BsFillPatchCheckFill, BsGearFill } from 'react-icons/bs';
+import noticeAdminSlice from '~/redux/slices/noticeAdminSlice';
 
 function Notice() {
-    
     const tmp = useSelector(noticeAdminSelector);
-    const [notice, setNotice] = useState()
-
+    const [notice, setNotice] = useState();
 
     useEffect(() => {
         setNotice(tmp);
     }, [tmp]);
 
-
     const dispatch = useDispatch();
 
     const handleClosed = () => {
         dispatch(noticeAdminSlice.actions.hiddenNotice());
-    }
-
+    };
 
     return (
-        <div>
+        <div className="fixed z-[9999999]">
             {notice?.hidden && (
                 <div
                     className={`${notice?.state ? 'animate-noticeSlideLeft' : 'animate-noticeSlideRight'} ${
                         notice?.status ? 'border-l-[#2fca32]' : 'border-l-[red]'
-                    } fixed top-[70px] border-l-[4px] border-l-solid box-shadow-admin-notice right-[30px] z-[100] px-[20px] py-[8px] min-w-[260px] rounded-[6px] bg-[#fff] flex items-center`}
+                    } fixed top-[70px] z-[9999999] border-l-[4px] border-l-solid box-shadow-admin-notice right-[30px] px-[20px] py-[8px] min-w-[260px] rounded-[6px] bg-[#fff] flex items-center`}
                 >
                     <button
                         onClick={handleClosed}
@@ -57,8 +52,7 @@ function Notice() {
                     ></div>
                 </div>
             )}
-            {
-                notice?.processing &&
+            {notice?.processing && (
                 <div
                     className={`border-l-[#6346f3] animate-noticeSlideLeft fixed top-[70px] border-l-[4px] border-l-solid box-shadow-admin-notice right-[30px] z-[100] px-[20px] py-[8px] min-w-[260px] rounded-[6px] bg-[#fff] flex items-center`}
                 >
@@ -72,13 +66,11 @@ function Notice() {
                         <BsGearFill />
                     </div>
                     <div className="ml-[16px] flex-1 text-[#000]">
-                        <h2 className={`text-[#6346f3] uppercase text-[16px] font-[700]`}>
-                            {notice?.title}
-                        </h2>
+                        <h2 className={`text-[#6346f3] uppercase text-[16px] font-[700]`}>{notice?.title}</h2>
                         <p className="text-[12px]">{notice?.text}</p>
                     </div>
                 </div>
-            }
+            )}
         </div>
     );
 }

@@ -36,9 +36,9 @@ function findPosFirstAndTwo(content) {
         'dg',
         'kh',
         'qb',
-        'bd',
         'qt',
         'gl',
+        'bd',
         'nt',
         'qg',
         'do',
@@ -50,7 +50,9 @@ function findPosFirstAndTwo(content) {
         let positions = [];
         let index = content.indexOf(char);
 
-        while (index !== -1 && !isFinite(Number(content[index - 1]))) {
+        // && !isFinite(Number(content[index - 1]))
+
+        while (index !== -1) {
             if (
                 (content[index - 1] === '.' &&
                     isFinite(Number(content[index - 2])) &&
@@ -59,9 +61,9 @@ function findPosFirstAndTwo(content) {
             ) {
                 positions.push(index);
             }
-
             index = content.indexOf(char, index + 1);
         }
+
 
         return positions;
     }

@@ -4,7 +4,9 @@ import { useEffect, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { BsArrowRepeat } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
-import { userSelector } from '~/redux/selectors';
+import { noticeAdminSelector, userSelector } from '~/redux/selectors';
+
+let setTimeoutTmp;
 
 function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
     const [name, setName] = useState(selecterMember.name);
@@ -66,6 +68,14 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
         status: false,
         text: '',
     });
+
+    
+    const notice = useSelector(noticeAdminSelector);
+    useEffect(() => {
+        if (!notice.state) {
+            clearTimeout(setTimeoutTmp);
+        }
+    }, [notice.state]);
 
     const tmp = useSelector(userSelector);
     const [user, setUser] = useState(tmp);

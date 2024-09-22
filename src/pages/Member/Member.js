@@ -10,6 +10,7 @@ import moment from 'moment';
 import ModalUpdate from './component/ModalUpdate';
 import Alert from '~/components/Alert';
 import noticeAdminSlice from '~/redux/slices/noticeAdminSlice';
+import Tippy from '@tippyjs/react';
 
 let setTimeoutTmp;
 
@@ -21,7 +22,7 @@ function Member() {
     const [selecterMember, setSelecterMember] = useState({});
 
     const [arrangeName, setArrangeName] = useState(true);
-    const [arrangeCreateDate, setArrangeCreateDate] = useState(false);
+    const [arrangeCreateDate, setArrangeCreateDate] = useState(true);
     const [typeArrange, setTypeArrange] = useState('name');
 
     const tmp = useSelector(userSelector);
@@ -52,7 +53,6 @@ function Member() {
         }
     };
 
-
     const handleUpdate = async (member) => {
         setSelecterMember(member);
         setModalUpdate(true);
@@ -69,14 +69,26 @@ function Member() {
     const dispatch = useDispatch();
 
     const handleDelete = async (member) => {
-        dispatch(noticeAdminSlice.actions.processingNotice('Đang xóa người chơi'));
-        const res = await axios.post(`${process.env.REACT_APP_API_URL}/v1/member/delete/${member._id}`);
+        try {
+            dispatch(noticeAdminSlice.actions.processingNotice('Đang xóa người chơi'));
+            const res = await axios.post(`${process.env.REACT_APP_API_URL}/v1/member/delete/${member._id}`);
 
-        if (res.data.success) {
-            handleSearchMember();
+            if (res.data.success) {
+                handleSearchMember();
 
-            dispatch(noticeAdminSlice.actions.successNotice('Xóa người chơi thành công'));
+                dispatch(noticeAdminSlice.actions.successNotice('Xóa người chơi thành công'));
 
+                setTimeoutTmp = setTimeout(() => {
+                    dispatch(noticeAdminSlice.actions.hiddenNotice());
+                }, [5000]);
+            } else {
+                dispatch(noticeAdminSlice.actions.errorNotice('Lỗi hệ thống!!!'));
+                setTimeoutTmp = setTimeout(() => {
+                    dispatch(noticeAdminSlice.actions.hiddenNotice());
+                }, [5000]);
+            }
+        } catch (error) {
+            dispatch(noticeAdminSlice.actions.errorNotice('Lỗi hệ thống!!!'));
             setTimeoutTmp = setTimeout(() => {
                 dispatch(noticeAdminSlice.actions.hiddenNotice());
             }, [5000]);
@@ -107,7 +119,7 @@ function Member() {
                 </button>
             </div>
 
-            <div className="w-full mt-[26px]">
+            <div className="w-full mt-[26px] overflow-x-auto">
                 <table className="w-full rounded-[6px] overflow-hidden">
                     <thead>
                         <tr className="text-[12px] w-[100%] bg-[#d8dce3]">
@@ -119,19 +131,19 @@ function Member() {
                                 }}
                                 className="w-[12%] py-[8px] border-[1px] border-solid border-[#fff] uppercase"
                             >
-                                <div className="flex items-center justify-around cursor-pointer">
+                                <button className="flex items-center justify-around w-full uppercase cursor-pointer">
                                     người chơi
                                     <div className="flex items-center">
                                         {typeArrange === 'name' ? (
                                             arrangeName ? (
                                                 <>
-                                                    <BsCaretUp />
-                                                    <BsCaretDownFill />
+                                                    <BsCaretUpFill />
+                                                    <BsCaretDown />
                                                 </>
                                             ) : (
                                                 <>
-                                                    <BsCaretUpFill />
-                                                    <BsCaretDown />
+                                                    <BsCaretUp />
+                                                    <BsCaretDownFill />
                                                 </>
                                             )
                                         ) : (
@@ -141,7 +153,7 @@ function Member() {
                                             </>
                                         )}
                                     </div>
-                                </div>
+                                </button>
                             </th>
                             <th className="w-[18%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
                                 số điện thoại
@@ -159,7 +171,7 @@ function Member() {
                                 }}
                                 className="w-[15%] py-[8px] border-[1px] border-solid border-[#fff] uppercase"
                             >
-                                <div className="flex items-center justify-around cursor-pointer">
+                                <button className="flex items-center justify-around w-full uppercase cursor-pointer">
                                     ngày tạo
                                     <div className="flex items-center">
                                         {typeArrange === 'createDate' ? (
@@ -181,7 +193,7 @@ function Member() {
                                             </>
                                         )}
                                     </div>
-                                </div>
+                                </button>
                             </th>
                             <th className="w-[15%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
                                 ngày cập nhật
@@ -235,17 +247,40 @@ function Member() {
                                 </td>
                                 <td className="px-[10px] py-[6px] w-[12%] border-[1px] border-solid border-[#fff]">
                                     <div className="flex items-center justify-center gap-[10px] text-[#4b4a4a]">
-                                        <div onClick={() => handleUpdate(member)} className="px-[4px] cursor-pointer">
-                                            <BsPencil />
-                                        </div>
+                                        <Tippy
+                                            placement="bottom-start"
+                                            arrow={false}
+                                            content={
+                                                <span className="text-[10px] px-[6px] rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
+                                                    Chỉnh sửa người chơi
+                                                </span>
+                                            }
+                                        >
+                                            <div
+                                                onClick={() => handleUpdate(member)}
+                                                className="px-[4px] cursor-pointer hover:text-[#7588b1]"
+                                            >
+                                                <BsPencil />
+                                            </div>
+                                        </Tippy>
                                         <Alert
                                             funcHandle={() => handleDelete(member)}
                                             title="Xóa Người Chơi"
-                                            content={`Bạn có chắc chắn muốn xóa người choi "${member.name}" không?`}
+                                            content={`Bạn có chắc chắn muốn xóa người chơi "${member.name}" không?`}
                                         >
-                                            <div className="px-[4px] cursor-pointer">
-                                                <BsTrash />
-                                            </div>
+                                            <Tippy
+                                                placement="bottom-start"
+                                                arrow={false}
+                                                content={
+                                                    <span className="text-[10px] px-[6px] rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
+                                                        Xóa người chơi
+                                                    </span>
+                                                }
+                                            >
+                                                <div className="px-[4px] cursor-pointer hover:text-[#7588b1]">
+                                                    <BsTrash />
+                                                </div>
+                                            </Tippy>
                                         </Alert>
                                     </div>
                                 </td>

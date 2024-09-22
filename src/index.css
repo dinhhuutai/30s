@@ -18,6 +18,12 @@
     .bg-active-path {
         background-image: linear-gradient(to right, #259dba 0%, #2574ab 100%);
     }
+
+    .dotThreeHiddenText {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+    }
 }
 
 :root {

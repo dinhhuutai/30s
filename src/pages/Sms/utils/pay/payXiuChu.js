@@ -4,26 +4,25 @@ function payXiuChu(content, info, kqxs) {
     let tientrung = 0;
     let quantitySoTrung = 0;
 
-    console.log(content);
 
-    let lengthSo = content.so.length;
+    let lengthSo = content.number[0].length;
 
     diem =
-        content.tien *
-        (content.mien === 'mn' || content.mien === 'mt' ? 2 : content.mien === 'mb' ? 4 : 1) *
-        content.dai.length;
+        content.price *
+        (content.domain === 'mn' || content.domain === 'mt' ? 2 : content.domain === 'mb' ? 4 : 1) *
+        content.province.length;
 
     tienxac =
-        diem * (content.mien === 'mn' ? info.coxiuchuMN : content.mien === 'mt' ? info.coxiuchuMT : info.coxiuchuMB);
+        diem * (content.domain === 'mn' ? info.coxiuchuMN : content.domain === 'mt' ? info.coxiuchuMT : info.coxiuchuMB);
 
     kqxs.map((eKq) => {
-        if (content.dai.includes(eKq.dai)) {
-            eKq.kq.map((s, i) => {
+        if (content.province.includes(eKq.province)) {
+            eKq.result.map((s, i) => {
                 if (
-                    s.length >= content.so.length &&
-                    s.endsWith(content.so) &&
-                    (((i === 1 || i === 17) && (content.mien === 'mn' || content.mien === 'mt')) ||
-                        (content.mien === 'mb' && (i === 19 || i === 20 || i === 21 || i === 26)))
+                    s.length >= content.number[0].length &&
+                    s.endsWith(content.number[0]) &&
+                    (((i === 1 || i === 17) && (content.domain === 'mn' || content.domain === 'mt')) ||
+                        (content.domain === 'mb' && (i === 19 || i === 20 || i === 21 || i === 26)))
                 ) {
                     quantitySoTrung += 1;
                 }
@@ -32,20 +31,16 @@ function payXiuChu(content, info, kqxs) {
     });
 
     tientrung =
-        content.tien *
+        content.price *
         quantitySoTrung *
-        (content.mien === 'mn' ? info.trungxiuchuMN : content.mien === 'mt' ? info.trungxiuchuMT : info.trungxiuchuMB);
+        (content.domain === 'mn' ? info.trungxiuchuMN : content.domain === 'mt' ? info.trungxiuchuMT : info.trungxiuchuMB);
 
-    console.log('soluongGiong: ', quantitySoTrung);
-    console.log('diem: ', diem);
-    console.log('tienxac: ', tienxac);
-    console.log('tientrung: ', tientrung);
 
     return {
         diem: diem,
         tienxac: tienxac,
         tientrung: tientrung,
-        soluongGiong: quantitySoTrung,
+        quantityLike: quantitySoTrung,
     };
 }
 
