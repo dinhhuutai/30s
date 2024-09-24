@@ -26,6 +26,14 @@ function Member() {
     const [arrangeCreateDate, setArrangeCreateDate] = useState(true);
     const [typeArrange, setTypeArrange] = useState('name');
 
+    const [width, setWidth] = useState(0);
+
+    useEffect(() => {
+        const width = window.innerWidth;
+
+        setWidth(width);
+    }, []);
+
     const tmp = useSelector(userSelector);
     const [user, setUser] = useState(tmp);
     useEffect(() => {
@@ -254,41 +262,63 @@ function Member() {
                                     </td>
                                     <td className="px-[10px] py-[6px] w-[12%] border-[1px] border-solid border-[#fff]">
                                         <div className="flex items-center justify-center gap-[10px] text-[#4b4a4a]">
-                                            <Tippy
-                                                placement="bottom-start"
-                                                arrow={false}
-                                                content={
-                                                    <span className="text-[10px] px-[6px] hidden lg:block rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
-                                                        Chỉnh sửa người chơi
-                                                    </span>
-                                                }
-                                            >
-                                                <div
-                                                    onClick={() => handleUpdate(member)}
-                                                    className="px-[4px] cursor-pointer hover:text-[#7588b1]"
-                                                >
-                                                    <BsPencil />
-                                                </div>
-                                            </Tippy>
-                                            <Alert
-                                                funcHandle={() => handleDelete(member)}
-                                                title="Xóa Người Chơi"
-                                                content={`Bạn có chắc chắn muốn xóa người chơi "${member.name}" không?`}
-                                            >
-                                                <Tippy
-                                                    placement="bottom-start"
-                                                    arrow={false}
-                                                    content={
-                                                        <span className="text-[10px] px-[6px] hidden lg:block rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
-                                                            Xóa người chơi
-                                                        </span>
-                                                    }
-                                                >
-                                                    <div className="px-[4px] cursor-pointer hover:text-[#7588b1]">
-                                                        <BsTrash />
+                                            {width < 768 ? (
+                                                <>
+                                                    <div
+                                                        onClick={() => handleUpdate(member)}
+                                                        className="px-[4px] cursor-pointer hover:text-[#7588b1]"
+                                                    >
+                                                        <BsPencil />
                                                     </div>
-                                                </Tippy>
-                                            </Alert>
+                                                    <Alert
+                                                        funcHandle={() => handleDelete(member)}
+                                                        title="Xóa Người Chơi"
+                                                        content={`Bạn có chắc chắn muốn xóa người chơi "${member.name}" không?`}
+                                                    >
+                                                        <div className="px-[4px] cursor-pointer hover:text-[#7588b1]">
+                                                            <BsTrash />
+                                                        </div>
+                                                    </Alert>
+                                                </>
+                                            ) : (
+                                                <>
+                                                    <Tippy
+                                                        placement="bottom-start"
+                                                        arrow={false}
+                                                        content={
+                                                            <span className="text-[10px] px-[6px] hidden lg:block rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
+                                                                Chỉnh sửa người chơi
+                                                            </span>
+                                                        }
+                                                    >
+                                                        <div
+                                                            onClick={() => handleUpdate(member)}
+                                                            className="px-[4px] cursor-pointer hover:text-[#7588b1]"
+                                                        >
+                                                            <BsPencil />
+                                                        </div>
+                                                    </Tippy>
+                                                    <Alert
+                                                        funcHandle={() => handleDelete(member)}
+                                                        title="Xóa Người Chơi"
+                                                        content={`Bạn có chắc chắn muốn xóa người chơi "${member.name}" không?`}
+                                                    >
+                                                        <Tippy
+                                                            placement="bottom-start"
+                                                            arrow={false}
+                                                            content={
+                                                                <span className="text-[10px] px-[6px] hidden lg:block rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
+                                                                    Xóa người chơi
+                                                                </span>
+                                                            }
+                                                        >
+                                                            <div className="px-[4px] cursor-pointer hover:text-[#7588b1]">
+                                                                <BsTrash />
+                                                            </div>
+                                                        </Tippy>
+                                                    </Alert>
+                                                </>
+                                            )}
                                         </div>
                                     </td>
                                 </tr>

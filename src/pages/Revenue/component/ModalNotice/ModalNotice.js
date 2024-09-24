@@ -181,8 +181,8 @@ ${selectorRevenue?.idMember?.total > 0 || !selectorRevenue?.idMember?.total ? 'T
     }, []);
 
     const handleCopy = async () => {
-        navigator.clipboard
-            .writeText(content)
+        navigator?.clipboard
+            ?.writeText(content)
             .then(() => {
                 dispatch(noticeAdminSlice.actions.successNotice('Đã sao chép nội dung'));
 

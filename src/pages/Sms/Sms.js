@@ -55,6 +55,14 @@ function Sms() {
     const [loadingDele, setLoadingDele] = useState(false);
     const [loadingRes, setLoadingRes] = useState(false);
 
+    const [width, setWidth] = useState(0);
+
+    useEffect(() => {
+        const width = window.innerWidth;
+
+        setWidth(width);
+    }, []);
+
     const tmp = useSelector(userSelector);
     const [user, setUser] = useState(tmp);
     useEffect(() => {
@@ -958,36 +966,40 @@ function Sms() {
                                     <td className="px-[10px] py-[8px] w-[8%] border-[1px] border-solid border-[#fff]">
                                         <div className="flex items-center justify-center gap-[10px] text-[#4b4a4a]">
                                             {deleted ? (
-                                                <Alert
-                                                    funcHandle={() => handleRestore(sm)}
-                                                    title="Phục hồi Tin Nhắn"
-                                                    content={`Phục hồi tin nhắn STT #${index + 1}?`}
-                                                >
-                                                    <Tippy
-                                                        placement="bottom-start"
-                                                        arrow={false}
-                                                        content={
-                                                            <span className="text-[10px] px-[6px] hidden lg:block rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
-                                                                Phục hồi tin nhắn
-                                                            </span>
-                                                        }
+                                                width < 768 ? (
+                                                    <Alert
+                                                        funcHandle={() => handleRestore(sm)}
+                                                        title="Phục hồi Tin Nhắn"
+                                                        content={`Phục hồi tin nhắn STT #${index + 1}?`}
                                                     >
                                                         <div className="px-[4px] text-[14px] cursor-pointer hover:text-[#7588b1]">
                                                             <BsArrowCounterclockwise />
                                                         </div>
-                                                    </Tippy>
-                                                </Alert>
+                                                    </Alert>
+                                                ) : (
+                                                    <Alert
+                                                        funcHandle={() => handleRestore(sm)}
+                                                        title="Phục hồi Tin Nhắn"
+                                                        content={`Phục hồi tin nhắn STT #${index + 1}?`}
+                                                    >
+                                                        <Tippy
+                                                            placement="bottom-start"
+                                                            arrow={false}
+                                                            content={
+                                                                <span className="text-[10px] px-[6px] hidden lg:block rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
+                                                                    Phục hồi tin nhắn
+                                                                </span>
+                                                            }
+                                                        >
+                                                            <div className="px-[4px] text-[14px] cursor-pointer hover:text-[#7588b1]">
+                                                                <BsArrowCounterclockwise />
+                                                            </div>
+                                                        </Tippy>
+                                                    </Alert>
+                                                )
                                             ) : (
                                                 <>
-                                                    <Tippy
-                                                        placement="bottom-start"
-                                                        arrow={false}
-                                                        content={
-                                                            <span className="text-[10px] px-[6px] hidden lg:block rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
-                                                                Chỉnh sửa tin nhắn
-                                                            </span>
-                                                        }
-                                                    >
+                                                    {width < 768 ? (
                                                         <div
                                                             onClick={() => {
                                                                 setModalUpdate(true);
@@ -1000,26 +1012,61 @@ function Sms() {
                                                         >
                                                             <BsPencil />
                                                         </div>
-                                                    </Tippy>
-                                                    <Alert
-                                                        funcHandle={() => handleDelete(sm)}
-                                                        title="Xóa Tin Nhắn"
-                                                        content={`Tin nhắn STT #${index + 1} sẽ bị xóa?`}
-                                                    >
+                                                    ) : (
                                                         <Tippy
                                                             placement="bottom-start"
                                                             arrow={false}
                                                             content={
                                                                 <span className="text-[10px] px-[6px] hidden lg:block rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
-                                                                    Xóa tin nhắn
+                                                                    Chỉnh sửa tin nhắn
                                                                 </span>
                                                             }
+                                                        >
+                                                            <div
+                                                                onClick={() => {
+                                                                    setModalUpdate(true);
+                                                                    setSelectorSms({
+                                                                        index: index + 1,
+                                                                        sm,
+                                                                    });
+                                                                }}
+                                                                className="px-[4px] cursor-pointer hover:text-[#7588b1]"
+                                                            >
+                                                                <BsPencil />
+                                                            </div>
+                                                        </Tippy>
+                                                    )}
+                                                    {width < 768 ? (
+                                                        <Alert
+                                                            funcHandle={() => handleDelete(sm)}
+                                                            title="Xóa Tin Nhắn"
+                                                            content={`Tin nhắn STT #${index + 1} sẽ bị xóa?`}
                                                         >
                                                             <div className="px-[4px] cursor-pointer hover:text-[#7588b1]">
                                                                 <BsTrash />
                                                             </div>
-                                                        </Tippy>
-                                                    </Alert>
+                                                        </Alert>
+                                                    ) : (
+                                                        <Alert
+                                                            funcHandle={() => handleDelete(sm)}
+                                                            title="Xóa Tin Nhắn"
+                                                            content={`Tin nhắn STT #${index + 1} sẽ bị xóa?`}
+                                                        >
+                                                            <Tippy
+                                                                placement="bottom-start"
+                                                                arrow={false}
+                                                                content={
+                                                                    <span className="text-[10px] px-[6px] hidden lg:block rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
+                                                                        Xóa tin nhắn
+                                                                    </span>
+                                                                }
+                                                            >
+                                                                <div className="px-[4px] cursor-pointer hover:text-[#7588b1]">
+                                                                    <BsTrash />
+                                                                </div>
+                                                            </Tippy>
+                                                        </Alert>
+                                                    )}
                                                 </>
                                             )}
                                         </div>
