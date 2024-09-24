@@ -2,8 +2,17 @@ import { Link, NavLink } from 'react-router-dom';
 import config from '~/config';
 import { AiFillHome, AiFillMessage, AiFillCalculator } from 'react-icons/ai';
 import { BsPeopleFill } from 'react-icons/bs';
+import { useEffect, useState } from 'react';
 
-function Sidebar() {
+function Sidebar({ setSidebarWidth }) {
+    const [width, setWidth] = useState(0);
+
+    useEffect(() => {
+        const width = window.innerWidth;
+
+        setWidth(width);
+    }, []);
+
     return (
         <div className="flex h-full flex-col">
             <div className="bg-[var(--bg-color-logo)] flex justify-center items-center h-[var(--height-header)]">
@@ -22,6 +31,12 @@ function Sidebar() {
                         <ul className="mt-[10px]">
                             <li>
                                 <NavLink
+                                    onClick={() => {
+                                        if (width < 768) {
+                                            setSidebarWidth('0px');
+                                            document.documentElement.style.setProperty('--width-sidebar', '0px');
+                                        }
+                                    }}
                                     className={(nav) =>
                                         `text-[12px] items-center text-[var(--color-text-sidebar)] font-[650] uppercase px-[16px] py-[8px] flex border-t-[1px] border-[#eaecf0] border-solid ${
                                             nav.isActive
@@ -37,6 +52,12 @@ function Sidebar() {
                             </li>
                             <li>
                                 <NavLink
+                                    onClick={() => {
+                                        if (width < 768) {
+                                            setSidebarWidth('0px');
+                                            document.documentElement.style.setProperty('--width-sidebar', '0px');
+                                        }
+                                    }}
                                     className={(nav) =>
                                         `text-[12px] items-center text-[var(--color-text-sidebar)] font-[650] uppercase px-[16px] py-[8px] flex border-t-[1px] border-[#eaecf0] border-solid ${
                                             nav.isActive
@@ -52,6 +73,12 @@ function Sidebar() {
                             </li>
                             <li>
                                 <NavLink
+                                    onClick={() => {
+                                        if (width < 768) {
+                                            setSidebarWidth('0px');
+                                            document.documentElement.style.setProperty('--width-sidebar', '0px');
+                                        }
+                                    }}
                                     className={(nav) =>
                                         `text-[12px] items-center text-[var(--color-text-sidebar)] font-[650] uppercase px-[16px] py-[8px] flex border-t-[1px] border-[#eaecf0] border-solid ${
                                             nav.isActive
@@ -67,6 +94,12 @@ function Sidebar() {
                             </li>
                             <li>
                                 <NavLink
+                                    onClick={() => {
+                                        if (width < 768) {
+                                            setSidebarWidth('0px');
+                                            document.documentElement.style.setProperty('--width-sidebar', '0px');
+                                        }
+                                    }}
                                     className={(nav) =>
                                         `text-[12px] items-center text-[var(--color-text-sidebar)] font-[650] uppercase px-[16px] py-[8px] flex border-t-[1px] border-b-[1px] border-[#eaecf0] border-solid ${
                                             nav.isActive

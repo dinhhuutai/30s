@@ -92,7 +92,7 @@ function Sms() {
         try {
             const resSms = await axios.post(
                 `${process.env.REACT_APP_API_URL}/v1/sms/findSmsByNameAndPhone/${
-                    user.login.currentUser._id
+                    user.login.currentUser?._id
                 }?idMember=${idMember}&resultDate=${date}&deleted=${deleted}&domain=${domain}&${
                     typeArrange === 'createDate'
                         ? `sortCreateDate=${arrangeCreateDate ? '1' : '-1'}`
@@ -634,7 +634,7 @@ function Sms() {
     return (
         <div>
             <HeaderPage pageCurr={'Quản Lý Tin Nhắn'} />
-            <div className="bg-[var(--color-white)] px-[16px] mt-[12px] py-[14px] pb-[28px] rounded-[6px]">
+            <div className="bg-[var(--color-white)] overflow-hidden w-[100%] px-[16px] mt-[12px] py-[14px] pb-[28px] rounded-[6px]">
                 <div>
                     <button
                         onClick={() => setModalCreate(true)}
@@ -644,20 +644,21 @@ function Sms() {
                     </button>
                 </div>
 
-                <div className="mt-[10px] flex gap-[8px]">
-                    <div>
+                <div className="mt-[10px] flex flex-col lg:flex-row gap-[4px] lg:gap-[8px]">
+                    <div className="w-[100%] lg:w-auto">
                         <DatePicker
+                            wrapperClassName="w-[100%] h-[100%] lg:w-auto"
                             maxDate={new Date()}
                             selected={date}
                             dateFormat="dd-MM-yyyy"
                             onChange={handleDateChange}
-                            className="border-[1px] border-solid px-[6px] py-[4px] outline-none rounded-[4px] text-[12px] border-[#ccc]"
+                            className="border-[1px] w-[100%] h-[100%] lg:w-auto border-solid px-[6px] py-[4px] outline-none rounded-[4px] text-[12px] border-[#ccc]"
                         />
                     </div>
                     <select
                         value={idMember}
                         onChange={handleMember}
-                        className="px-[4px] py-[4px] w-[150px] text-[#000] font-[500] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
+                        className="px-[4px] w-[100%] py-[4px] lg:w-[150px] text-[#000] font-[500] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                     >
                         <option className="font-[500]" value={0}>
                             Tất cả
@@ -666,75 +667,77 @@ function Sms() {
                             return <option key={index} value={`${member._id}`}>{`${member.name}`}</option>;
                         })}
                     </select>
-                    <div className="flex items-center gap-[4px] ml-[10px]">
-                        <input checked={deleted} onChange={(e) => setDeleted(e.target.checked)} type="checkbox" />
-                        <label className="text-[12px] text-[#000]">Đã xóa</label>
-                    </div>
+                    <div className="flex mt-[10px] lg:mt-[0px]">
+                        <div className="flex items-center gap-[4px] lg:ml-[10px] ml-[0px]">
+                            <input checked={deleted} onChange={(e) => setDeleted(e.target.checked)} type="checkbox" />
+                            <label className="text-[12px] text-[#000]">Đã xóa</label>
+                        </div>
 
-                    <div className="ml-[4px]">
-                        {deleted ? (
-                            <Alert
-                                funcHandle={() => handleRestoreMany()}
-                                title="Phục hồi Tin Nhắn"
-                                content={`Phục hồi các tin nhắn?`}
-                            >
-                                <button
-                                    disabled={!(listIdSelector.length > 0) || loadingRes}
-                                    className={`gap-[6px] uppercase font-[620] text-[12px] w-[100px] h-[30px] flex justify-center items-center bg-[#3892ad] ${
-                                        listIdSelector.length > 0 || loadingRes
-                                            ? 'hover:opacity-[.9] active:opacity-[.7]'
-                                            : 'opacity-[.6]'
-                                    } rounded-[4px] text-[#fff]`}
+                        <div className="ml-[18px] lg:ml-[4px]">
+                            {deleted ? (
+                                <Alert
+                                    funcHandle={() => handleRestoreMany()}
+                                    title="Phục hồi Tin Nhắn"
+                                    content={`Phục hồi các tin nhắn?`}
                                 >
-                                    {loadingRes ? (
-                                        <div className="text-[20px] animate-loading">
-                                            <BsArrowRepeat />
-                                        </div>
-                                    ) : (
-                                        <>
-                                            <div className="text-[14px]">
-                                                <BsArrowCounterclockwise />
+                                    <button
+                                        disabled={!(listIdSelector.length > 0) || loadingRes}
+                                        className={`gap-[6px] uppercase font-[620] text-[12px] w-[100px] h-[30px] flex justify-center items-center bg-[#3892ad] ${
+                                            listIdSelector.length > 0 || loadingRes
+                                                ? 'hover:opacity-[.9] active:opacity-[.7]'
+                                                : 'opacity-[.6]'
+                                        } rounded-[4px] text-[#fff]`}
+                                    >
+                                        {loadingRes ? (
+                                            <div className="text-[20px] animate-loading">
+                                                <BsArrowRepeat />
                                             </div>
-                                            Phục hồi
-                                        </>
-                                    )}
-                                </button>
-                            </Alert>
-                        ) : (
-                            <Alert
-                                funcHandle={() => handleDeleteMany()}
-                                title="Xóa Tin Nhắn"
-                                content={`Các tin nhắn đã chọn sẽ bị xóa?`}
-                            >
-                                <button
-                                    disabled={!(listIdSelector.length > 0) || loadingDele}
-                                    className={`gap-[6px] uppercase font-[620] text-[12px] w-[70px] h-[30px] flex justify-center items-center bg-[#d9534f] ${
-                                        listIdSelector.length > 0 || loadingDele
-                                            ? 'hover:opacity-[.9] active:opacity-[.7]'
-                                            : 'opacity-[.6]'
-                                    } rounded-[4px] text-[#fff]`}
+                                        ) : (
+                                            <>
+                                                <div className="text-[14px]">
+                                                    <BsArrowCounterclockwise />
+                                                </div>
+                                                Phục hồi
+                                            </>
+                                        )}
+                                    </button>
+                                </Alert>
+                            ) : (
+                                <Alert
+                                    funcHandle={() => handleDeleteMany()}
+                                    title="Xóa Tin Nhắn"
+                                    content={`Các tin nhắn đã chọn sẽ bị xóa?`}
                                 >
-                                    {loadingDele ? (
-                                        <div className="text-[20px] animate-loading">
-                                            <BsArrowRepeat />
-                                        </div>
-                                    ) : (
-                                        <>
-                                            <BsTrash />
-                                            Xóa
-                                        </>
-                                    )}
-                                </button>
-                            </Alert>
-                        )}
+                                    <button
+                                        disabled={!(listIdSelector.length > 0) || loadingDele}
+                                        className={`gap-[6px] uppercase font-[620] text-[12px] w-[70px] h-[30px] flex justify-center items-center bg-[#d9534f] ${
+                                            listIdSelector.length > 0 || loadingDele
+                                                ? 'hover:opacity-[.9] active:opacity-[.7]'
+                                                : 'opacity-[.6]'
+                                        } rounded-[4px] text-[#fff]`}
+                                    >
+                                        {loadingDele ? (
+                                            <div className="text-[20px] animate-loading">
+                                                <BsArrowRepeat />
+                                            </div>
+                                        ) : (
+                                            <>
+                                                <BsTrash />
+                                                Xóa
+                                            </>
+                                        )}
+                                    </button>
+                                </Alert>
+                            )}
+                        </div>
                     </div>
                 </div>
 
-                <div className="mt-[26px] flex justify-between">
+                <div className="mt-[26px] w-[300px] lg:w-auto gap-[6px] lg:gap-[0px] flex flex-col lg:flex-row justify-between">
                     <div className="">
                         <button
                             onClick={() => setDomain('mn')}
-                            className={`text-[12px] font-[600] rounded-tl-[6px] uppercase px-[18px] py-[5px] border-[1px] border-solid border-[#ccc] ${
+                            className={`text-[12px] font-[600] rounded-tl-[6px] uppercase px-[14px] py-[5px] border-[1px] border-solid border-[#ccc] ${
                                 domain === 'mn' ? 'bg-[#fff]' : 'bg-[#9fa8bc]'
                             }`}
                         >
@@ -742,7 +745,7 @@ function Sms() {
                         </button>
                         <button
                             onClick={() => setDomain('mt')}
-                            className={`text-[12px] font-[600] uppercase px-[18px] py-[5px] border-[1px] border-solid border-[#ccc] ${
+                            className={`text-[12px] font-[600] uppercase px-[14px] py-[5px] border-[1px] border-solid border-[#ccc] ${
                                 domain === 'mt' ? 'bg-[#fff]' : 'bg-[#9fa8bc]'
                             }`}
                         >
@@ -750,7 +753,7 @@ function Sms() {
                         </button>
                         <button
                             onClick={() => setDomain('mb')}
-                            className={`text-[12px] font-[600] uppercase px-[18px] py-[5px] border-[1px] border-solid border-[#ccc] ${
+                            className={`text-[12px] font-[600] uppercase px-[14px] py-[5px] border-[1px] border-solid border-[#ccc] ${
                                 domain === 'mb' ? 'bg-[#fff]' : 'bg-[#9fa8bc]'
                             }`}
                         >
@@ -758,7 +761,7 @@ function Sms() {
                         </button>
                         <button
                             onClick={() => setDomain('other')}
-                            className={`text-[12px] font-[600] rounded-tr-[6px] uppercase px-[18px] py-[5px] border-[1px] border-solid border-[#ccc] ${
+                            className={`text-[12px] font-[600] rounded-tr-[6px] uppercase px-[14px] py-[5px] border-[1px] border-solid border-[#ccc] ${
                                 domain === 'other' ? 'bg-[#fff]' : 'bg-[#9fa8bc]'
                             }`}
                         >
@@ -779,7 +782,7 @@ function Sms() {
                 </div>
 
                 <div className="w-full mt-[4px] overflow-x-auto">
-                    <table className="w-full rounded-[6px] overflow-hidden">
+                    <table className="lg:w-full w-[900px] rounded-[6px] overflow-hidden">
                         <thead>
                             <tr className="text-[12px] w-[100%] bg-[#d8dce3]">
                                 <td className="w-[3%] py-[8px] border-[1px] border-solid border-[#fff]">
@@ -964,7 +967,7 @@ function Sms() {
                                                         placement="bottom-start"
                                                         arrow={false}
                                                         content={
-                                                            <span className="text-[10px] px-[6px] rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
+                                                            <span className="text-[10px] px-[6px] hidden lg:block rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
                                                                 Phục hồi tin nhắn
                                                             </span>
                                                         }
@@ -980,7 +983,7 @@ function Sms() {
                                                         placement="bottom-start"
                                                         arrow={false}
                                                         content={
-                                                            <span className="text-[10px] px-[6px] rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
+                                                            <span className="text-[10px] px-[6px] hidden lg:block rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
                                                                 Chỉnh sửa tin nhắn
                                                             </span>
                                                         }
@@ -1007,7 +1010,7 @@ function Sms() {
                                                             placement="bottom-start"
                                                             arrow={false}
                                                             content={
-                                                                <span className="text-[10px] px-[6px] rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
+                                                                <span className="text-[10px] px-[6px] hidden lg:block rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
                                                                     Xóa tin nhắn
                                                                 </span>
                                                             }

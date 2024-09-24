@@ -41,6 +41,24 @@ function App() {
 
                     <Route path="*" element={<Navigate to={config.routes.dashboard} />} />
                 </Route>
+
+                {/* {routes.map((route, index) => {
+                    return (
+                        <Route
+                            key={index}
+                            path={route.path}
+                            element={
+                                route.isPageLogin ? (
+                                    <route.component />
+                                ) : (
+                                    <DefaultLayout>
+                                        <route.component />
+                                    </DefaultLayout>
+                                )
+                            }
+                        />
+                    );
+                })} */}
             </Routes>
         </Router>
     );

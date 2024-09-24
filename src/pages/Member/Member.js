@@ -109,21 +109,21 @@ function Member() {
                     </button>
                 </div>
 
-                <div className="mt-[16px] flex gap-[10px]">
+                <div className="mt-[16px] flex flex-col lg:flex-row gap-[10px]">
                     <input
                         value={nameSearch}
                         onChange={(e) => setNameSearch(e.target.value)}
                         placeholder="Tên, SĐT"
-                        className="py-[4px] px-[8px] outline-none text-[12px] border-[1px] border-solid border-[#ccc] rounded-[4px]"
+                        className="py-[4px] w-[100%] lg:w-auto px-[8px] outline-none text-[12px] border-[1px] border-solid border-[#ccc] rounded-[4px]"
                     />
-                    <button className="py-[4px] px-[8px] border-[1px] border-solid flex items-center gap-[4px] border-[#ccc] rounded-[4px]">
+                    <button className="py-[4px] w-[60px] px-[8px] border-[1px] border-solid flex items-center gap-[4px] border-[#ccc] rounded-[4px]">
                         <AiOutlineSearch />
                         <span className="uppercase text-[12px] font-[640] text-[#000]">xem</span>
                     </button>
                 </div>
 
                 <div className="w-full mt-[26px] overflow-x-auto">
-                    <table className="w-full rounded-[6px] overflow-hidden">
+                    <table className="lg:w-full w-[900px] rounded-[6px] overflow-hidden">
                         <thead>
                             <tr className="text-[12px] w-[100%] bg-[#d8dce3]">
                                 <th className="w-[5%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">
@@ -258,7 +258,7 @@ function Member() {
                                                 placement="bottom-start"
                                                 arrow={false}
                                                 content={
-                                                    <span className="text-[10px] px-[6px] rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
+                                                    <span className="text-[10px] px-[6px] hidden lg:block rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
                                                         Chỉnh sửa người chơi
                                                     </span>
                                                 }
@@ -279,7 +279,7 @@ function Member() {
                                                     placement="bottom-start"
                                                     arrow={false}
                                                     content={
-                                                        <span className="text-[10px] px-[6px] rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
+                                                        <span className="text-[10px] px-[6px] hidden lg:block rounded-[4px] bg-[#000] text-[#fff] py-[2px]">
                                                             Xóa người chơi
                                                         </span>
                                                     }

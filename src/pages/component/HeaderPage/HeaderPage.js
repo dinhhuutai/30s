@@ -6,7 +6,7 @@ function HeaderPage({ pageCurr }) {
     const navigate = useNavigate();
 
     return (
-        <div className="text-[12px] flex items-center">
+        <div className="text-[12px] w-[300px] w-min-[200px] lg:w-auto flex items-center">
             <div
                 onClick={() => navigate(config.routes.dashboard)}
                 className="flex items-center cursor-pointer text-[#545b68] hover:text-[#3d424c]"

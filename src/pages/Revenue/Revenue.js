@@ -241,23 +241,24 @@ function Revenue() {
                         )}
                     </button>
                 </div>
-                <div className="mt-[10px] flex gap-[8px]">
-                    <div>
+                <div className="mt-[10px] flex flex-col lg:flex-row gap-[8px]">
+                    <div className="w-[100%] lg:w-auto">
                         <DatePicker
+                            wrapperClassName="w-[100%] h-[100%] lg:w-auto"
                             maxDate={new Date()}
                             selected={date}
                             dateFormat="dd-MM-yyyy"
                             onChange={handleDateChange}
-                            className="border-[1px] border-solid px-[6px] py-[4px] outline-none rounded-[4px] text-[12px] border-[#ccc]"
+                            className="border-[1px] w-[100%] h-[100%] border-solid px-[6px] py-[4px] outline-none rounded-[4px] text-[12px] border-[#ccc]"
                         />
                     </div>
 
                     <select
                         value={idMember}
                         onChange={handleMember}
-                        className="px-[4px] py-[4px] w-[150px] text-[#000] font-[500] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
+                        className="px-[4px] py-[4px] w-[100%] lg:w-[150px] text-[#000] font-[500] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                     >
-                        <option className="font-[500]" value={0}>
+                        <option className="font-[500] w-[100%]" value={0}>
                             Tất cả
                         </option>
                         {members?.map((member, index) => {
@@ -265,7 +266,7 @@ function Revenue() {
                         })}
                     </select>
 
-                    <div className="flex items-center gap-[4px] ml-[10px]">
+                    <div className="flex items-center gap-[4px] lg:ml-[10px]">
                         <input
                             checked={showDiem234con}
                             onChange={(e) => setShowDiem234con(e.target.checked)}

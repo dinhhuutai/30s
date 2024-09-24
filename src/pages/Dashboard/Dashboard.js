@@ -1,6 +1,6 @@
 import axios from 'axios';
 import moment from 'moment';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import TableKqxsMN from './component/TableKqxsMN';
@@ -162,17 +162,18 @@ function Dashboard() {
         <div>
             <HeaderPage pageCurr={'Kết Quả Xổ Số'} />
             <div className="bg-[var(--color-white)] px-[16px] mt-[12px] py-[14px] pb-[28px] rounded-[6px]">
-                <div>
+                <div className="w-[100%]">
                     <DatePicker
+                        wrapperClassName="w-[100%] lg:w-auto"
                         maxDate={new Date()}
                         selected={date}
                         dateFormat="dd-MM-yyyy"
                         onChange={handleDateChange}
-                        className="border-[1px] border-solid px-[6px] py-[4px] outline-none rounded-[4px] text-[12px] border-[#ccc]"
+                        className="border-[1px] w-[100%] border-solid px-[6px] py-[4px] outline-none rounded-[4px] text-[12px] border-[#ccc]"
                     />
                 </div>
-    
-                <div className="grid grid-cols-3 gap-[10px] mt-[30px]">
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-[30px] lg:gap-[10px] mt-[30px]">
                     <div className="text-center">
                         <h2 className="text-[16px] uppercase font-[650]">miền nam</h2>
                         {kqxsMN && <TableKqxsMN kqxsMN={kqxsMN} day={day} />}

@@ -405,7 +405,7 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
             <div className="fixed flex justify-center overflow-y-auto overflow-x-hidden top-0 left-0 right-0 bottom-0 pb-[60px] opacity-[1] z-[999]">
                 <div
                     onClick={(e) => e.stopPropagation()}
-                    className="bg-[#fff] animate-modalDownSlide text-[12px] w-[900px] h-fit pb-[20px] shadow-xl rounded-[6px] mt-[30px] py-[14px]"
+                    className="bg-[#fff] animate-modalDownSlide text-[12px] lg:w-[900px] w-[400px] h-fit pb-[20px] shadow-xl rounded-[6px] mt-[30px] py-[14px]"
                 >
                     <div className="flex justify-between items-center pb-[12px] border-b-[1px] border-solid border-[#f0f0f0] px-[26px]">
                         <h1 className="text-[14px] capitalize text-[#000] font-[620]">{`Chỉnh sửa tin nhắn STT #${selectorSms.index} - ${selectorSms?.sm?.idMember?.name}`}</h1>
@@ -413,7 +413,7 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
                             <AiOutlineClose />
                         </div>
                     </div>
-                    <div className="mt-[16px] px-[26px] flex justify-between">
+                    <div className="mt-[16px] px-[26px] flex flex-col lg:flex-row justify-between">
                         <div>
                             <label className="text-[12px] font-[600]">
                                 Người chơi <span className="text-[#e92d2d] ml-[2px]">*</span>
@@ -432,7 +432,7 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
                                 })}
                             </select>
                         </div>
-                        <div className="flex gap-[6px]">
+                        <div className="flex gap-[6px] mt-[10px] lg:mt-[0px]">
                             <button
                                 disabled={loading}
                                 onClick={() => handleSave(true)}
@@ -472,7 +472,7 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
                         </div>
                     </div>
 
-                    <div className="mt-[16px] px-[10px] flex gap-[20px]">
+                    <div className="mt-[16px] px-[10px] flex flex-col lg:flex-row gap-[20px]">
                         <div className="flex flex-col flex-1">
                             <label>Nội dung gốc </label>
                             <textarea
@@ -553,8 +553,8 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
                         </div>
                     </div>
 
-                    <div className="mt-[16px] px-[10px]">
-                        <div className="w-full mt-[26px] overflow-x-auto h-[300px] overflow-y-auto">
+                    <div className="lg:mt-[16px] mt-[10px] mx-[10px] overflow-x-auto overflow-hidden">
+                        <div className="lg:w-full w-[900px] lg:mt-[26px] h-[300px] overflow-y-auto">
                             <table className="w-full rounded-[6px] overflow-hidden">
                                 <thead>
                                     <tr className="text-[11px] w-[100%] bg-[#d8dce3]">

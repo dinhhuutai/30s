@@ -10,16 +10,29 @@ import authSlice from '~/redux/slices/authSlice';
 import axios from 'axios';
 import ModalInfor from './component/ModalInfor';
 
-function Header() {
+function Header({ sidebarWidth, setSidebarWidth }) {
     const tmp = useSelector(userSelector);
     const [user, setUser] = useState(tmp);
     const [downUser, setDownUser] = useState(false);
-    const [sidebarWidth, setSidebarWidth] = useState('220px');
     const [modalInfor, setModalInfor] = useState(false);
+
+    const [width, setWidth] = useState(0);
 
     useEffect(() => {
         setUser(tmp);
     }, [tmp]);
+
+    useEffect(() => {
+        const width = window.innerWidth;
+
+        setWidth(width);
+
+        if (width < 768) {
+            const newWidth = sidebarWidth === '0px' ? '220px' : '0px';
+            setSidebarWidth(newWidth);
+            document.documentElement.style.setProperty('--width-sidebar', newWidth);
+        }
+    }, []);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -47,13 +60,19 @@ function Header() {
     };
 
     const handleSidebar = () => {
-        const newWidth = sidebarWidth === '0px' ? '220px' : '0px';
-        setSidebarWidth(newWidth);
-        document.documentElement.style.setProperty('--width-sidebar', newWidth);
+        if (width < 768) {
+            const newWidth = sidebarWidth === '0px' ? '180px' : '0px';
+            setSidebarWidth(newWidth);
+            document.documentElement.style.setProperty('--width-sidebar', newWidth);
+        } else {
+            const newWidth = sidebarWidth === '0px' ? '220px' : '0px';
+            setSidebarWidth(newWidth);
+            document.documentElement.style.setProperty('--width-sidebar', newWidth);
+        }
     };
 
     return (
-        <div className="flex justify-between items-center px-[30px] h-full">
+        <div className="flex justify-between lg:w-auto overflow-hidden items-center px-[30px] h-full">
             <div onClick={handleSidebar} className="text-[24px] cursor-pointer">
                 <AiOutlineMenu />
             </div>
@@ -99,7 +118,7 @@ function Header() {
                     <div className="cursor-pointer overflow-hidden h-[20px] w-[20px] bg-[#f3e3e6] rounded-[50%] text-[#544f4f] flex items-center justify-center">
                         <AiOutlineUser />
                     </div>
-                    <div className="text-[14px]">{user.login.currentUser.name}</div>
+                    <div className="text-[14px]">{user.login.currentUser?.name}</div>
 
                     <div className="">{!downUser ? <BsFillCaretDownFill /> : <BsFillCaretUpFill />}</div>
                 </button>

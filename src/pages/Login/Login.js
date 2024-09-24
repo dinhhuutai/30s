@@ -65,12 +65,12 @@ function Login() {
 
     return (
         <div
-            className="min-h-screen w-full bg-cover bg-center bg-repeat justify-center items-center flex fixed top-0 left-0 ring-0 bottom-0"
+            className="min-h-screen w-full bg-cover bg-center bg-repeat justify-center lg:items-center flex fixed top-0 left-0 ring-0 bottom-0"
             style={{ backgroundImage: `url(${bgLogin})` }}
         >
-            <div className="min-h-screen opacity-[.75] w-full bg-[#0e1013] fixed top-0 left-0 ring-0 bottom-0"></div>
+            <div className="min-h-screen opacity-[1] lg:opacity-[.75] w-full lg:bg-[#0e1013] bg-[#262b36] fixed top-0 left-0 ring-0 bottom-0"></div>
 
-            <div className="w-[400px] bg-[#262b36e6] text-[#fff] rounded-[6px] px-[40px] pt-[24px] pb-[14px] opacity-[.75]">
+            <div className="w-[400px] lg:bg-[#262b36e6] text-[#fff] rounded-[6px] px-[40px] pt-[24px] pb-[14px] opacity-[.75]">
                 <div className="flex flex-col items-center">
                     <h1 className="text-[26px] hover:text-[var(--color-logo-hover)] text-[var(--color-logo)] uppercase font-[620]">
                         10S.BIZ

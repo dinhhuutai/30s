@@ -19,7 +19,7 @@ function Notice() {
     };
 
     return (
-        <div className="fixed z-[9999999]">
+        <div className="fixed z-[9999999] shadow-lg">
             {notice?.hidden && (
                 <div
                     className={`${notice?.state ? 'animate-noticeSlideLeft' : 'animate-noticeSlideRight'} ${
