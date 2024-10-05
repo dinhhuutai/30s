@@ -1,3 +1,4 @@
+import errorDai from './errorDai';
 import findListOverturn from './findListOverturn';
 import findListTwoNum from './findListTwoNum';
 import findPosFirstAndTwo from './findPosFirstAndTwo';
@@ -61,7 +62,21 @@ function convertContentDetail(content, date) {
     let kth = 0;
 
     while (kt) {
-        const pos = findPosFirstAndTwo(contentTmp);
+        if (contentTmp[0] === 'b' && contentTmp[1] === 'l') {
+            contentTmp = 'bi' + contentTmp.slice(2);
+        }
+        const { firstTwoPositions, changeDaiBacLieu, changeBaoDao } = findPosFirstAndTwo(contentTmp);
+
+        const pos = firstTwoPositions;
+        if (changeDaiBacLieu) {
+            contentTmp = contentTmp.slice(0, pos[1]) + 'bi' + contentTmp.slice(pos[1] + 2);
+        }
+        if (changeBaoDao.length > 0) {
+            // eslint-disable-next-line no-loop-func
+            changeBaoDao.map((item, index) => {
+                contentTmp = contentTmp.slice(0, item + 2 * index) + 'bdao' + contentTmp.slice(item + 2 * index + 2);
+            });
+        }
 
         let firstArrLength = arr.length;
 
@@ -100,6 +115,7 @@ function convertContentDetail(content, date) {
         let ddCh = true;
 
         let cbBl = false;
+        let cbBld = false;
 
         let dai = '';
 
@@ -110,6 +126,8 @@ function convertContentDetail(content, date) {
                 dai = dai.replace(/[.,:]/g, '');
 
                 dai = handleDai(dai, mien, dayOfWeek);
+
+                errorSyntax = errorDai(dai, mien, dayOfWeek);
                 break;
             }
         }
@@ -123,6 +141,7 @@ function convertContentDetail(content, date) {
                 mangSo.push(so.toString());
                 so = '';
                 cbBl = false;
+                cbBld = false;
             }
 
             if (mangSo.length > 0 && fKdanh && cloChild[i] !== '.' && !isFinite(Number(cloChild[i]))) {
@@ -200,6 +219,20 @@ function convertContentDetail(content, date) {
 
                     let daiTmps = findListTwoNum(dai);
 
+                    if (dai.length === 1) {
+                        if (
+                            kdSS === 'dx' ||
+                            kdSS === 'đx' ||
+                            kdSS === 'đax' ||
+                            kdSS === 'daxien' ||
+                            kdSS === 'dxien' ||
+                            kdSS === 'dax'
+                        ) {
+                            errorSyntax = true;
+                            console.log(123);
+                        }
+                    }
+
                     if (dai.length > 2) {
                         // eslint-disable-next-line no-loop-func
                         daiTmps.map((daiTmp) => {
@@ -215,10 +248,29 @@ function convertContentDetail(content, date) {
                                     soDa[1].length < 2
                                 ) {
                                     errorSyntax = true;
+                                    console.log(123);
+                                }
+
+                                const daiTmpContent = [...daiTmp];
+
+                                if (daiTmpContent.includes('br')) {
+                                    daiTmpContent[daiTmpContent.indexOf('br')] = 'btr';
+                                } else if (daiTmpContent.includes('bi')) {
+                                    daiTmpContent[daiTmpContent.indexOf('bi')] = 'bl';
+                                } else if (daiTmpContent.includes('bu')) {
+                                    daiTmpContent[daiTmpContent.indexOf('bu')] = 'bd';
+                                } else if (daiTmpContent.includes('lt')) {
+                                    daiTmpContent[daiTmpContent.indexOf('lt')] = 'dl';
+                                } else if (daiTmpContent.includes('dg')) {
+                                    daiTmpContent[daiTmpContent.indexOf('dg')] = 'dn';
+                                } else if (daiTmpContent.includes('qg')) {
+                                    daiTmpContent[daiTmpContent.indexOf('qg')] = 'qn';
+                                } else if (daiTmpContent.includes('do')) {
+                                    daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
                                 }
 
                                 const obj = {
-                                    content: `${daiTmp}.${soDa[0]},${soDa[1]}.${kdanhMain}.${gtien}ngan`,
+                                    content: `${daiTmpContent}.${soDa[0]},${soDa[1]}.${kdanhMain}.${gtien}ngan`,
                                     domain: mien,
                                     province: daiTmp,
                                     number: soDa,
@@ -230,27 +282,46 @@ function convertContentDetail(content, date) {
 
                                 arr = [...arr, obj];
 
-                                console.log(`${daiTmp}.${soDa[0]},${soDa[1]}.${kdanhMain}.${gtien}ngan`);
+                                console.log(`${daiTmpContent},${soDa[1]}.${kdanhMain}.${gtien}ngan`);
                             });
                         });
                     } else {
                         // eslint-disable-next-line no-loop-func
                         mangSoDa.map((soDa) => {
                             if (
-                                kdSS === 'dx' ||
-                                kdSS === 'đx' ||
-                                kdSS === 'đax' ||
-                                kdSS === 'daxien' ||
-                                kdSS === 'dxien' ||
-                                kdSS === 'dax' ||
+                                kdSS === 'dat' ||
+                                kdSS === 'dathang' ||
+                                kdSS === 'dath' ||
+                                kdSS === 'dth' ||
+                                kdSS === 'dthang' ||
+                                kdSS === 'đat' ||
                                 soDa[0].length < 2 ||
                                 soDa[1].length < 2
                             ) {
                                 errorSyntax = true;
+                                console.log(123);
+                            }
+
+                            const daiTmpContent = [...dai];
+
+                            if (daiTmpContent.includes('br')) {
+                                daiTmpContent[daiTmpContent.indexOf('br')] = 'btr';
+                            } else if (daiTmpContent.includes('bi')) {
+                                daiTmpContent[daiTmpContent.indexOf('bi')] = 'bl';
+                            } else if (daiTmpContent.includes('bu')) {
+                                daiTmpContent[daiTmpContent.indexOf('bu')] = 'bd';
+                            } else if (daiTmpContent.includes('lt')) {
+                                daiTmpContent[daiTmpContent.indexOf('lt')] = 'dl';
+                            } else if (daiTmpContent.includes('dg')) {
+                                daiTmpContent[daiTmpContent.indexOf('dg')] = 'dn';
+                            } else if (daiTmpContent.includes('qg')) {
+                                daiTmpContent[daiTmpContent.indexOf('qg')] = 'qn';
+                            } else if (daiTmpContent.includes('do')) {
+                                daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
                             }
 
                             const obj = {
-                                content: `${dai}.${soDa[0]},${soDa[1]}.${kdanhMain}.${gtien}ngan`,
+                                content: `${daiTmpContent}.${soDa[0]},${soDa[1]}.${kdanhMain}.${gtien}ngan`,
                                 domain: mien,
                                 province: dai,
                                 number: soDa,
@@ -262,7 +333,7 @@ function convertContentDetail(content, date) {
 
                             arr = [...arr, obj];
 
-                            console.log(`${dai}.${soDa[0]},${soDa[1]}.${kdanhMain}.${gtien}ngan`);
+                            console.log(`${daiTmpContent}.${soDa[0]},${soDa[1]}.${kdanhMain}.${gtien}ngan`);
                         });
                     }
                 } else {
@@ -278,6 +349,40 @@ function convertContentDetail(content, date) {
                             kdSS === 'baol' ||
                             kdSS === 'baolô') &&
                         cbBl
+                    ) {
+                        mangSo = handleListNumComboBao(mangSo);
+                    }
+
+                    if (
+                        (kdSS === 'dl' ||
+                            kdSS === 'dlo' ||
+                            kdSS === 'ld' ||
+                            kdSS === 'lod' ||
+                            kdSS === 'db' ||
+                            kdSS === 'đb' ||
+                            kdSS === 'dbl' ||
+                            kdSS === 'đbl' ||
+                            kdSS === 'dblo' ||
+                            kdSS === 'đblô' ||
+                            kdSS === 'daobaolo' ||
+                            kdSS === 'daobaolô' ||
+                            kdSS === 'blodao' ||
+                            kdSS === 'daoblo' ||
+                            kdSS === 'baolodao' ||
+                            kdSS === 'daobaolo' ||
+                            kdSS === 'bldao' ||
+                            kdSS === 'daobl' ||
+                            kdSS === 'bdao' ||
+                            kdSS === 'daob' ||
+                            kdSS === 'baoldao' ||
+                            kdSS === 'daobaol' ||
+                            kdSS === 'baodao' ||
+                            kdSS === 'daobao' ||
+                            kdSS === 'daolo' ||
+                            kdSS === 'lodao' ||
+                            kdSS === 'bđao' ||
+                            kdSS === 'bld') &&
+                        cbBld
                     ) {
                         mangSo = handleListNumComboBao(mangSo);
                     }
@@ -302,8 +407,26 @@ function convertContentDetail(content, date) {
                         ) {
                             kdanhMain = 'baolo';
 
+                            const daiTmpContent = [...dai];
+
+                            if (daiTmpContent.includes('br')) {
+                                daiTmpContent[daiTmpContent.indexOf('br')] = 'btr';
+                            } else if (daiTmpContent.includes('bi')) {
+                                daiTmpContent[daiTmpContent.indexOf('bi')] = 'bl';
+                            } else if (daiTmpContent.includes('bu')) {
+                                daiTmpContent[daiTmpContent.indexOf('bu')] = 'bd';
+                            } else if (daiTmpContent.includes('lt')) {
+                                daiTmpContent[daiTmpContent.indexOf('lt')] = 'dl';
+                            } else if (daiTmpContent.includes('dg')) {
+                                daiTmpContent[daiTmpContent.indexOf('dg')] = 'dn';
+                            } else if (daiTmpContent.includes('qg')) {
+                                daiTmpContent[daiTmpContent.indexOf('qg')] = 'qn';
+                            } else if (daiTmpContent.includes('do')) {
+                                daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
+                            }
+
                             const obj = {
-                                content: `${dai}.${eSo}.${kdanhMain}.${gtien}ngan`,
+                                content: `${daiTmpContent}.${eSo}.${kdanhMain}.${gtien}ngan`,
                                 domain: mien,
                                 province: dai,
                                 number: [eSo],
@@ -357,9 +480,29 @@ function convertContentDetail(content, date) {
                             mangSoDao.map((soDao) => {
                                 if (soDao.length < 2) {
                                     errorSyntax = true;
+                                    console.log(123);
                                 }
+
+                                const daiTmpContent = [...dai];
+
+                                if (daiTmpContent.includes('br')) {
+                                    daiTmpContent[daiTmpContent.indexOf('br')] = 'btr';
+                                } else if (daiTmpContent.includes('bi')) {
+                                    daiTmpContent[daiTmpContent.indexOf('bi')] = 'bl';
+                                } else if (daiTmpContent.includes('bu')) {
+                                    daiTmpContent[daiTmpContent.indexOf('bu')] = 'bd';
+                                } else if (daiTmpContent.includes('lt')) {
+                                    daiTmpContent[daiTmpContent.indexOf('lt')] = 'dl';
+                                } else if (daiTmpContent.includes('dg')) {
+                                    daiTmpContent[daiTmpContent.indexOf('dg')] = 'dn';
+                                } else if (daiTmpContent.includes('qg')) {
+                                    daiTmpContent[daiTmpContent.indexOf('qg')] = 'qn';
+                                } else if (daiTmpContent.includes('do')) {
+                                    daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
+                                }
+
                                 const obj = {
-                                    content: `${dai}.${soDao}.${kdanhMain}.${gtien}ngan`,
+                                    content: `${daiTmpContent}.${soDao}.${kdanhMain}.${gtien}ngan`,
                                     domain: mien,
                                     province: dai,
                                     number: [soDao],
@@ -373,6 +516,8 @@ function convertContentDetail(content, date) {
 
                                 console.log(`${dai}.${soDao}.${kdanhMain}.${gtien}ngan`);
                             });
+
+                            cbBld = true;
                         }
 
                         if (
@@ -391,8 +536,30 @@ function convertContentDetail(content, date) {
                         ) {
                             kdanhMain = 'dauduoi';
 
+                            if (eSo.length !== 2) {
+                                errorSyntax = true;
+                            }
+
+                            const daiTmpContent = [...dai];
+
+                            if (daiTmpContent.includes('br')) {
+                                daiTmpContent[daiTmpContent.indexOf('br')] = 'btr';
+                            } else if (daiTmpContent.includes('bi')) {
+                                daiTmpContent[daiTmpContent.indexOf('bi')] = 'bl';
+                            } else if (daiTmpContent.includes('bu')) {
+                                daiTmpContent[daiTmpContent.indexOf('bu')] = 'bd';
+                            } else if (daiTmpContent.includes('lt')) {
+                                daiTmpContent[daiTmpContent.indexOf('lt')] = 'dl';
+                            } else if (daiTmpContent.includes('dg')) {
+                                daiTmpContent[daiTmpContent.indexOf('dg')] = 'dn';
+                            } else if (daiTmpContent.includes('qg')) {
+                                daiTmpContent[daiTmpContent.indexOf('qg')] = 'qn';
+                            } else if (daiTmpContent.includes('do')) {
+                                daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
+                            }
+
                             const obj = {
-                                content: `${dai}.${eSo}.${kdanhMain}.${gtien}ngan`,
+                                content: `${daiTmpContent}.${eSo}.${kdanhMain}.${gtien}ngan`,
                                 domain: mien,
                                 province: dai,
                                 number: [eSo],
@@ -425,8 +592,30 @@ function convertContentDetail(content, date) {
                         ) {
                             kdanhMain = 'xiuchu';
 
+                            if (eSo.length !== 3) {
+                                errorSyntax = true;
+                            }
+
+                            const daiTmpContent = [...dai];
+
+                            if (daiTmpContent.includes('br')) {
+                                daiTmpContent[daiTmpContent.indexOf('br')] = 'btr';
+                            } else if (daiTmpContent.includes('bi')) {
+                                daiTmpContent[daiTmpContent.indexOf('bi')] = 'bl';
+                            } else if (daiTmpContent.includes('bu')) {
+                                daiTmpContent[daiTmpContent.indexOf('bu')] = 'bd';
+                            } else if (daiTmpContent.includes('lt')) {
+                                daiTmpContent[daiTmpContent.indexOf('lt')] = 'dl';
+                            } else if (daiTmpContent.includes('dg')) {
+                                daiTmpContent[daiTmpContent.indexOf('dg')] = 'dn';
+                            } else if (daiTmpContent.includes('qg')) {
+                                daiTmpContent[daiTmpContent.indexOf('qg')] = 'qn';
+                            } else if (daiTmpContent.includes('do')) {
+                                daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
+                            }
+
                             const obj = {
-                                content: `${dai}.${eSo}.${kdanhMain}.${gtien}ngan`,
+                                content: `${daiTmpContent}.${eSo}.${kdanhMain}.${gtien}ngan`,
                                 domain: mien,
                                 province: dai,
                                 number: [eSo],
@@ -465,8 +654,30 @@ function convertContentDetail(content, date) {
                         ) {
                             kdanhMain = 'xiuchudau';
 
+                            if (eSo.length !== 3) {
+                                errorSyntax = true;
+                            }
+
+                            const daiTmpContent = [...dai];
+
+                            if (daiTmpContent.includes('br')) {
+                                daiTmpContent[daiTmpContent.indexOf('br')] = 'btr';
+                            } else if (daiTmpContent.includes('bi')) {
+                                daiTmpContent[daiTmpContent.indexOf('bi')] = 'bl';
+                            } else if (daiTmpContent.includes('bu')) {
+                                daiTmpContent[daiTmpContent.indexOf('bu')] = 'bd';
+                            } else if (daiTmpContent.includes('lt')) {
+                                daiTmpContent[daiTmpContent.indexOf('lt')] = 'dl';
+                            } else if (daiTmpContent.includes('dg')) {
+                                daiTmpContent[daiTmpContent.indexOf('dg')] = 'dn';
+                            } else if (daiTmpContent.includes('qg')) {
+                                daiTmpContent[daiTmpContent.indexOf('qg')] = 'qn';
+                            } else if (daiTmpContent.includes('do')) {
+                                daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
+                            }
+
                             const obj = {
-                                content: `${dai}.${eSo}.${kdanhMain}.${gtien}ngan`,
+                                content: `${daiTmpContent}.${eSo}.${kdanhMain}.${gtien}ngan`,
                                 domain: mien,
                                 province: dai,
                                 number: [eSo],
@@ -525,8 +736,30 @@ function convertContentDetail(content, date) {
                         ) {
                             kdanhMain = 'xiuchuduoi';
 
+                            if (eSo.length !== 3) {
+                                errorSyntax = true;
+                            }
+
+                            const daiTmpContent = [...dai];
+
+                            if (daiTmpContent.includes('br')) {
+                                daiTmpContent[daiTmpContent.indexOf('br')] = 'btr';
+                            } else if (daiTmpContent.includes('bi')) {
+                                daiTmpContent[daiTmpContent.indexOf('bi')] = 'bl';
+                            } else if (daiTmpContent.includes('bu')) {
+                                daiTmpContent[daiTmpContent.indexOf('bu')] = 'bd';
+                            } else if (daiTmpContent.includes('lt')) {
+                                daiTmpContent[daiTmpContent.indexOf('lt')] = 'dl';
+                            } else if (daiTmpContent.includes('dg')) {
+                                daiTmpContent[daiTmpContent.indexOf('dg')] = 'dn';
+                            } else if (daiTmpContent.includes('qg')) {
+                                daiTmpContent[daiTmpContent.indexOf('qg')] = 'qn';
+                            } else if (daiTmpContent.includes('do')) {
+                                daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
+                            }
+
                             const obj = {
-                                content: `${dai}.${eSo}.${kdanhMain}.${gtien}ngan`,
+                                content: `${daiTmpContent}.${eSo}.${kdanhMain}.${gtien}ngan`,
                                 domain: mien,
                                 province: dai,
                                 number: [eSo],
@@ -629,11 +862,33 @@ function convertContentDetail(content, date) {
                         ) {
                             kdanhMain = 'xiuchudao';
 
+                            if (eSo.length !== 3) {
+                                errorSyntax = true;
+                            }
+
                             let mangSoDao = findListOverturn(eSo);
+
+                            const daiTmpContent = [...dai];
+
+                            if (daiTmpContent.includes('br')) {
+                                daiTmpContent[daiTmpContent.indexOf('br')] = 'btr';
+                            } else if (daiTmpContent.includes('bi')) {
+                                daiTmpContent[daiTmpContent.indexOf('bi')] = 'bl';
+                            } else if (daiTmpContent.includes('bu')) {
+                                daiTmpContent[daiTmpContent.indexOf('bu')] = 'bd';
+                            } else if (daiTmpContent.includes('lt')) {
+                                daiTmpContent[daiTmpContent.indexOf('lt')] = 'dl';
+                            } else if (daiTmpContent.includes('dg')) {
+                                daiTmpContent[daiTmpContent.indexOf('dg')] = 'dn';
+                            } else if (daiTmpContent.includes('qg')) {
+                                daiTmpContent[daiTmpContent.indexOf('qg')] = 'qn';
+                            } else if (daiTmpContent.includes('do')) {
+                                daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
+                            }
 
                             mangSoDao.map((soDao) => {
                                 const obj = {
-                                    content: `${dai}.${soDao}.${kdanhMain}.${gtien}ngan`,
+                                    content: `${daiTmpContent}.${soDao}.${kdanhMain}.${gtien}ngan`,
                                     domain: mien,
                                     province: dai,
                                     number: [soDao],
@@ -652,8 +907,30 @@ function convertContentDetail(content, date) {
                         if (kdSS === 'dau' || kdSS === 'đau' || kdSS === 'đầu' || kdSS === 'đâu') {
                             kdanhMain = 'dau';
 
+                            if (eSo.length !== 2) {
+                                errorSyntax = true;
+                            }
+
+                            const daiTmpContent = [...dai];
+
+                            if (daiTmpContent.includes('br')) {
+                                daiTmpContent[daiTmpContent.indexOf('br')] = 'btr';
+                            } else if (daiTmpContent.includes('bi')) {
+                                daiTmpContent[daiTmpContent.indexOf('bi')] = 'bl';
+                            } else if (daiTmpContent.includes('bu')) {
+                                daiTmpContent[daiTmpContent.indexOf('bu')] = 'bd';
+                            } else if (daiTmpContent.includes('lt')) {
+                                daiTmpContent[daiTmpContent.indexOf('lt')] = 'dl';
+                            } else if (daiTmpContent.includes('dg')) {
+                                daiTmpContent[daiTmpContent.indexOf('dg')] = 'dn';
+                            } else if (daiTmpContent.includes('qg')) {
+                                daiTmpContent[daiTmpContent.indexOf('qg')] = 'qn';
+                            } else if (daiTmpContent.includes('do')) {
+                                daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
+                            }
+
                             const obj = {
-                                content: `${dai}.${eSo}.${kdanhMain}.${gtien}ngan`,
+                                content: `${daiTmpContent}.${eSo}.${kdanhMain}.${gtien}ngan`,
                                 domain: mien,
                                 province: dai,
                                 number: [eSo],
@@ -678,8 +955,30 @@ function convertContentDetail(content, date) {
                         ) {
                             kdanhMain = 'duoi';
 
+                            if (eSo.length !== 2) {
+                                errorSyntax = true;
+                            }
+
+                            const daiTmpContent = [...dai];
+
+                            if (daiTmpContent.includes('br')) {
+                                daiTmpContent[daiTmpContent.indexOf('br')] = 'btr';
+                            } else if (daiTmpContent.includes('bi')) {
+                                daiTmpContent[daiTmpContent.indexOf('bi')] = 'bl';
+                            } else if (daiTmpContent.includes('bu')) {
+                                daiTmpContent[daiTmpContent.indexOf('bu')] = 'bd';
+                            } else if (daiTmpContent.includes('lt')) {
+                                daiTmpContent[daiTmpContent.indexOf('lt')] = 'dl';
+                            } else if (daiTmpContent.includes('dg')) {
+                                daiTmpContent[daiTmpContent.indexOf('dg')] = 'dn';
+                            } else if (daiTmpContent.includes('qg')) {
+                                daiTmpContent[daiTmpContent.indexOf('qg')] = 'qn';
+                            } else if (daiTmpContent.includes('do')) {
+                                daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
+                            }
+
                             const obj = {
-                                content: `${dai}.${eSo}.${kdanhMain}.${gtien}ngan`,
+                                content: `${daiTmpContent}.${eSo}.${kdanhMain}.${gtien}ngan`,
                                 domain: mien,
                                 province: dai,
                                 number: [eSo],
@@ -697,8 +996,30 @@ function convertContentDetail(content, date) {
                         if ((kdSS === 'd' || kdSS === 'đ') && ddCh) {
                             kdanhMain = 'dau';
 
+                            if (eSo.length !== 2) {
+                                errorSyntax = true;
+                            }
+
+                            const daiTmpContent = [...dai];
+
+                            if (daiTmpContent.includes('br')) {
+                                daiTmpContent[daiTmpContent.indexOf('br')] = 'btr';
+                            } else if (daiTmpContent.includes('bi')) {
+                                daiTmpContent[daiTmpContent.indexOf('bi')] = 'bl';
+                            } else if (daiTmpContent.includes('bu')) {
+                                daiTmpContent[daiTmpContent.indexOf('bu')] = 'bd';
+                            } else if (daiTmpContent.includes('lt')) {
+                                daiTmpContent[daiTmpContent.indexOf('lt')] = 'dl';
+                            } else if (daiTmpContent.includes('dg')) {
+                                daiTmpContent[daiTmpContent.indexOf('dg')] = 'dn';
+                            } else if (daiTmpContent.includes('qg')) {
+                                daiTmpContent[daiTmpContent.indexOf('qg')] = 'qn';
+                            } else if (daiTmpContent.includes('do')) {
+                                daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
+                            }
+
                             const obj = {
-                                content: `${dai}.${eSo}.${kdanhMain}.${gtien}ngan`,
+                                content: `${daiTmpContent}.${eSo}.${kdanhMain}.${gtien}ngan`,
                                 domain: mien,
                                 province: dai,
                                 number: [eSo],
@@ -714,8 +1035,30 @@ function convertContentDetail(content, date) {
                         } else if ((kdSS === 'd' || kdSS === 'đ') && !ddCh) {
                             kdanhMain = 'duoi';
 
+                            if (eSo.length !== 2) {
+                                errorSyntax = true;
+                            }
+
+                            const daiTmpContent = [...dai];
+
+                            if (daiTmpContent.includes('br')) {
+                                daiTmpContent[daiTmpContent.indexOf('br')] = 'btr';
+                            } else if (daiTmpContent.includes('bi')) {
+                                daiTmpContent[daiTmpContent.indexOf('bi')] = 'bl';
+                            } else if (daiTmpContent.includes('bu')) {
+                                daiTmpContent[daiTmpContent.indexOf('bu')] = 'bd';
+                            } else if (daiTmpContent.includes('lt')) {
+                                daiTmpContent[daiTmpContent.indexOf('lt')] = 'dl';
+                            } else if (daiTmpContent.includes('dg')) {
+                                daiTmpContent[daiTmpContent.indexOf('dg')] = 'dn';
+                            } else if (daiTmpContent.includes('qg')) {
+                                daiTmpContent[daiTmpContent.indexOf('qg')] = 'qn';
+                            } else if (daiTmpContent.includes('do')) {
+                                daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
+                            }
+
                             const obj = {
-                                content: `${dai}.${eSo}.${kdanhMain}.${gtien}ngan`,
+                                content: `${daiTmpContent}.${eSo}.${kdanhMain}.${gtien}ngan`,
                                 domain: mien,
                                 province: dai,
                                 number: [eSo],
@@ -753,6 +1096,7 @@ function convertContentDetail(content, date) {
 
         if (firstArrLength === arr.length) {
             errorSyntax = true;
+            console.log(123);
         }
 
         contentTmp = contentTmp.slice(ktThemCham ? kth - 1 : kth);

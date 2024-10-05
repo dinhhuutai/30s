@@ -7,6 +7,7 @@ import TableKqxsMN from './component/TableKqxsMN';
 import TableKqxsMT from './component/TableKqxsMT';
 import TableKqxsMB from './component/TableKqxsMB';
 import HeaderPage from '../component/HeaderPage';
+import { BsArrowClockwise } from 'react-icons/bs';
 
 function Dashboard() {
     const [kqxsMB, setKqxsMB] = useState([]);
@@ -15,6 +16,8 @@ function Dashboard() {
 
     const [date, setDate] = useState(new Date());
     const [day, setDay] = useState(date.getDay() + 1);
+
+    const [loading, setLoading] = useState(true);
 
     const handleDateChange = (e) => {
         setDate(e);
@@ -26,6 +29,7 @@ function Dashboard() {
     }, [date]);
 
     const handleFindKqxs = async () => {
+        setLoading(true);
         const formattedDate = moment(date).format('DD/MM/YYYY');
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/v1/kqxs/findKqxsByDate`, {
             date: formattedDate,
@@ -155,11 +159,26 @@ function Dashboard() {
             setKqxsMB(mbMain);
             setKqxsMT(mtMain);
             setKqxsMN(mnMain);
+            setLoading(false);
         }
     };
 
     return (
         <div>
+            {loading ? (
+                <div className="left-0 right-0 absolute z-[999999] top-0">
+                    <div className="bg-[#259dba] h-[3px] animate-loadingSlice"></div>
+                    <div className="right-[6px] absolute top-[10px]">
+                        <div className="flex justify-center items-center">
+                            <div className="text-[26px] animate-loading2 text-[#259dba]">
+                                <BsArrowClockwise />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <></>
+            )}
             <HeaderPage pageCurr={'Kết Quả Xổ Số'} />
             <div className="bg-[var(--color-white)] px-[16px] mt-[12px] py-[14px] pb-[28px] rounded-[6px]">
                 <div className="w-[100%]">

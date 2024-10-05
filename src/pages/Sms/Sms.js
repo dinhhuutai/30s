@@ -9,6 +9,7 @@ import {
     BsArrowRightCircleFill,
     BsArrowCounterclockwise,
     BsArrowRepeat,
+    BsArrowClockwise,
 } from 'react-icons/bs';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -55,6 +56,8 @@ function Sms() {
     const [loadingDele, setLoadingDele] = useState(false);
     const [loadingRes, setLoadingRes] = useState(false);
 
+    const [loading, setLoading] = useState(true);
+
     const [width, setWidth] = useState(0);
 
     useEffect(() => {
@@ -98,6 +101,10 @@ function Sms() {
 
     const handleFindSms = async () => {
         try {
+            setLoading(true);
+            
+            console.log('date SMS: ', date);
+
             const resSms = await axios.post(
                 `${process.env.REACT_APP_API_URL}/v1/sms/findSmsByNameAndPhone/${
                     user.login.currentUser?._id
@@ -111,6 +118,7 @@ function Sms() {
             //console.log(resSms.data.sms);
 
             if (resSms.data.success) {
+                setLoading(false);
                 setSms(resSms.data.sms);
                 setListCheck([]);
             }
@@ -641,6 +649,20 @@ function Sms() {
 
     return (
         <div>
+            {loading ? (
+                <div className="left-0 right-0 absolute z-[999999] top-0">
+                    <div className="bg-[#259dba] h-[3px] animate-loadingSlice"></div>
+                    <div className="right-[6px] absolute top-[10px]">
+                        <div className="flex justify-center items-center">
+                            <div className="text-[26px] animate-loading2 text-[#259dba]">
+                                <BsArrowClockwise />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <></>
+            )}
             <HeaderPage pageCurr={'Quản Lý Tin Nhắn'} />
             <div className="bg-[var(--color-white)] overflow-hidden w-[100%] px-[16px] mt-[12px] py-[14px] pb-[28px] rounded-[6px]">
                 <div>
@@ -741,7 +763,7 @@ function Sms() {
                     </div>
                 </div>
 
-                <div className="mt-[26px] w-[300px] lg:w-auto gap-[6px] lg:gap-[0px] flex flex-col lg:flex-row justify-between">
+                <div className="mt-[26px] w-[400px] lg:w-auto gap-[6px] lg:gap-[0px] flex flex-col lg:flex-row justify-between">
                     <div className="">
                         <button
                             onClick={() => setDomain('mn')}

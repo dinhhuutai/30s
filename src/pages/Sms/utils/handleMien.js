@@ -91,22 +91,23 @@ function handleMien(content, now) {
         const currentHour = now.getHours();
         const currentMinute = now.getMinutes();
 
-        if (currentHour < 16 || (currentHour === 16 && currentMinute < 15)) {
-            mienMain = 'mn';
+        // if (currentHour < 16 || (currentHour === 16 && currentMinute < 15)) {
+        //     mienMain = 'mn';
 
-            contentTmp = mienMain + '.' + contentTmp;
-        } else if (currentHour < 17 || (currentHour === 17 && currentMinute < 15)) {
-            mienMain = 'mt';
+        //     contentTmp = mienMain + '.' + contentTmp;
+        // } else if (currentHour < 17 || (currentHour === 17 && currentMinute < 15)) {
+        //     mienMain = 'mt';
 
-            contentTmp = mienMain + '.' + contentTmp;
-        } else if (currentHour < 18 || (currentHour === 18 && currentMinute < 15)) {
-            mienMain = 'mb';
+        //     contentTmp = mienMain + '.' + contentTmp;
+        // } else if (currentHour < 18 || (currentHour === 18 && currentMinute < 15)) {
+        //     mienMain = 'mb';
 
-            contentTmp = mienMain + '.' + contentTmp;
-        }
+        //     contentTmp = mienMain + '.' + contentTmp;
+        // }
 
         if (isFinite(Number(contentTmp[1]))) {
             mienMain = 'mb';
+            console.log(123);
 
             contentTmp = mienMain + '.' + contentTmp;
         } else {

@@ -13,9 +13,8 @@ import payRevenue from './payRevenue';
 
 async function payTotalSmsByDate(date, dateSelect, domain, idUser, kqxs) {
     try {
-        const smsMany = await axios.post(`${process.env.REACT_APP_API_URL}/v1/sms/findSmsByStatus`, {
+        const smsMany = await axios.post(`${process.env.REACT_APP_API_URL}/v1/sms/findSmsByStatus?date=${dateSelect}`, {
             domain,
-            date: dateSelect,
             idUser,
         });
 
@@ -67,8 +66,6 @@ async function payTotalSmsByDate(date, dateSelect, domain, idUser, kqxs) {
                         tongtrung,
                         revenue: sms.idMember.runNumber ? tongtrung - sms.tongxac : sms.tongxac - tongtrung,
                     };
-
-                    console.log('form: ', form);
 
                     await axios.post(`${process.env.REACT_APP_API_URL}/v1/sms/update/${sms._id}`, form);
                 }),

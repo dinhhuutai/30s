@@ -131,7 +131,7 @@ function Member() {
                 </div>
 
                 <div className="w-full mt-[26px] overflow-x-auto">
-                    <table className="lg:w-full w-[900px] rounded-[6px] overflow-hidden">
+                    <table className="lg:w-full w-[990px] rounded-[6px] overflow-hidden">
                         <thead>
                             <tr className="text-[12px] w-[100%] bg-[#d8dce3]">
                                 <th className="w-[5%] py-[8px] border-[1px] border-solid border-[#fff] uppercase">

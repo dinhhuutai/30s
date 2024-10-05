@@ -47,6 +47,7 @@ function handleDeleteStringFrontRedundant(content) {
         'do',
         'kt',
         'mb',
+        'bl',
     ];
 
     let stringRedun = '';

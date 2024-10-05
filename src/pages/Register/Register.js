@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import bgLogin from '~/assets/imgs/bg_login.jpg';
-import { BsFillPersonFill, BsLockFill, BsEyeSlash, BsEye, BsArrowBarLeft } from 'react-icons/bs';
+import { BsFillPersonFill, BsLockFill, BsEyeSlash, BsEye, BsArrowBarLeft, BsArrowClockwise } from 'react-icons/bs';
 import { Link, useNavigate } from 'react-router-dom';
 import config from '~/config';
 import { useDispatch } from 'react-redux';
@@ -13,8 +13,11 @@ function Register() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setconfirmPassword] = useState('');
     const [codeRegister, setCodeRegister] = useState('');
+    const [dataCodeRegister, setDataCodeRegister] = useState('');
     const [unvisiblePassword, setUnvisiblePassword] = useState(true);
     const [unvisibleConfirmPassword, setUnvisibleConfirmPassword] = useState(true);
+
+    const [loading, setLoading] = useState(true);
 
     const [noticeError, setNoticeError] = useState({
         status: false,
@@ -23,6 +26,23 @@ function Register() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        handleFindCodeRegister();
+    }, []);
+
+    const handleFindCodeRegister = async () => {
+        try {
+            const resOnlyAdminEdit = await axios.post(`${process.env.REACT_APP_API_URL}/v1/onlyAdminEdit/find`);
+            const rs = resOnlyAdminEdit.data.onlyAdminEdit[0];
+
+            if (resOnlyAdminEdit.data.success) {
+                setDataCodeRegister(rs.codeRegister);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     const handleLogin = async () => {
         if (!username) {
@@ -55,7 +75,7 @@ function Register() {
                 status: true,
                 text: 'Nhập lại mật khẩu không giống nhau',
             });
-        } else if (codeRegister !== '10s.biz') {
+        } else if (codeRegister !== dataCodeRegister) {
             setNoticeError({
                 status: true,
                 text: 'Mã đăng ký không chính xác',
@@ -70,6 +90,7 @@ function Register() {
 
                 dispatch(authSlice.actions.loginStart());
 
+                setLoading(true);
                 const res = await axios.post(`${process.env.REACT_APP_API_URL}/v1/user/register`, formData);
 
                 if (res?.data?.success) {
@@ -80,6 +101,7 @@ function Register() {
                         }),
                     );
 
+                    setLoading(false);
                     navigate(config.routes.dashboard);
                 } else {
                     dispatch(authSlice.actions.loginFailed());
@@ -92,12 +114,33 @@ function Register() {
             }
         }
     };
+    
+
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 800);
+    }, []);
 
     return (
         <div
             className="min-h-screen w-full bg-cover bg-center bg-repeat justify-center lg:items-center flex fixed top-0 left-0 ring-0 bottom-0"
             style={{ backgroundImage: `url(${bgLogin})` }}
         >
+            {loading ? (
+                <div className="absolute w-full z-[999999] top-0">
+                    <div className="bg-[#259dba] h-[3px] animate-loadingSlice"></div>
+                    <div className="right-[6px] absolute top-[10px]">
+                        <div className="flex justify-center items-center">
+                            <div className="text-[26px] animate-loading2 text-[#259dba]">
+                                <BsArrowClockwise />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <></>
+            )}
             <div className="min-h-screen opacity-[1] lg:opacity-[.75] bg-[#262b36] w-full lg:bg-[#0e1013] fixed top-0 left-0 ring-0 bottom-0"></div>
 
             <div className="w-[400px] bg-[#262b36e6] text-[#fff] shadow-xl rounded-[6px] px-[40px] pt-[24px] pb-[14px] opacity-[.75]">

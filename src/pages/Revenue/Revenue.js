@@ -7,11 +7,12 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { noticeAdminSelector, userSelector } from '~/redux/selectors';
 
-import { BsArrowRightCircleFill, BsCopy, BsArrowRepeat } from 'react-icons/bs';
+import { BsArrowRightCircleFill, BsCopy, BsArrowRepeat, BsArrowClockwise } from 'react-icons/bs';
 import ModalNotice from './component/ModalNotice';
 import noticeAdminSlice from '~/redux/slices/noticeAdminSlice';
 import payTotalSmsByDate from './component/payTotalSmsByDate';
 import HeaderPage from '../component/HeaderPage';
+import ModalWin from './component/ModalWin';
 
 let setTimeoutTmp;
 
@@ -27,6 +28,11 @@ function Revenue() {
     const [modalNotice, setModalNotice] = useState(false);
     const [selectorRevenue, setSelectorRevenue] = useState({});
     const [domain, setDomain] = useState();
+
+    const [selectRevenue, setSelectRevenue] = useState();
+    const [modalWin, setModalWin] = useState(false);
+
+    const [loadingUp, setLoadingUp] = useState(true);
 
     const handleDateChange = (e) => {
         setDate(e);
@@ -71,13 +77,13 @@ function Revenue() {
 
     const handleFindRevenue = async () => {
         try {
+            setLoadingUp(true);
             const formattedDate = moment(date).format('DD/MM/YYYY');
             const res = await axios.post(`${process.env.REACT_APP_API_URL}/v1/revenue/findRevenueByDateAndIdMember`, {
                 date: formattedDate,
                 idMember,
             });
 
-            console.log(res.data.data);
 
             if (res.data.success) {
                 let revenueNew = res.data.data?.reduce((acc, curr) => {
@@ -102,11 +108,9 @@ function Revenue() {
                     return acc;
                 }, []);
 
-                console.log(revenueNew);
                 if (revenueNew) {
                     revenueNew = revenueNew.filter((e) => e?.mn?.tongxac || e?.mt?.tongxac || e?.mb?.tongxac);
                 }
-                console.log(revenueNew);
 
                 let tongMN = 0;
                 let tongMT = 0;
@@ -129,6 +133,7 @@ function Revenue() {
                 revenueNew.push(objTotal);
 
                 setRevenues(revenueNew);
+                setLoadingUp(false);
             }
         } catch (error) {
             console.log(error);
@@ -222,6 +227,20 @@ function Revenue() {
 
     return (
         <div>
+            {loadingUp ? (
+                <div className="left-0 right-0 absolute z-[999999] top-0">
+                    <div className="bg-[#259dba] h-[3px] animate-loadingSlice"></div>
+                    <div className="right-[6px] absolute top-[10px]">
+                        <div className="flex justify-center items-center">
+                            <div className="text-[26px] animate-loading2 text-[#259dba]">
+                                <BsArrowClockwise />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <></>
+            )}
             <HeaderPage pageCurr={'Doanh Thu'} />
             <div className="bg-[var(--color-white)] px-[16px] mt-[12px] py-[14px] pb-[28px] rounded-[6px]">
                 <div>
@@ -458,7 +477,19 @@ function Revenue() {
                                                         ? parseFloat(revenue?.mn?.tongxac.toFixed(1)).toLocaleString()
                                                         : 0}
                                                 </div>
-                                                <div className="w-[80px] px-[4px] font-[480] h-[40px] text-[#2587a0] flex justify-center items-center py-[2px] border-[1px] border-solid border-[#fff]">
+                                                <div
+                                                    onClick={() => {
+                                                        setSelectRevenue({
+                                                            idMember: revenue.idMember._id,
+                                                            resultDate: date,
+                                                            domain: 'mn',
+                                                            name: revenue.idMember.name,
+                                                        });
+                                                        setModalWin(true);
+                                                        console.log('date revenue: ', date)
+                                                    }}
+                                                    className="w-[80px] px-[4px] cursor-pointer font-[480] h-[40px] text-[#2587a0] flex justify-center items-center py-[2px] border-[1px] border-solid border-[#fff]"
+                                                >
                                                     {revenue?.mn?.tongtrung
                                                         ? parseFloat(revenue?.mn?.tongtrung.toFixed(1)).toLocaleString()
                                                         : 0}
@@ -526,7 +557,18 @@ function Revenue() {
                                                         ? parseFloat(revenue?.mt?.tongxac.toFixed(1)).toLocaleString()
                                                         : 0}
                                                 </div>
-                                                <div className="w-[80px] px-[4px] font-[480] h-[40px] text-[#2587a0] flex justify-center items-center py-[2px] border-[1px] border-solid border-[#fff]">
+                                                <div
+                                                    onClick={() => {
+                                                        setSelectRevenue({
+                                                            idMember: revenue.idMember._id,
+                                                            resultDate: date,
+                                                            domain: 'mt',
+                                                            name: revenue.idMember.name,
+                                                        });
+                                                        setModalWin(true);
+                                                    }}
+                                                    className="w-[80px] px-[4px] cursor-pointer font-[480] h-[40px] text-[#2587a0] flex justify-center items-center py-[2px] border-[1px] border-solid border-[#fff]"
+                                                >
                                                     {revenue?.mt?.tongtrung
                                                         ? parseFloat(revenue?.mt?.tongtrung.toFixed(1)).toLocaleString()
                                                         : 0}
@@ -594,7 +636,18 @@ function Revenue() {
                                                         ? parseFloat(revenue?.mb?.tongxac.toFixed(1)).toLocaleString()
                                                         : 0}
                                                 </div>
-                                                <div className="w-[80px] px-[4px] font-[480] h-[40px] text-[#2587a0] flex justify-center items-center py-[2px] border-[1px] border-solid border-[#fff]">
+                                                <div
+                                                    onClick={() => {
+                                                        setSelectRevenue({
+                                                            idMember: revenue.idMember._id,
+                                                            resultDate: date,
+                                                            domain: 'mb',
+                                                            name: revenue.idMember.name,
+                                                        });
+                                                        setModalWin(true);
+                                                    }}
+                                                    className="w-[80px] px-[4px] cursor-pointer font-[480] h-[40px] text-[#2587a0] flex justify-center items-center py-[2px] border-[1px] border-solid border-[#fff]"
+                                                >
                                                     {revenue?.mb?.tongtrung
                                                         ? parseFloat(revenue?.mb?.tongtrung.toFixed(1)).toLocaleString()
                                                         : 0}
@@ -670,6 +723,8 @@ function Revenue() {
                 {modalNotice && (
                     <ModalNotice selectorRevenue={selectorRevenue} domain={domain} setModalNotice={setModalNotice} />
                 )}
+
+                {modalWin && <ModalWin setModalWin={setModalWin} selectRevenue={selectRevenue} />}
             </div>
         </div>
     );

@@ -7,7 +7,6 @@ import axios from 'axios';
 import authSlice from '~/redux/slices/authSlice';
 
 import { jwtDecode } from 'jwt-decode';
-import config from '~/config';
 
 // refresh Token
 export let axiosJWT;

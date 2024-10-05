@@ -60,6 +60,7 @@ function handleConvertSymbol(content, mien, dayOfWeek) {
         'do',
         'kt',
         'mb',
+        'bl',
     ];
 
     let dai = '';

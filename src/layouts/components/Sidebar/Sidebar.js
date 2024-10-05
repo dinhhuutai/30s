@@ -17,7 +17,10 @@ function Sidebar({ setSidebarWidth }) {
         <div className="flex h-full flex-col">
             <div className="bg-[var(--bg-color-logo)] flex justify-center items-center h-[var(--height-header)]">
                 <h2>
-                    <Link className="text-[26px] hover:text-[var(--color-logo-hover)] text-[var(--color-logo)] uppercase font-[620]">
+                    <Link
+                        to={config.routes.dashboard}
+                        className="text-[26px] hover:text-[var(--color-logo-hover)] text-[var(--color-logo)] uppercase font-[620]"
+                    >
                         10s.biz
                     </Link>
                 </h2>

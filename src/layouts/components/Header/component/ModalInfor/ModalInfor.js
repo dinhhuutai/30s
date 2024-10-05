@@ -65,7 +65,7 @@ function ModalInfor({ setModalInfor, user, setUser }) {
             <div className="fixed flex justify-center overflow-y-auto overflow-x-hidden top-0 left-0 right-0 bottom-0 pb-[60px] opacity-[1] z-[999]">
                 <div
                     onClick={(e) => e.stopPropagation()}
-                    className="bg-[#fff] animate-modalDownSlide text-[12px] lg:w-[500px] w-[400px] h-fit pb-[20px] shadow-xl rounded-[6px] mt-[30px] py-[14px]"
+                    className="bg-[#fff] animate-modalDownSlide text-[12px] lg:w-[500px] w-[370px] h-fit pb-[20px] shadow-xl rounded-[6px] mt-[30px] py-[14px]"
                 >
                     <div className="flex justify-between items-center pb-[12px] border-b-[1px] border-solid border-[#f0f0f0] px-[26px]">
                         <h1 className="text-[14px] capitalize text-[#000] font-[620]">Chỉnh sửa thông tin cá nhân</h1>
@@ -73,7 +73,7 @@ function ModalInfor({ setModalInfor, user, setUser }) {
                             <AiOutlineClose />
                         </div>
                     </div>
-                    <div className="mt-[16px] px-[26px]">
+                    <div className="mt-[16px] lg:px-[26px] px-[16px]">
                         <div className="flex items-center">
                             <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
                                 Tài khoản <span className="text-[#e92d2d] ml-[2px]">*</span>
@@ -105,10 +105,10 @@ function ModalInfor({ setModalInfor, user, setUser }) {
                         </div>
                         <div className="flex items-center mt-[20px]">
                             <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
-                                Phòng ID Telegram
+                                ID Telegram
                             </label>
                             <input
-                                placeholder="Phòng ID Telegram"
+                                placeholder="ID Telegram"
                                 value={idTelegram}
                                 onChange={(e) => setIdTelegram(e.target.value)}
                                 className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"

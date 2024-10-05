@@ -5,19 +5,15 @@ async function payRevenue(date, formattedDate, domain, idUser) {
         const members = await axios.post(`${process.env.REACT_APP_API_URL}/v1/member/findAllMemberByIdUser/${idUser}`);
 
         if (members?.data?.success) {
-
             await Promise.all(
                 members?.data?.members?.map(async (member, index) => {
                     const smsManyOfMember = await axios.post(
-                        `${process.env.REACT_APP_API_URL}/v1/sms/findSmsByIdMember`,
+                        `${process.env.REACT_APP_API_URL}/v1/sms/findSmsByIdMember?date=${date}`,
                         {
                             idMember: member._id,
                             domain,
-                            date,
                         },
                     );
-
-                    console.log('member: ', member);
 
                     let diem2con = 0;
                     let diem34con = 0;

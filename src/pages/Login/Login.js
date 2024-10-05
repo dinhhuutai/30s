@@ -1,6 +1,6 @@
 import bgLogin from '~/assets/imgs/bg_login.jpg';
-import { BsFillPersonFill, BsLockFill, BsEyeSlash, BsEye } from 'react-icons/bs';
-import { useState } from 'react';
+import { BsFillPersonFill, BsLockFill, BsEyeSlash, BsEye, BsArrowClockwise } from 'react-icons/bs';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import config from '~/config';
 import { useDispatch } from 'react-redux';
@@ -11,6 +11,7 @@ function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [unvisiblePassword, setUnvisiblePassword] = useState(true);
+    const [loading, setLoading] = useState(true);
 
     const [noticeError, setNoticeError] = useState({
         status: false,
@@ -39,6 +40,7 @@ function Login() {
                 };
 
                 dispatch(authSlice.actions.loginStart());
+                setLoading(true);
 
                 const res = await axios.post(`${process.env.REACT_APP_API_URL}/v1/user/login`, user);
 
@@ -50,7 +52,12 @@ function Login() {
                         }),
                     );
 
-                    navigate(config.routes.dashboard);
+                    setLoading(false);
+                    if (res.data?.user?.isAdmin) {
+                        navigate(config.routes.adminAnalytics);
+                    } else {
+                        navigate(config.routes.dashboard);
+                    }
                 } else {
                     dispatch(authSlice.actions.loginFailed());
                 }
@@ -63,11 +70,32 @@ function Login() {
         }
     };
 
+
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false);
+        }, 800);
+    }, []);
+
     return (
         <div
             className="min-h-screen w-full bg-cover bg-center bg-repeat justify-center lg:items-center flex fixed top-0 left-0 ring-0 bottom-0"
             style={{ backgroundImage: `url(${bgLogin})` }}
         >
+            {loading ? (
+                <div className="absolute w-full z-[999999] top-0">
+                    <div className="bg-[#259dba] h-[3px] animate-loadingSlice"></div>
+                    <div className="right-[6px] absolute top-[10px]">
+                        <div className="flex justify-center items-center">
+                            <div className="text-[26px] animate-loading2 text-[#259dba]">
+                                <BsArrowClockwise />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <></>
+            )}
             <div className="min-h-screen opacity-[1] lg:opacity-[.75] w-full lg:bg-[#0e1013] bg-[#262b36] fixed top-0 left-0 ring-0 bottom-0"></div>
 
             <div className="w-[400px] lg:bg-[#262b36e6] text-[#fff] rounded-[6px] px-[40px] pt-[24px] pb-[14px] opacity-[.75]">
