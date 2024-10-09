@@ -58,6 +58,7 @@ function KqxsCreate() {
     const [urlmb, setUrlmb] = useState('');
     const [codeRegister, setCodeRegister] = useState('');
     const [tokenChatBotTelegram, setTokenChatBotTelegram] = useState('');
+    const [tokenChatBotWhatsApp, setTokenChatBotWhatsApp] = useState('');
 
     const notice = useSelector(noticeAdminSelector);
 
@@ -116,6 +117,7 @@ function KqxsCreate() {
             setUrlmb(rs?.urlmb);
             setCodeRegister(rs?.codeRegister);
             setTokenChatBotTelegram(rs?.tokenChatBotTelegram);
+            setTokenChatBotWhatsApp(rs?.tokenChatBotWhatsApp);
         }
     };
 
@@ -165,6 +167,7 @@ function KqxsCreate() {
                 urlmb,
                 codeRegister,
                 tokenChatBotTelegram,
+                tokenChatBotWhatsApp,
             };
 
             let res;
@@ -654,7 +657,7 @@ function KqxsCreate() {
                         </div>
 
                         <div className="mb-[10px] mt-[50px] font-[600] text-[12px] uppercase">Other</div>
-                        <div className="flex flex-col gap-[4px]">
+                        <div className="flex flex-col gap-[4px] mt-[4px]">
                             <label className="text-[12px]">Code Register</label>
                             <input
                                 value={codeRegister}
@@ -665,7 +668,7 @@ function KqxsCreate() {
                                 placeholder="Mã đăng ký"
                             />
                         </div>
-                        <div className="flex flex-col gap-[4px]">
+                        <div className="flex flex-col gap-[4px] mt-[4px]">
                             <label className="text-[12px]">Token ChatBot Telegram</label>
                             <input
                                 value={tokenChatBotTelegram}
@@ -674,6 +677,17 @@ function KqxsCreate() {
                                 className="border-[1px] px-[8px] py-[2px] text-[12px] outline-none border-solid border-[#a9a5a5] rounded-[4px]"
                                 type="text"
                                 placeholder="Token ChatBot Telegram"
+                            />
+                        </div>
+                        <div className="flex flex-col gap-[4px] mt-[4px]">
+                            <label className="text-[12px]">Token ChatBot WhatsApp</label>
+                            <input
+                                value={tokenChatBotWhatsApp}
+                                name="tokenChatBotWhatsApp"
+                                onChange={(e) => setTokenChatBotWhatsApp(e.target.value)}
+                                className="border-[1px] px-[8px] py-[2px] text-[12px] outline-none border-solid border-[#a9a5a5] rounded-[4px]"
+                                type="text"
+                                placeholder="Token ChatBot WhatsApp"
                             />
                         </div>
                     </div>

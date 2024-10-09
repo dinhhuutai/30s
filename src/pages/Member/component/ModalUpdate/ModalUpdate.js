@@ -13,6 +13,7 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
     const [phone, setPhone] = useState(selecterMember.phone);
     const [phoneTmp, setPhoneTmp] = useState();
     const [idTelegram, setIdTelegram] = useState(selecterMember.idTelegram);
+    const [idWhatsApp, setIdWhatsApp] = useState(selecterMember.idWhatsApp);
     const [runNumber, setRunNumber] = useState(selecterMember.runNumber);
 
     const [co2conMN, setCo2conMN] = useState(selecterMember.co2conMN);
@@ -69,7 +70,6 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
         text: '',
     });
 
-    
     const notice = useSelector(noticeAdminSelector);
     useEffect(() => {
         if (!notice.state) {
@@ -94,6 +94,7 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                 idUser: user.login.currentUser._id,
                 name,
                 idTelegram,
+                idWhatsApp,
                 phone,
                 runNumber,
                 co2conMN,
@@ -208,6 +209,17 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                 placeholder="Phòng ID Telegram"
                                 value={idTelegram}
                                 onChange={(e) => setIdTelegram(e.target.value)}
+                                className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
+                            />
+                        </div>
+                        <div className="flex items-center mt-[20px]">
+                            <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                Phòng ID WhatsApp
+                            </label>
+                            <input
+                                placeholder="Phòng ID WhatsApp"
+                                value={idWhatsApp}
+                                onChange={(e) => setIdWhatsApp(e.target.value)}
                                 className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                             />
                         </div>

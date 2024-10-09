@@ -1,12 +1,12 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { BsArrowRepeat } from 'react-icons/bs';
-import { useSelector } from 'react-redux';
 
 function ModalInfor({ setModalInfor, user, setUser }) {
     const [name, setName] = useState(user.name);
     const [idTelegram, setIdTelegram] = useState(user.idTelegram);
+    const [phone, setPhone] = useState(user.phone);
     const [username, setUsername] = useState(user.username);
 
     const [loading, setLoading] = useState(false);
@@ -22,10 +22,16 @@ function ModalInfor({ setModalInfor, user, setUser }) {
                 status: true,
                 text: 'Tên không để trống',
             });
+        } else if (!(/^\d+$/.test(phone) && phone.length >= 9 && phone.length <= 11)) {
+            setNoticeError({
+                status: true,
+                text: 'Số điện thoại không đúng',
+            });
         } else {
             const formData = {
                 name,
                 idTelegram,
+                phone,
             };
 
             try {
@@ -111,6 +117,17 @@ function ModalInfor({ setModalInfor, user, setUser }) {
                                 placeholder="ID Telegram"
                                 value={idTelegram}
                                 onChange={(e) => setIdTelegram(e.target.value)}
+                                className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
+                            />
+                        </div>
+                        <div className="flex items-center mt-[20px]">
+                            <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                Số điện thoại
+                            </label>
+                            <input
+                                placeholder="Số điện thoại"
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value)}
                                 className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                             />
                         </div>
