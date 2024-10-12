@@ -28,6 +28,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
     const [trungdauduoiMN, setTrungdauduoiMN] = useState(selecterMember.trungdauduoiMN);
     const [trungdathangMN, setTrungdathangMN] = useState(selecterMember.trungdathangMN);
     const [trungdaxienMN, setTrungdaxienMN] = useState(selecterMember.trungdaxienMN);
+    const [typeTrungdathangMN, setTypeTrungdathangMN] = useState(selecterMember?.typeTrungdathangMN);
+    const [typeTrungdaxienMN, setTypeTrungdaxienMN] = useState(selecterMember?.typeTrungdaxienMN);
     const [trung3conMN, setTrung3conMN] = useState(selecterMember.trung3conMN);
     const [trung4conMN, setTrung4conMN] = useState(selecterMember.trung4conMN);
     const [trungxiuchuMN, setTrungxiuchuMN] = useState(selecterMember.trungxiuchuMN);
@@ -44,6 +46,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
     const [trungdauduoiMT, setTrungdauduoiMT] = useState(selecterMember.trungdauduoiMT);
     const [trungdathangMT, setTrungdathangMT] = useState(selecterMember.trungdathangMT);
     const [trungdaxienMT, setTrungdaxienMT] = useState(selecterMember.trungdaxienMT);
+    const [typeTrungdathangMT, setTypeTrungdathangMT] = useState(selecterMember?.typeTrungdathangMT);
+    const [typeTrungdaxienMT, setTypeTrungdaxienMT] = useState(selecterMember?.typeTrungdaxienMT);
     const [trung3conMT, setTrung3conMT] = useState(selecterMember.trung3conMT);
     const [trung4conMT, setTrung4conMT] = useState(selecterMember.trung4conMT);
     const [trungxiuchuMT, setTrungxiuchuMT] = useState(selecterMember.trungxiuchuMT);
@@ -58,6 +62,7 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
     const [trung2conMB, setTrung2conMB] = useState(selecterMember.trung2conMB);
     const [trungdauduoiMB, setTrungdauduoiMB] = useState(selecterMember.trungdauduoiMB);
     const [trungdathangMB, setTrungdathangMB] = useState(selecterMember.trungdathangMB);
+    const [typeTrungdathangMB, setTypeTrungdathangMB] = useState(selecterMember?.typeTrungdathangMB);
     const [trung3conMB, setTrung3conMB] = useState(selecterMember.trung3conMB);
     const [trung4conMB, setTrung4conMB] = useState(selecterMember.trung4conMB);
     const [trungxiuchuMB, setTrungxiuchuMB] = useState(selecterMember.trungxiuchuMB);
@@ -108,6 +113,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                 trungdauduoiMN,
                 trungdathangMN,
                 trungdaxienMN,
+                typeTrungdathangMN,
+                typeTrungdaxienMN,
                 trung3conMN,
                 trungxiuchuMN,
                 trung4conMN,
@@ -122,6 +129,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                 trungdauduoiMT,
                 trungdathangMT,
                 trungdaxienMT,
+                typeTrungdathangMT,
+                typeTrungdaxienMT,
                 trung3conMT,
                 trungxiuchuMT,
                 trung4conMT,
@@ -134,6 +143,7 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                 trung2conMB,
                 trungdauduoiMB,
                 trungdathangMB,
+                typeTrungdathangMB,
                 trung3conMB,
                 trungxiuchuMB,
                 trung4conMB,
@@ -186,9 +196,9 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                             <AiOutlineClose />
                         </div>
                     </div>
-                    <div className="mt-[16px] px-[26px]">
-                        <div className="flex items-center">
-                            <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                    <div className="mt-[16px] flex flex-col gap-[12px] px-[26px]">
+                        <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                            <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                 Tên <span className="text-[#e92d2d] ml-[2px]">*</span>
                             </label>
                             <input
@@ -201,8 +211,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                 className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                             />
                         </div>
-                        <div className="flex items-center mt-[20px]">
-                            <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                        <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                            <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                 Phòng ID Telegram
                             </label>
                             <input
@@ -212,8 +222,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                 className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                             />
                         </div>
-                        <div className="flex items-center mt-[20px]">
-                            <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                        <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                            <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                 Phòng ID WhatsApp
                             </label>
                             <input
@@ -223,8 +233,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                 className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                             />
                         </div>
-                        <div className="flex items-center mt-[20px]">
-                            <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                        <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                            <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                 Điện thoại
                             </label>
                             <div className="flex-1 flex gap-[4px] flex-col">
@@ -272,8 +282,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                 />
                             </div>
                         </div>
-                        <div className="flex items-center mt-[20px]">
-                            <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                        <div className="flex items-center">
+                            <label className="text-[12px] mr-[20px] mt-[2px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                 Chạy số
                             </label>
                             <Switch
@@ -324,12 +334,12 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                         </div>
 
                         {typeCheck === 'mn' && (
-                            <div>
+                            <div className="flex flex-col gap-[10px]">
                                 <div className="border-t-[1px] border-solid border-[#f0f0f0]">
                                     <h2 className="mt-[10px] text-[#000] font-[640]">Giá Miền Nam</h2>
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Giá cò 2 con MN
                                     </label>
                                     <input
@@ -340,8 +350,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Giá cò đầu đuôi MN
                                     </label>
                                     <input
@@ -352,8 +362,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Giá cò đá thẳng MN
                                     </label>
                                     <input
@@ -364,8 +374,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Giá cò đá xiên MN
                                     </label>
                                     <input
@@ -376,8 +386,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Giá cò 3 con MN
                                     </label>
                                     <input
@@ -388,8 +398,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Giá cò xỉu chủ MN
                                     </label>
                                     <input
@@ -400,8 +410,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Giá cò 4 con MN
                                     </label>
                                     <input
@@ -413,8 +423,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                     />
                                 </div>
 
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Trúng 2 con MN
                                     </label>
                                     <input
@@ -425,8 +435,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Trúng đầu đuôi MN
                                     </label>
                                     <input
@@ -437,8 +447,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Trúng đá thẳng MN
                                     </label>
                                     <input
@@ -449,8 +459,39 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
+                                        Cách trúng đá thẳng MN
+                                    </label>
+                                    <div className="flex gap-[40px] ml-[16px] lg:ml-[0px]">
+                                        <div className="flex items-center">
+                                            <input
+                                                checked={typeTrungdathangMN === true}
+                                                onClick={() => setTypeTrungdathangMN(true)}
+                                                type="radio"
+                                                name="typeTrungdathangMN"
+                                                id="typeTrungdathangMNTrue"
+                                            />
+                                            <label for="typeTrungdathangMNTrue" className="ml-[2px]">
+                                                Ky rưỡi
+                                            </label>
+                                        </div>
+                                        <div className="flex items-center">
+                                            <input
+                                                checked={typeTrungdathangMN === false}
+                                                onClick={() => setTypeTrungdathangMN(false)}
+                                                type="radio"
+                                                name="typeTrungdathangMN"
+                                                id="typeTrungdathangMNFalse"
+                                            />
+                                            <label for="typeTrungdathangMNFalse" className="ml-[2px]">
+                                                Không Ky rưỡi
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Trúng đá xiên MN
                                     </label>
                                     <input
@@ -461,8 +502,39 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
+                                        Cách trúng đá xiên MN
+                                    </label>
+                                    <div className="flex gap-[40px] ml-[16px] lg:ml-[0px]">
+                                        <div className="flex items-center">
+                                            <input
+                                                checked={typeTrungdaxienMN === true}
+                                                onClick={() => setTypeTrungdaxienMN(true)}
+                                                type="radio"
+                                                name="typeTrungdaxienMN"
+                                                id="typeTrungdaxienMNTrue"
+                                            />
+                                            <label for="typeTrungdaxienMNTrue" className="ml-[2px]">
+                                                Ky rưỡi
+                                            </label>
+                                        </div>
+                                        <div className="flex items-center">
+                                            <input
+                                                checked={typeTrungdaxienMN === false}
+                                                onClick={() => setTypeTrungdaxienMN(false)}
+                                                type="radio"
+                                                name="typeTrungdaxienMN"
+                                                id="typeTrungdaxienMNFalse"
+                                            />
+                                            <label for="typeTrungdaxienMNFalse" className="ml-[2px]">
+                                                Không Ky rưỡi
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Trúng 3 con MN
                                     </label>
                                     <input
@@ -473,8 +545,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Trúng xỉu chủ MN
                                     </label>
                                     <input
@@ -485,8 +557,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Trúng 4 con MN
                                     </label>
                                     <input
@@ -501,12 +573,12 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                         )}
 
                         {typeCheck === 'mt' && (
-                            <div>
+                            <div className="flex flex-col gap-[10px]">
                                 <div className="border-t-[1px] border-solid border-[#f0f0f0]">
                                     <h2 className="mt-[10px] text-[#000] font-[640]">Giá Miền Trung</h2>
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Giá cò 2 con MT
                                     </label>
                                     <input
@@ -517,8 +589,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Giá cò đầu đuôi MT
                                     </label>
                                     <input
@@ -529,8 +601,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Giá cò đá thẳng MT
                                     </label>
                                     <input
@@ -541,8 +613,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Giá cò đá xiên MT
                                     </label>
                                     <input
@@ -553,8 +625,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Giá cò 3 con MT
                                     </label>
                                     <input
@@ -565,8 +637,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Giá cò xỉu chủ MT
                                     </label>
                                     <input
@@ -577,8 +649,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Giá cò 4 con MT
                                     </label>
                                     <input
@@ -590,8 +662,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                     />
                                 </div>
 
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Trúng 2 con MT
                                     </label>
                                     <input
@@ -602,8 +674,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Trúng đầu đuôi MT
                                     </label>
                                     <input
@@ -614,8 +686,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Trúng đá thẳng MT
                                     </label>
                                     <input
@@ -626,8 +698,39 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
+                                        Cách trúng đá thẳng MT
+                                    </label>
+                                    <div className="flex gap-[40px] ml-[16px] lg:ml-[0px]">
+                                        <div className="flex items-center">
+                                            <input
+                                                checked={typeTrungdathangMT === true}
+                                                onClick={() => setTypeTrungdathangMT(true)}
+                                                type="radio"
+                                                name="typeTrungdathangMT"
+                                                id="typeTrungdathangMTTrue"
+                                            />
+                                            <label for="typeTrungdathangMTTrue" className="ml-[2px]">
+                                                Ky rưỡi
+                                            </label>
+                                        </div>
+                                        <div className="flex items-center">
+                                            <input
+                                                checked={typeTrungdathangMT === false}
+                                                onClick={() => setTypeTrungdathangMT(false)}
+                                                type="radio"
+                                                name="typeTrungdathangMT"
+                                                id="typeTrungdathangMTFalse"
+                                            />
+                                            <label for="typeTrungdathangMTFalse" className="ml-[2px]">
+                                                Không Ky rưỡi
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Trúng đá xiên MT
                                     </label>
                                     <input
@@ -638,8 +741,39 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
+                                        Cách trúng đá xiên MT
+                                    </label>
+                                    <div className="flex gap-[40px] ml-[16px] lg:ml-[0px]">
+                                        <div className="flex items-center">
+                                            <input
+                                                checked={typeTrungdaxienMT === true}
+                                                onClick={() => setTypeTrungdaxienMT(true)}
+                                                type="radio"
+                                                name="typeTrungdaxienMT"
+                                                id="typeTrungdaxienMTTrue"
+                                            />
+                                            <label for="typeTrungdaxienMTTrue" className="ml-[2px]">
+                                                Ky rưỡi
+                                            </label>
+                                        </div>
+                                        <div className="flex items-center">
+                                            <input
+                                                checked={typeTrungdaxienMT === false}
+                                                onClick={() => setTypeTrungdaxienMT(false)}
+                                                type="radio"
+                                                name="typeTrungdaxienMT"
+                                                id="typeTrungdaxienMTFalse"
+                                            />
+                                            <label for="typeTrungdaxienMTFalse" className="ml-[2px]">
+                                                Không Ky rưỡi
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Trúng 3 con MT
                                     </label>
                                     <input
@@ -650,8 +784,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Trúng xỉu chủ MT
                                     </label>
                                     <input
@@ -662,8 +796,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Trúng 4 con MT
                                     </label>
                                     <input
@@ -678,12 +812,12 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                         )}
 
                         {typeCheck === 'mb' && (
-                            <div>
+                            <div className="flex flex-col gap-[10px]">
                                 <div className="border-t-[1px] border-solid border-[#f0f0f0]">
                                     <h2 className="mt-[10px] text-[#000] font-[640]">Giá Miền Bắc</h2>
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Giá cò 2 con MB
                                     </label>
                                     <input
@@ -694,8 +828,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Giá cò đầu đuôi MB
                                     </label>
                                     <input
@@ -706,8 +840,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Giá cò đá thẳng MB
                                     </label>
                                     <input
@@ -718,8 +852,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Giá cò 3 con MB
                                     </label>
                                     <input
@@ -730,8 +864,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Giá cò xỉu chủ MB
                                     </label>
                                     <input
@@ -742,8 +876,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Giá cò 4 con MB
                                     </label>
                                     <input
@@ -755,8 +889,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                     />
                                 </div>
 
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Trúng 2 con MB
                                     </label>
                                     <input
@@ -767,8 +901,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Trúng đầu đuôi MB
                                     </label>
                                     <input
@@ -779,8 +913,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Trúng đá thẳng MB
                                     </label>
                                     <input
@@ -791,8 +925,39 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
+                                        Cách trúng đá thẳng MB
+                                    </label>
+                                    <div className="flex gap-[40px] ml-[16px] lg:ml-[0px]">
+                                        <div className="flex items-center">
+                                            <input
+                                                checked={typeTrungdathangMB === true}
+                                                onClick={() => setTypeTrungdathangMB(true)}
+                                                type="radio"
+                                                name="typeTrungdathangMB"
+                                                id="typeTrungdathangMBTrue"
+                                            />
+                                            <label for="typeTrungdathangMBTrue" className="ml-[2px]">
+                                                Ky rưỡi
+                                            </label>
+                                        </div>
+                                        <div className="flex items-center">
+                                            <input
+                                                checked={typeTrungdathangMB === false}
+                                                onClick={() => setTypeTrungdathangMB(false)}
+                                                type="radio"
+                                                name="typeTrungdathangMB"
+                                                id="typeTrungdathangMBFalse"
+                                            />
+                                            <label for="typeTrungdathangMBFalse" className="ml-[2px]">
+                                                Không Ky rưỡi
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Trúng 3 con MB
                                     </label>
                                     <input
@@ -803,8 +968,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Trúng xỉu chủ MB
                                     </label>
                                     <input
@@ -815,8 +980,8 @@ function ModalUpdate({ setModalUpdate, setMembers, selecterMember }) {
                                         className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                                     />
                                 </div>
-                                <div className="flex items-center mt-[20px]">
-                                    <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                                <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                                    <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                         Trúng 4 con MB
                                     </label>
                                     <input

@@ -8,6 +8,7 @@ import handleDeleteMien from './handleDeleteMien';
 import handleDeleteStringFrontRedundant from './handleDeleteStringFrontRedundant';
 import handleListNumComboBao from './handleListNumComboBao';
 import handleMien from './handleMien';
+import handleTextCaseSpecial from './handleTextCaseSpecial';
 import handleTextKeo from './handleTextKeo';
 import shortenText from './shortenText';
 
@@ -34,8 +35,14 @@ function convertContentDetail(content, date) {
     let contentTmp = shortenText(content);
     console.log('Làm gọn: ', contentTmp);
 
-    contentTmp = handleTextKeo(contentTmp);
+    let { data1, data2 } = handleTextKeo(contentTmp);
+    contentTmp = data1;
+    errorSyntax = data2;
+
     console.log('Làm gọn sau kéo: ', contentTmp);
+
+    contentTmp = handleTextCaseSpecial(contentTmp);
+    console.log('Làm gọn sau xử lý kiểu đánh đặc biệt: ', contentTmp);
 
     // Lấy miền ở đây
 
@@ -127,7 +134,9 @@ function convertContentDetail(content, date) {
 
                 dai = handleDai(dai, mien, dayOfWeek);
 
-                errorSyntax = errorDai(dai, mien, dayOfWeek);
+                if (!errorSyntax) {
+                    errorSyntax = errorDai(dai, mien, dayOfWeek);
+                }
                 break;
             }
         }
@@ -521,6 +530,51 @@ function convertContentDetail(content, date) {
                         }
 
                         if (
+                            kdSS === 'baylo' ||
+                            kdSS === 'baobay' ||
+                            kdSS === 'baobaylo'
+                        ) {
+                            kdanhMain = 'baylo';
+
+                            if (eSo.length !== 2) {
+                                errorSyntax = true;
+                            }
+
+                            const daiTmpContent = [...dai];
+
+                            if (daiTmpContent.includes('br')) {
+                                daiTmpContent[daiTmpContent.indexOf('br')] = 'btr';
+                            } else if (daiTmpContent.includes('bi')) {
+                                daiTmpContent[daiTmpContent.indexOf('bi')] = 'bl';
+                            } else if (daiTmpContent.includes('bu')) {
+                                daiTmpContent[daiTmpContent.indexOf('bu')] = 'bd';
+                            } else if (daiTmpContent.includes('lt')) {
+                                daiTmpContent[daiTmpContent.indexOf('lt')] = 'dl';
+                            } else if (daiTmpContent.includes('dg')) {
+                                daiTmpContent[daiTmpContent.indexOf('dg')] = 'dn';
+                            } else if (daiTmpContent.includes('qg')) {
+                                daiTmpContent[daiTmpContent.indexOf('qg')] = 'qn';
+                            } else if (daiTmpContent.includes('do')) {
+                                daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
+                            }
+
+                            const obj = {
+                                content: `${daiTmpContent}.${eSo}.${kdanhMain}.${gtien}ngan`,
+                                domain: mien,
+                                province: dai,
+                                number: [eSo],
+                                typePlay: kdanhMain,
+                                price: gtien,
+                                resultDate: now,
+                                dayOfWeek: dayOfWeek,
+                            };
+
+                            arr = [...arr, obj];
+
+                            console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
+                        }
+
+                        if (
                             kdSS === 'dd' ||
                             kdSS === 'đđ' ||
                             kdSS === 'dauduoi' ||
@@ -861,6 +915,290 @@ function convertContentDetail(content, date) {
                             kdSS === 'dsiuch'
                         ) {
                             kdanhMain = 'xiuchudao';
+
+                            if (eSo.length !== 3) {
+                                errorSyntax = true;
+                            }
+
+                            let mangSoDao = findListOverturn(eSo);
+
+                            const daiTmpContent = [...dai];
+
+                            if (daiTmpContent.includes('br')) {
+                                daiTmpContent[daiTmpContent.indexOf('br')] = 'btr';
+                            } else if (daiTmpContent.includes('bi')) {
+                                daiTmpContent[daiTmpContent.indexOf('bi')] = 'bl';
+                            } else if (daiTmpContent.includes('bu')) {
+                                daiTmpContent[daiTmpContent.indexOf('bu')] = 'bd';
+                            } else if (daiTmpContent.includes('lt')) {
+                                daiTmpContent[daiTmpContent.indexOf('lt')] = 'dl';
+                            } else if (daiTmpContent.includes('dg')) {
+                                daiTmpContent[daiTmpContent.indexOf('dg')] = 'dn';
+                            } else if (daiTmpContent.includes('qg')) {
+                                daiTmpContent[daiTmpContent.indexOf('qg')] = 'qn';
+                            } else if (daiTmpContent.includes('do')) {
+                                daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
+                            }
+
+                            mangSoDao.map((soDao) => {
+                                const obj = {
+                                    content: `${daiTmpContent}.${soDao}.${kdanhMain}.${gtien}ngan`,
+                                    domain: mien,
+                                    province: dai,
+                                    number: [soDao],
+                                    typePlay: kdanhMain,
+                                    price: gtien,
+                                    resultDate: now,
+                                    dayOfWeek: dayOfWeek,
+                                };
+
+                                arr = [...arr, obj];
+
+                                console.log(`${dai}.${soDao}.${kdanhMain}.${gtien}ngan`);
+                            });
+                        }
+
+                        if (
+                            kdSS === 'daoxcdau' ||
+                            kdSS === 'daoxdau' ||
+                            kdSS === 'dxchudau' ||
+                            kdSS === 'dxdau' ||
+                            kdSS === 'dxcdau' ||
+                            kdSS === 'xddau' ||
+                            kdSS === 'xdaodau' ||
+                            kdSS === 'xcdaodau' ||
+                            kdSS === 'xiuchudaodau' ||
+                            kdSS === 'xchudaodau' ||
+                            kdSS === 'xchdaodau' ||
+                            kdSS === 'xiucdaodau' ||
+                            kdSS === 'xiuchdaodau' ||
+                            kdSS === 'xcddau' ||
+                            kdSS === 'xiuchuddau' ||
+                            kdSS === 'xchuddau' ||
+                            kdSS === 'xchddau' ||
+                            kdSS === 'xiucddau' ||
+                            kdSS === 'xiuchddau' ||
+                            kdSS === 'đaoxcdau' ||
+                            kdSS === 'đaoxdau' ||
+                            kdSS === 'đxchudau' ||
+                            kdSS === 'đxdau' ||
+                            kdSS === 'đxcdau' ||
+                            kdSS === 'xđdau' ||
+                            kdSS === 'xđaodau' ||
+                            kdSS === 'xcđdau' ||
+                            kdSS === 'xcđaodau' ||
+                            kdSS === 'xiuchuđaodau' ||
+                            kdSS === 'daoxdau' ||
+                            kdSS === 'daoxcdau' ||
+                            kdSS === 'daoxiuchudau' ||
+                            kdSS === 'daoxchudau' ||
+                            kdSS === 'daoxchdau' ||
+                            kdSS === 'daoxiucdau' ||
+                            kdSS === 'daoxiuchdau' ||
+                            kdSS === 'dxcdau' ||
+                            kdSS === 'dxiuchudau' ||
+                            kdSS === 'dxchudau' ||
+                            kdSS === 'dxchdau' ||
+                            kdSS === 'dxiucdau' ||
+                            kdSS === 'dxiuchdau' ||
+                            kdSS === 'daoscdau' ||
+                            kdSS === 'daosdau' ||
+                            kdSS === 'dschudau' ||
+                            kdSS === 'dsdau' ||
+                            kdSS === 'dscdau' ||
+                            kdSS === 'sddau' ||
+                            kdSS === 'sdaodau' ||
+                            kdSS === 'scdaodau' ||
+                            kdSS === 'siuchudaodau' ||
+                            kdSS === 'schudaodau' ||
+                            kdSS === 'schdaodau' ||
+                            kdSS === 'siucdaodau' ||
+                            kdSS === 'siuchdaodau' ||
+                            kdSS === 'scddau' ||
+                            kdSS === 'siuchuddau' ||
+                            kdSS === 'schuddau' ||
+                            kdSS === 'schddau' ||
+                            kdSS === 'siucddau' ||
+                            kdSS === 'siuchddau' ||
+                            kdSS === 'đaoscdau' ||
+                            kdSS === 'đaosdau' ||
+                            kdSS === 'đschudau' ||
+                            kdSS === 'đsdau' ||
+                            kdSS === 'đscdau' ||
+                            kdSS === 'sđdau' ||
+                            kdSS === 'sđaodau' ||
+                            kdSS === 'scđdau' ||
+                            kdSS === 'scđaodau' ||
+                            kdSS === 'siuchuđaodau' ||
+                            kdSS === 'daosdau' ||
+                            kdSS === 'daoscdau' ||
+                            kdSS === 'daosiuchudau' ||
+                            kdSS === 'daoschudau' ||
+                            kdSS === 'daoschdau' ||
+                            kdSS === 'daosiucdau' ||
+                            kdSS === 'daosiuchdau' ||
+                            kdSS === 'dscdau' ||
+                            kdSS === 'dsiuchudau' ||
+                            kdSS === 'dschudau' ||
+                            kdSS === 'dschdau' ||
+                            kdSS === 'dsiucdau' ||
+                            kdSS === 'dsiuchdau' ||
+                            kdSS === 'xcdaudao' ||
+                            kdSS === 'xiuchudaudao' ||
+                            kdSS === 'xchudaudao' ||
+                            kdSS === 'xcdaud' ||
+                            kdSS === 'xiuchudaud' ||
+                            kdSS === 'xchudaud' ||
+                            kdSS === 'scdaudao' ||
+                            kdSS === 'siuchudaudao' ||
+                            kdSS === 'schudaudao' ||
+                            kdSS === 'scdaud' ||
+                            kdSS === 'siuchudaud' ||
+                            kdSS === 'schudaud'
+                        ) {
+                            kdanhMain = 'xiuchudaudao';
+
+                            if (eSo.length !== 3) {
+                                errorSyntax = true;
+                            }
+
+                            let mangSoDao = findListOverturn(eSo);
+
+                            const daiTmpContent = [...dai];
+
+                            if (daiTmpContent.includes('br')) {
+                                daiTmpContent[daiTmpContent.indexOf('br')] = 'btr';
+                            } else if (daiTmpContent.includes('bi')) {
+                                daiTmpContent[daiTmpContent.indexOf('bi')] = 'bl';
+                            } else if (daiTmpContent.includes('bu')) {
+                                daiTmpContent[daiTmpContent.indexOf('bu')] = 'bd';
+                            } else if (daiTmpContent.includes('lt')) {
+                                daiTmpContent[daiTmpContent.indexOf('lt')] = 'dl';
+                            } else if (daiTmpContent.includes('dg')) {
+                                daiTmpContent[daiTmpContent.indexOf('dg')] = 'dn';
+                            } else if (daiTmpContent.includes('qg')) {
+                                daiTmpContent[daiTmpContent.indexOf('qg')] = 'qn';
+                            } else if (daiTmpContent.includes('do')) {
+                                daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
+                            }
+
+                            mangSoDao.map((soDao) => {
+                                const obj = {
+                                    content: `${daiTmpContent}.${soDao}.${kdanhMain}.${gtien}ngan`,
+                                    domain: mien,
+                                    province: dai,
+                                    number: [soDao],
+                                    typePlay: kdanhMain,
+                                    price: gtien,
+                                    resultDate: now,
+                                    dayOfWeek: dayOfWeek,
+                                };
+
+                                arr = [...arr, obj];
+
+                                console.log(`${dai}.${soDao}.${kdanhMain}.${gtien}ngan`);
+                            });
+                        }
+
+                        if (
+                            kdSS === 'daoxcduoi' ||
+                            kdSS === 'daoxduoi' ||
+                            kdSS === 'dxchuduoi' ||
+                            kdSS === 'dxduoi' ||
+                            kdSS === 'dxcduoi' ||
+                            kdSS === 'xdduoi' ||
+                            kdSS === 'xdaoduoi' ||
+                            kdSS === 'xcdaoduoi' ||
+                            kdSS === 'xiuchudaoduoi' ||
+                            kdSS === 'xchudaoduoi' ||
+                            kdSS === 'xchdaoduoi' ||
+                            kdSS === 'xiucdaoduoi' ||
+                            kdSS === 'xiuchdaoduoi' ||
+                            kdSS === 'xcdduoi' ||
+                            kdSS === 'xiuchudduoi' ||
+                            kdSS === 'xchudduoi' ||
+                            kdSS === 'xchdduoi' ||
+                            kdSS === 'xiucdduoi' ||
+                            kdSS === 'xiuchdduoi' ||
+                            kdSS === 'đaoxcduoi' ||
+                            kdSS === 'đaoxduoi' ||
+                            kdSS === 'đxchuduoi' ||
+                            kdSS === 'đxduoi' ||
+                            kdSS === 'đxcduoi' ||
+                            kdSS === 'xđduoi' ||
+                            kdSS === 'xđaoduoi' ||
+                            kdSS === 'xcđduoi' ||
+                            kdSS === 'xcđaoduoi' ||
+                            kdSS === 'xiuchuđaoduoi' ||
+                            kdSS === 'daoxduoi' ||
+                            kdSS === 'daoxcduoi' ||
+                            kdSS === 'daoxiuchuduoi' ||
+                            kdSS === 'daoxchuduoi' ||
+                            kdSS === 'daoxchduoi' ||
+                            kdSS === 'daoxiucduoi' ||
+                            kdSS === 'daoxiuchduoi' ||
+                            kdSS === 'dxcduoi' ||
+                            kdSS === 'dxiuchuduoi' ||
+                            kdSS === 'dxchuduoi' ||
+                            kdSS === 'dxchduoi' ||
+                            kdSS === 'dxiucduoi' ||
+                            kdSS === 'dxiuchduoi' ||
+                            kdSS === 'daoscduoi' ||
+                            kdSS === 'daosduoi' ||
+                            kdSS === 'dschuduoi' ||
+                            kdSS === 'dsduoi' ||
+                            kdSS === 'dscduoi' ||
+                            kdSS === 'sdduoi' ||
+                            kdSS === 'sdaoduoi' ||
+                            kdSS === 'scdaoduoi' ||
+                            kdSS === 'siuchudaoduoi' ||
+                            kdSS === 'schudaoduoi' ||
+                            kdSS === 'schdaoduoi' ||
+                            kdSS === 'siucdaoduoi' ||
+                            kdSS === 'siuchdaoduoi' ||
+                            kdSS === 'scdduoi' ||
+                            kdSS === 'siuchudduoi' ||
+                            kdSS === 'schudduoi' ||
+                            kdSS === 'schdduoi' ||
+                            kdSS === 'siucdduoi' ||
+                            kdSS === 'siuchdduoi' ||
+                            kdSS === 'đaoscduoi' ||
+                            kdSS === 'đaosduoi' ||
+                            kdSS === 'đschuduoi' ||
+                            kdSS === 'đsduoi' ||
+                            kdSS === 'đscduoi' ||
+                            kdSS === 'sđduoi' ||
+                            kdSS === 'sđaoduoi' ||
+                            kdSS === 'scđduoi' ||
+                            kdSS === 'scđaoduoi' ||
+                            kdSS === 'siuchuđaoduoi' ||
+                            kdSS === 'daosduoi' ||
+                            kdSS === 'daoscduoi' ||
+                            kdSS === 'daosiuchuduoi' ||
+                            kdSS === 'daoschuduoi' ||
+                            kdSS === 'daoschduoi' ||
+                            kdSS === 'daosiucduoi' ||
+                            kdSS === 'daosiuchduoi' ||
+                            kdSS === 'dscduoi' ||
+                            kdSS === 'dsiuchuduoi' ||
+                            kdSS === 'dschuduoi' ||
+                            kdSS === 'dschduoi' ||
+                            kdSS === 'dsiucduoi' ||
+                            kdSS === 'dsiuchduoi' ||
+                            kdSS === 'xcduoidao' ||
+                            kdSS === 'xiuchuduoidao' ||
+                            kdSS === 'xchuduoidao' ||
+                            kdSS === 'xcduoid' ||
+                            kdSS === 'xiuchuduoid' ||
+                            kdSS === 'xchuduoid' ||
+                            kdSS === 'scduoidao' ||
+                            kdSS === 'siuchuduoidao' ||
+                            kdSS === 'schuduoidao' ||
+                            kdSS === 'scduoid' ||
+                            kdSS === 'siuchuduoid' ||
+                            kdSS === 'schuduoid'
+                        ) {
+                            kdanhMain = 'xiuchuduoidao';
 
                             if (eSo.length !== 3) {
                                 errorSyntax = true;

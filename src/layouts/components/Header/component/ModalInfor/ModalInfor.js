@@ -79,9 +79,9 @@ function ModalInfor({ setModalInfor, user, setUser }) {
                             <AiOutlineClose />
                         </div>
                     </div>
-                    <div className="mt-[16px] lg:px-[26px] px-[16px]">
-                        <div className="flex items-center">
-                            <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                    <div className="mt-[16px] flex flex-col gap-[12px] lg:px-[26px] px-[16px]">
+                        <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                            <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                 Tài khoản <span className="text-[#e92d2d] ml-[2px]">*</span>
                             </label>
                             <input
@@ -95,8 +95,8 @@ function ModalInfor({ setModalInfor, user, setUser }) {
                                 className="px-[10px] py-[4px] flex-1 text-[#9fa8bc] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                             />
                         </div>
-                        <div className="flex items-center mt-[20px]">
-                            <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                        <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                            <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                 Tên <span className="text-[#e92d2d] ml-[2px]">*</span>
                             </label>
                             <input
@@ -109,8 +109,8 @@ function ModalInfor({ setModalInfor, user, setUser }) {
                                 className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                             />
                         </div>
-                        <div className="flex items-center mt-[20px]">
-                            <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                        <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                            <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                 ID Telegram
                             </label>
                             <input
@@ -120,8 +120,8 @@ function ModalInfor({ setModalInfor, user, setUser }) {
                                 className="px-[10px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                             />
                         </div>
-                        <div className="flex items-center mt-[20px]">
-                            <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[30%]">
+                        <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                            <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[30%]">
                                 Số điện thoại
                             </label>
                             <input

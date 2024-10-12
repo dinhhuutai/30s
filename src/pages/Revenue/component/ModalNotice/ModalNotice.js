@@ -34,7 +34,7 @@ function ModalNotice({ setModalNotice, selectorRevenue, domain }) {
             contentTmp = `${selectorRevenue.idMember.name}
             
 ${
-    selectorRevenue.mn.tongxac > 0
+    selectorRevenue.mn?.tongxac > 0
         ? `M.Nam ${
               dayOfWeek === 1
                   ? 'chủ nhật'

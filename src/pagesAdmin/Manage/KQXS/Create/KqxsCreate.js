@@ -369,9 +369,9 @@ function KqxsCreate() {
                         <div className="flex flex-col gap-[4px]">
                             <label className="text-[12px]">Vĩnh Long</label>
                             <input
-                                value={urlbu}
-                                name="urlbu"
-                                onChange={(e) => setUrlbu(e.target.value)}
+                                value={urlvl}
+                                name="urlvl"
+                                onChange={(e) => setUrlvl(e.target.value)}
                                 className="border-[1px] px-[8px] py-[2px] text-[12px] outline-none border-solid border-[#a9a5a5] rounded-[4px]"
                                 type="text"
                                 placeholder="Link url"
@@ -380,9 +380,9 @@ function KqxsCreate() {
                         <div className="flex flex-col gap-[4px]">
                             <label className="text-[12px]">Bình Dương</label>
                             <input
-                                value={urlvl}
-                                name="urlvl"
-                                onChange={(e) => setUrlvl(e.target.value)}
+                                value={urlbu}
+                                name="urlbu"
+                                onChange={(e) => setUrlbu(e.target.value)}
                                 className="border-[1px] px-[8px] py-[2px] text-[12px] outline-none border-solid border-[#a9a5a5] rounded-[4px]"
                                 type="text"
                                 placeholder="Link url"

@@ -6,7 +6,6 @@ function payDaXien(content, info, kqxs) {
     let quantitySoTrung1 = 0;
     let quantitySoTrung2 = 0;
 
-
     diem =
         content.price *
         2 *
@@ -35,7 +34,20 @@ function payDaXien(content, info, kqxs) {
     });
 
     if (hasSo1 && hasSo2) {
-        quantitySoTrung = hasSo1 < hasSo2 ? quantitySoTrung1 : hasSo1 > hasSo2 ? quantitySoTrung2 : quantitySoTrung1;
+        if (
+            (content.domain === 'mn' && info.typeTrungdathangMN) ||
+            (content.domain === 'mt' && info.typeTrungdathangMT) ||
+            (content.domain === 'mb' && info.typeTrungdathangMB)
+        ) {
+            quantitySoTrung = (quantitySoTrung1 + quantitySoTrung2) / 2;
+        } else {
+            quantitySoTrung =
+                quantitySoTrung1 < quantitySoTrung2
+                    ? quantitySoTrung1
+                    : quantitySoTrung1 > quantitySoTrung2
+                    ? quantitySoTrung2
+                    : quantitySoTrung1;
+        }
     } else {
         quantitySoTrung = 0;
     }
@@ -44,7 +56,6 @@ function payDaXien(content, info, kqxs) {
         content.price *
         quantitySoTrung *
         (content.domain === 'mn' ? info.trungdaxienMN : content.domain === 'mt' ? info.trungdaxienMT : 1);
-
 
     return {
         diem: diem,

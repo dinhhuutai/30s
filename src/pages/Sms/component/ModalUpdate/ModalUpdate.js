@@ -414,14 +414,14 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
                         </div>
                     </div>
                     <div className="mt-[16px] px-[26px] flex flex-col lg:flex-row justify-between">
-                        <div>
+                        <div className="flex flex-col lg:items-center lg:flex-row gap-[4px] lg:gap-[0px">
                             <label className="text-[12px] font-[600]">
                                 Người chơi <span className="text-[#e92d2d] ml-[2px]">*</span>
                             </label>
                             <select
                                 value={selecMember}
                                 onChange={(e) => setSelecMember(e.target.value)}
-                                className="px-[4px] ml-[8px] py-[4px] w-[150px] text-[#000] font-[500] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
+                                className="px-[4px] w-full lg:ml-[8px] py-[4px] lg:w-[150px] text-[#000] font-[500] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
                             >
                                 {members?.map((member, index) => {
                                     return (
@@ -498,7 +498,7 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
                         </div>
                     </div>
 
-                    <div className="mt-[16px] px-[10px] flex justify-between items-end text-[12px]">
+                    <div className="mt-[16px] px-[10px] lg:gap-[0px] gap-[6px] flex lg:flex-row flex-col lg:justify-between lg:items-end text-[12px]">
                         <div className="flex flex-col gap-[2px]">
                             <div className="flex gap-[24px]">
                                 <div>
@@ -553,8 +553,8 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
                         </div>
                     </div>
 
-                    <div className="lg:mt-[16px] mt-[10px] mx-[10px] overflow-x-auto overflow-hidden">
-                        <div className="lg:w-full w-[900px] lg:mt-[26px] h-[300px] overflow-y-auto">
+                    <div className="mt-[10px] mx-[10px] overflow-x-auto overflow-hidden">
+                        <div className="lg:w-full w-[900px] lg:mt-[6px] h-[300px] overflow-y-auto">
                             <table className="w-full rounded-[6px] overflow-hidden">
                                 <thead>
                                     <tr className="text-[11px] w-[100%] bg-[#d8dce3]">
@@ -687,12 +687,16 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
                                                         ? 'Đầu'
                                                         : sms.typePlay === 'duoi'
                                                         ? 'Đuôi'
-                                                        : sms.typePlay === 'xiuchudau'
+                                                        : sms.typePlay === 'xiuchudau' ||
+                                                          sms.typePlay === 'xiuchudaudao'
                                                         ? 'Xỉu Chủ Đầu'
-                                                        : sms.typePlay === 'xiuchuduoi'
+                                                        : sms.typePlay === 'xiuchuduoi' ||
+                                                          sms.typePlay === 'xiuchuduoidao'
                                                         ? 'Xỉu Chủ Đuôi'
                                                         : sms.typePlay === 'da(thang)'
                                                         ? 'Đá Thẳng'
+                                                        : sms.typePlay === 'baylo'
+                                                        ? 'Bảy Lô'
                                                         : 'Đá Xiên'}
                                                 </div>
                                             </td>

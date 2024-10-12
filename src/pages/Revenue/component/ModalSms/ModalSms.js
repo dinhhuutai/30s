@@ -96,7 +96,7 @@ function ModalSms({ setModalSms, idSms }) {
                         </div>
                     </div>
 
-                    <div className="mt-[16px] px-[10px] flex justify-between items-end text-[12px]">
+                    <div className="mt-[16px] px-[10px] lg:gap-[0px] gap-[6px] flex lg:flex-row flex-col lg:justify-between lg:items-end text-[12px]">
                         <div className="flex flex-col gap-[2px]">
                             <div className="flex gap-[24px]">
                                 <div>
@@ -151,8 +151,8 @@ function ModalSms({ setModalSms, idSms }) {
                         </div>
                     </div>
 
-                    <div className="lg:mt-[16px] mt-[10px] mx-[10px] overflow-x-auto overflow-hidden">
-                        <div className="lg:w-full w-[900px] lg:mt-[26px] h-[300px] overflow-y-auto">
+                    <div className="mt-[10px] mx-[10px] overflow-x-auto overflow-hidden">
+                        <div className="lg:w-full w-[900px] lg:mt-[6px] h-[300px] overflow-y-auto">
                             <table className="w-full rounded-[6px] overflow-hidden">
                                 <thead>
                                     <tr className="text-[11px] w-[100%] bg-[#d8dce3]">

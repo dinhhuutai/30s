@@ -1,4 +1,5 @@
 import payBaoLo from './pay/payBaoLo';
+import payBayLo from './pay/payBayLo';
 import payDaThang from './pay/payDaThang';
 import payDaXien from './pay/payDaXien';
 import payDau from './pay/payDau';
@@ -9,7 +10,6 @@ import payXiuChuDau from './pay/payXiuChuDau';
 import payXiuChuDuoi from './pay/payXiuChuDuoi';
 
 function payBySms(sms, infoPlayer, kqxs) {
-
     sms = sms.map((e, index) => {
         let pay = {};
 
@@ -23,14 +23,16 @@ function payBySms(sms, infoPlayer, kqxs) {
             pay = payDau(e, infoPlayer, kqxs);
         } else if (e.typePlay === 'duoi') {
             pay = payDuoi(e, infoPlayer, kqxs);
-        } else if (e.typePlay === 'xiuchudau') {
+        } else if (e.typePlay === 'xiuchudau' || e.typePlay === 'xiuchudaudao') {
             pay = payXiuChuDau(e, infoPlayer, kqxs);
-        } else if (e.typePlay === 'xiuchuduoi') {
+        } else if (e.typePlay === 'xiuchuduoi' || e.typePlay === 'xiuchuduoidao') {
             pay = payXiuChuDuoi(e, infoPlayer, kqxs);
         } else if (e.typePlay === 'da(thang)') {
             pay = payDaThang(e, infoPlayer, kqxs);
         } else if (e.typePlay === 'da(xien)') {
             pay = payDaXien(e, infoPlayer, kqxs);
+        } else if (e.typePlay === 'baylo') {
+            pay = payBayLo(e, infoPlayer, kqxs);
         }
 
         return { ...e, ...pay };

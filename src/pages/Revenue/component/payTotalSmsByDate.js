@@ -8,6 +8,7 @@ import payXiuChuDauWin from './pay/payXiuChuDauWin';
 import payXiuChuDuoiWin from './pay/payXiuChuDuoiWin';
 import payDaThangWin from './pay/payDaThangWin';
 import payDaXienWin from './pay/payDaXienWin';
+import payBayLoWin from './pay/payBayLoWin';
 import moment from 'moment';
 import payRevenue from './payRevenue';
 
@@ -39,14 +40,16 @@ async function payTotalSmsByDate(date, dateSelect, domain, idUser, kqxs) {
                                 pay = payDauWin(e, sms.idMember, kqxs);
                             } else if (e.typePlay === 'duoi') {
                                 pay = payDuoiWin(e, sms.idMember, kqxs);
-                            } else if (e.typePlay === 'xiuchudau') {
+                            } else if (e.typePlay === 'xiuchudau' || e.typePlay === 'xiuchudaudao') {
                                 pay = payXiuChuDauWin(e, sms.idMember, kqxs);
-                            } else if (e.typePlay === 'xiuchuduoi') {
+                            } else if (e.typePlay === 'xiuchuduoi' || e.typePlay === 'xiuchuduoidao') {
                                 pay = payXiuChuDuoiWin(e, sms.idMember, kqxs);
                             } else if (e.typePlay === 'da(thang)') {
                                 pay = payDaThangWin(e, sms.idMember, kqxs);
                             } else if (e.typePlay === 'da(xien)') {
                                 pay = payDaXienWin(e, sms.idMember, kqxs);
+                            } else if (e.typePlay === 'baylo') {
+                                pay = payBayLoWin(e, sms.idMember, kqxs);
                             }
 
                             await axios.post(`${process.env.REACT_APP_API_URL}/v1/smsDetail/update/${e._id}`, pay);

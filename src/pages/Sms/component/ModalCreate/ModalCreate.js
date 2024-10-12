@@ -259,9 +259,9 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
                             <AiOutlineClose />
                         </div>
                     </div>
-                    <div className="mt-[16px] px-[26px]">
-                        <div className="flex items-center">
-                            <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[20%]">
+                    <div className="mt-[16px] flex flex-col gap-[12px] px-[26px]">
+                        <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                            <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[20%]">
                                 Người chơi <span className="text-[#e92d2d] ml-[2px]">*</span>
                             </label>
 
@@ -275,8 +275,8 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
                             </select>
                         </div>
 
-                        <div className="flex items-start mt-[16px]">
-                            <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[20%]">
+                        <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                            <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[20%]">
                                 Nội dung <span className="text-[#e92d2d] ml-[2px]">*</span>
                             </label>
 
@@ -290,8 +290,8 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
                             ></textarea>
                         </div>
 
-                        <div className="flex items-center mt-[16px]">
-                            <label className="text-[12px] mr-[20px] flex justify-end text-[#000] w-[20%]">
+                        <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
+                            <label className="text-[12px] lg:mr-[20px] flex lg:justify-end text-[#000] lg:w-[20%]">
                                 Ngày xổ <span className="text-[#e92d2d] ml-[2px]">*</span>
                             </label>
 
