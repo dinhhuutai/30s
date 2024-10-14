@@ -12,9 +12,6 @@ import ProtectedRouteAdmin from './routing/ProtectedRouteAdmin';
 import { useState } from 'react';
 
 function App() {
-
-
-
     return (
         <Router>
             <Routes>
@@ -26,9 +23,8 @@ function App() {
                     {routes.map((route, index) => {
                         return (
                             route.login && (
-                                <Route path="/" element={<ProtecteRouterLogin />}>
+                                <Route key={index} path="/" element={<ProtecteRouterLogin />}>
                                     <Route
-                                        key={index}
                                         path={route.path}
                                         element={
                                             route.isPageLogin ? (

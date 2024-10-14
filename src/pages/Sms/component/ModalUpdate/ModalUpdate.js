@@ -358,7 +358,7 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
                     handleFindSmsDetails();
                     handleFindSms();
 
-                    dispatch(noticeAdminSlice.actions.successNotice('Thêm tin nhắn thành công'));
+                    dispatch(noticeAdminSlice.actions.successNotice('Chỉnh sửa tin nhắn thành công'));
 
                     setTimeoutTmp = setTimeout(() => {
                         dispatch(noticeAdminSlice.actions.hiddenNotice());

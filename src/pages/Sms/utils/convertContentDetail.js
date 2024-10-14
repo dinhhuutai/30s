@@ -68,6 +68,8 @@ function convertContentDetail(content, date) {
     let bd = 0;
     let kth = 0;
 
+    let isKD = false;
+
     while (kt) {
         if (contentTmp[0] === 'b' && contentTmp[1] === 'l') {
             contentTmp = 'bi' + contentTmp.slice(2);
@@ -79,7 +81,7 @@ function convertContentDetail(content, date) {
             contentTmp = contentTmp.slice(0, pos[1]) + 'bi' + contentTmp.slice(pos[1] + 2);
         }
         if (changeBaoDao.length > 0) {
-            // eslint-disable-next-line no-loop-func
+            // eslint-disable-next-line no-loop-func, array-callback-return
             changeBaoDao.map((item, index) => {
                 contentTmp = contentTmp.slice(0, item + 2 * index) + 'bdao' + contentTmp.slice(item + 2 * index + 2);
             });
@@ -156,6 +158,7 @@ function convertContentDetail(content, date) {
             if (mangSo.length > 0 && fKdanh && cloChild[i] !== '.' && !isFinite(Number(cloChild[i]))) {
                 kdanh += cloChild[i];
                 fSo = false;
+                isKD = false;
             }
 
             if (isFinite(Number(cloChild[i])) && !fSo) {
@@ -254,7 +257,8 @@ function convertContentDetail(content, date) {
                                     kdSS === 'dthang' ||
                                     kdSS === 'đat' ||
                                     soDa[0].length < 2 ||
-                                    soDa[1].length < 2
+                                    soDa[1].length < 2 ||
+                                    soDa[0] === soDa[1]
                                 ) {
                                     errorSyntax = true;
                                     console.log(123);
@@ -290,6 +294,7 @@ function convertContentDetail(content, date) {
                                 };
 
                                 arr = [...arr, obj];
+                                isKD = true;
 
                                 console.log(`${daiTmpContent},${soDa[1]}.${kdanhMain}.${gtien}ngan`);
                             });
@@ -305,7 +310,8 @@ function convertContentDetail(content, date) {
                                 kdSS === 'dthang' ||
                                 kdSS === 'đat' ||
                                 soDa[0].length < 2 ||
-                                soDa[1].length < 2
+                                soDa[1].length < 2 ||
+                                soDa[0] === soDa[1]
                             ) {
                                 errorSyntax = true;
                                 console.log(123);
@@ -341,6 +347,7 @@ function convertContentDetail(content, date) {
                             };
 
                             arr = [...arr, obj];
+                            isKD = true;
 
                             console.log(`${daiTmpContent}.${soDa[0]},${soDa[1]}.${kdanhMain}.${gtien}ngan`);
                         });
@@ -446,6 +453,7 @@ function convertContentDetail(content, date) {
                             };
 
                             arr = [...arr, obj];
+                            isKD = true;
 
                             console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
 
@@ -522,6 +530,7 @@ function convertContentDetail(content, date) {
                                 };
 
                                 arr = [...arr, obj];
+                                isKD = true;
 
                                 console.log(`${dai}.${soDao}.${kdanhMain}.${gtien}ngan`);
                             });
@@ -529,11 +538,7 @@ function convertContentDetail(content, date) {
                             cbBld = true;
                         }
 
-                        if (
-                            kdSS === 'baylo' ||
-                            kdSS === 'baobay' ||
-                            kdSS === 'baobaylo'
-                        ) {
+                        if (kdSS === 'baylo' || kdSS === 'baobay' || kdSS === 'baobaylo') {
                             kdanhMain = 'baylo';
 
                             if (eSo.length !== 2) {
@@ -570,6 +575,7 @@ function convertContentDetail(content, date) {
                             };
 
                             arr = [...arr, obj];
+                            isKD = true;
 
                             console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
                         }
@@ -624,6 +630,7 @@ function convertContentDetail(content, date) {
                             };
 
                             arr = [...arr, obj];
+                            isKD = true;
 
                             console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
                         }
@@ -680,6 +687,7 @@ function convertContentDetail(content, date) {
                             };
 
                             arr = [...arr, obj];
+                            isKD = true;
 
                             console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
                         }
@@ -742,6 +750,7 @@ function convertContentDetail(content, date) {
                             };
 
                             arr = [...arr, obj];
+                            isKD = true;
 
                             console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
                         }
@@ -824,6 +833,7 @@ function convertContentDetail(content, date) {
                             };
 
                             arr = [...arr, obj];
+                            isKD = true;
 
                             console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
                         }
@@ -953,6 +963,7 @@ function convertContentDetail(content, date) {
                                 };
 
                                 arr = [...arr, obj];
+                                isKD = true;
 
                                 console.log(`${dai}.${soDao}.${kdanhMain}.${gtien}ngan`);
                             });
@@ -1095,6 +1106,7 @@ function convertContentDetail(content, date) {
                                 };
 
                                 arr = [...arr, obj];
+                                isKD = true;
 
                                 console.log(`${dai}.${soDao}.${kdanhMain}.${gtien}ngan`);
                             });
@@ -1237,6 +1249,7 @@ function convertContentDetail(content, date) {
                                 };
 
                                 arr = [...arr, obj];
+                                isKD = true;
 
                                 console.log(`${dai}.${soDao}.${kdanhMain}.${gtien}ngan`);
                             });
@@ -1279,6 +1292,7 @@ function convertContentDetail(content, date) {
                             };
 
                             arr = [...arr, obj];
+                            isKD = true;
 
                             console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
                         }
@@ -1327,6 +1341,7 @@ function convertContentDetail(content, date) {
                             };
 
                             arr = [...arr, obj];
+                            isKD = true;
 
                             console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
                         }
@@ -1368,6 +1383,7 @@ function convertContentDetail(content, date) {
                             };
 
                             arr = [...arr, obj];
+                            isKD = true;
 
                             console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
                         } else if ((kdSS === 'd' || kdSS === 'đ') && !ddCh) {
@@ -1407,6 +1423,7 @@ function convertContentDetail(content, date) {
                             };
 
                             arr = [...arr, obj];
+                            isKD = true;
 
                             console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
                         }
@@ -1417,6 +1434,10 @@ function convertContentDetail(content, date) {
                     } else if ((kdSS === 'd' || kdSS === 'đ') && !ddCh) {
                         ddCh = true;
                     }
+                }
+
+                if (!isKD) {
+                    errorSyntax = true;
                 }
 
                 fSo = true;

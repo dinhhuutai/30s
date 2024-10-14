@@ -81,9 +81,8 @@ function Revenue() {
             const formattedDate = moment(date).format('DD/MM/YYYY');
             const res = await axios.post(`${process.env.REACT_APP_API_URL}/v1/revenue/findRevenueByDateAndIdMember`, {
                 date: formattedDate,
-                idMember,
+                idUser: user.login.currentUser._id,
             });
-
 
             if (res.data.success) {
                 let revenueNew = res.data.data?.reduce((acc, curr) => {
@@ -486,7 +485,7 @@ function Revenue() {
                                                             name: revenue.idMember.name,
                                                         });
                                                         setModalWin(true);
-                                                        console.log('date revenue: ', date)
+                                                        console.log('date revenue: ', date);
                                                     }}
                                                     className="w-[80px] px-[4px] cursor-pointer font-[480] h-[40px] text-[#2587a0] flex justify-center items-center py-[2px] border-[1px] border-solid border-[#fff]"
                                                 >
