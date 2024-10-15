@@ -104,6 +104,13 @@ function Member() {
         }
     };
 
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+    }, []);
+
     return (
         <div>
             <HeaderPage pageCurr={'Danh Bạ'} />

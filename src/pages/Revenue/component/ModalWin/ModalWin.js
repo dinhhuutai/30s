@@ -40,7 +40,7 @@ function ModalWin({ setModalWin, selectRevenue }) {
             className="fixed flex justify-center items-center top-0 left-0 right-0 bottom-0 z-[9999]"
         >
             {loadingUp ? (
-                <div className="left-0 right-0 absolute z-[999999] top-0">
+                <div className="left-0 right-0 fixed z-[999999] top-0">
                     <div className="bg-[#259dba] h-[3px] animate-loadingSlice"></div>
                     <div className="right-[6px] absolute top-[10px]">
                         <div className="flex justify-center items-center">

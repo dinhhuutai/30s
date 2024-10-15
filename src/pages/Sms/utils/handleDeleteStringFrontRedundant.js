@@ -51,6 +51,8 @@ function handleDeleteStringFrontRedundant(content) {
     ];
 
     let stringRedun = '';
+    let countDelete = 0;
+    let errorSyntax = false;
 
     for (let i = 0; i < length; i++) {
         if (contentTmp[i] !== '.' && !(isFinite(Number(contentTmp[i])) && isFinite(Number(contentTmp[i + 1])))) {
@@ -65,9 +67,14 @@ function handleDeleteStringFrontRedundant(content) {
                 i = -1;
             }
         }
+        countDelete++;
     }
 
-    return contentTmp;
+    if (countDelete >= 4) {
+        errorSyntax = true;
+    }
+
+    return { data3: contentTmp, data4: errorSyntax };
 }
 
 export default handleDeleteStringFrontRedundant;

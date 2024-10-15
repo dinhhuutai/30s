@@ -86,6 +86,13 @@ function User() {
         } catch (error) {}
     };
 
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+    }, []);
+
     return (
         <div className="pb-[10px]">
             <div className="py-[14px] px-[30px] bg-[#F7F9FA] flex items-center justify-between">

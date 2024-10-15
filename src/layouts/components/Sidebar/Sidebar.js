@@ -18,6 +18,12 @@ function Sidebar({ setSidebarWidth }) {
             <div className="bg-[var(--bg-color-logo)] flex justify-center items-center h-[var(--height-header)]">
                 <h2>
                     <Link
+                        onClick={() => {
+                            if (width < 768) {
+                                setSidebarWidth('0px');
+                                document.documentElement.style.setProperty('--width-sidebar', '0px');
+                            }
+                        }}
                         to={config.routes.dashboard}
                         className="text-[26px] hover:text-[var(--color-logo-hover)] text-[var(--color-logo)] uppercase font-[620]"
                     >

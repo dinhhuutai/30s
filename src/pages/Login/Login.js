@@ -77,13 +77,20 @@ function Login() {
         }, 800);
     }, []);
 
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+    }, []);
+
     return (
         <div
             className="min-h-screen w-full bg-cover bg-center bg-repeat justify-center lg:items-center flex fixed top-0 left-0 ring-0 bottom-0"
             style={{ backgroundImage: `url(${bgLogin})` }}
         >
             {loading ? (
-                <div className="absolute w-full z-[999999] top-0">
+                <div className="fixed w-full z-[999999] top-0">
                     <div className="bg-[#259dba] h-[3px] animate-loadingSlice"></div>
                     <div className="right-[6px] absolute top-[10px]">
                         <div className="flex justify-center items-center">

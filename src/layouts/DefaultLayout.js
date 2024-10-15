@@ -22,7 +22,7 @@ function DefaultLayout({ children }) {
     return (
         <div className="">
             {loading ? (
-                <div className="absolute w-full z-[999999] top-0">
+                <div className="fixed w-full z-[999999] top-0">
                     <div className="bg-[#259dba] h-[3px] animate-loadingSlice"></div>
                     <div className="right-[6px] absolute top-[10px]">
                         <div className="flex justify-center items-center">

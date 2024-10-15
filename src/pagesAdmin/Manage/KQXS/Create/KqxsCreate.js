@@ -199,6 +199,13 @@ function KqxsCreate() {
         }
     };
 
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+    }, []);
+
     return (
         <div>
             <div className="py-[14px] px-[30px] bg-[#F7F9FA] flex items-center justify-between">

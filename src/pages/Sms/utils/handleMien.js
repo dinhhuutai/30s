@@ -105,7 +105,7 @@ function handleMien(content, now) {
         //     contentTmp = mienMain + '.' + contentTmp;
         // }
 
-        if (isFinite(Number(contentTmp[1]))) {
+        if (isFinite(Number(contentTmp[1])) && (currentHour > 16 || (currentHour === 16 && currentMinute > 15))) {
             mienMain = 'mb';
             console.log(123);
 

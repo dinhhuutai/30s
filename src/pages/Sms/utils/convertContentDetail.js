@@ -62,7 +62,11 @@ function convertContentDetail(content, date) {
     contentTmp = handleConvertSymbol(contentTmp, mien, dayOfWeek);
     console.log('Làm gọn sau viết tắc: ', contentTmp);
 
-    contentTmp = handleDeleteStringFrontRedundant(contentTmp);
+    let { data3, data4 } = handleDeleteStringFrontRedundant(contentTmp);
+    contentTmp = data3;
+    if (!errorSyntax) {
+        errorSyntax = data4;
+    }
     console.log('Làm gọn sau xóa các chuỗi dư thừa phía trước: ', contentTmp);
 
     let bd = 0;

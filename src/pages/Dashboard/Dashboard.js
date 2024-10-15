@@ -163,10 +163,17 @@ function Dashboard() {
         }
     };
 
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+    }, []);
+
     return (
         <div>
             {loading ? (
-                <div className="left-0 right-0 absolute z-[999999] top-0">
+                <div className="left-0 right-0 z-[999999] fixed top-0">
                     <div className="bg-[#259dba] h-[3px] animate-loadingSlice"></div>
                     <div className="right-[6px] absolute top-[10px]">
                         <div className="flex justify-center items-center">

@@ -72,14 +72,25 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
                 });
             }
 
-            let { arr, errorSyntax } = convertContentDetail(content, dateCreate);
+            let { arr, errorSyntax } = await convertContentDetail(content, dateCreate);
             let smsDetailList = arr;
+
+            if (errorSyntax) {
+                dispatch(noticeAdminSlice.actions.errorNotice('Lỗi cú pháp!!!'));
+
+                setTimeoutTmp = setTimeout(() => {
+                    setLoading(false);
+                    dispatch(noticeAdminSlice.actions.hiddenNotice());
+                }, [5000]);
+
+                return;
+            }
 
             let mien = smsDetailList[0] && smsDetailList[0].domain;
             let kqxs = mien === 'mn' ? mn : mien === 'mt' ? mt : mb;
 
             const resMember = await axios.post(`${process.env.REACT_APP_API_URL}/v1/member/findMemberById/${idMember}`);
-            smsDetailList = payBySms(smsDetailList, resMember?.data?.member, kqxs);
+            smsDetailList = await payBySms(smsDetailList, resMember?.data?.member, kqxs);
 
             let tongxac = 0;
             let tongtrung = 0;
