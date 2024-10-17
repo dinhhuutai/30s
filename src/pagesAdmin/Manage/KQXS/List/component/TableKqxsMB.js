@@ -5,10 +5,12 @@ import { BsX, BsCheck2, BsArrowRepeat } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
 import { noticeAdminSelector } from '~/redux/selectors';
 import noticeAdminSlice from '~/redux/slices/noticeAdminSlice';
+import { BiLoaderCircle } from 'react-icons/bi';
+import paySms from './paySms';
 
 let setTimeoutTmp;
 
-function TableKqxsMB({ kqxsMB, date, setKqxsMB }) {
+function TableKqxsMB({ handleFindKqxs, kqxsMB, date, setKqxsMB }) {
     const [localSelect, setLocalSelect] = useState({
         rank: 0,
         indexInRank: 0,
@@ -76,6 +78,8 @@ function TableKqxsMB({ kqxsMB, date, setKqxsMB }) {
                     setValue('');
                     setLoading(false);
 
+                    await paySms('mb');
+
                     dispatch(noticeAdminSlice.actions.successNotice('Thay đổi thành công'));
 
                     setTimeoutTmp = setTimeout(() => {
@@ -99,15 +103,75 @@ function TableKqxsMB({ kqxsMB, date, setKqxsMB }) {
         }
     };
 
+    const handleCreateKQXS = async () => {
+        let province = 'mb';
+        const resultDate = moment(date).format('DD/MM/YYYY');
+
+        const kqxs = await axios.post(`${process.env.REACT_APP_API_URL}/v1/kqxs/find`, {
+            resultDate,
+            province,
+        });
+
+        const now = new Date();
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+
+        if (kqxs.data.kqxs.length === 0 && (hours > 18 || (hours === 18 && minutes > 40))) {
+            const rs = [
+                '00000',
+                '00000',
+                '00000',
+                '00000',
+                '00000',
+                '00000',
+                '00000',
+                '00000',
+                '00000',
+                '0000',
+                '0000',
+                '0000',
+                '0000',
+                '0000',
+                '0000',
+                '0000',
+                '0000',
+                '0000',
+                '0000',
+                '000',
+                '000',
+                '000',
+                '00',
+                '00',
+                '00',
+                '00',
+                '00000',
+            ];
+
+            const kqxsObj = {
+                domain: 'mb',
+                province,
+                resultDate,
+                result: rs,
+            };
+
+            const res = await axios.post(`${process.env.REACT_APP_API_URL}/v1/kqxs/create`, kqxsObj);
+
+            if (res.data.success) {
+                await handleFindKqxs();
+            }
+        }
+    };
+
     return (
         <div class="mt-[10px] overflow-x-auto w-[100%] flex">
             <table className="w-[100%]">
                 <tbody>
                     {kqxsMB?.map((e, i) => (
                         <tr key={i} className="bg-[#f0f1f4] flex grid-flow-col text-[12px]">
-                            <td className="px-[2px] py-[6px] w-[50px] flex justify-center items-center border-[1px] border-[#fff]">{`${
-                                i !== 0 ? `Giải ${i}` : 'ĐB'
-                            }`}</td>
+                            <td
+                                onDoubleClick={() => handleCreateKQXS()}
+                                className="px-[2px] py-[6px] w-[50px] flex justify-center items-center border-[1px] border-[#fff]"
+                            >{`${i !== 0 ? `Giải ${i}` : 'ĐB'}`}</td>
                             <td
                                 className={`grid ${
                                     i === 0 || i === 1
@@ -119,15 +183,15 @@ function TableKqxsMB({ kqxsMB, date, setKqxsMB }) {
                                         : i === 4 || i === 7
                                         ? 'grid-cols-4'
                                         : ''
-                                } items-center justify-center flex-1 px-[2px] py-[6px] border-[1px] border-[#fff] ${
+                                } items-center justify-center flex-1 gap-[6px] px-[2px] py-[6px] border-[1px] border-[#fff] ${
                                     i === 0 || i === 7
                                         ? 'text-[14px] text-[#f02b2b] font-[650]'
                                         : 'text-[#000] font-[600]'
                                 }`}
                             >
                                 {e?.map((el, ii) => (
-                                    <div key={el} className="grid col-span-1">
-                                        {
+                                    <div key={el} className="grid col-span-1 justify-center">
+                                        {el ? (
                                             <button
                                                 onDoubleClick={() => {
                                                     setLocalSelect({
@@ -198,7 +262,65 @@ function TableKqxsMB({ kqxsMB, date, setKqxsMB }) {
                                                     el
                                                 )}
                                             </button>
-                                        }
+                                        ) : (
+                                            <div className="flex gap-[1px] text-[12px] text-[#5d5c5c]">
+                                                {i <= 3 ? (
+                                                    <>
+                                                        <div className="animate-loading3">
+                                                            <BiLoaderCircle />
+                                                        </div>
+                                                        <div className="animate-loading3">
+                                                            <BiLoaderCircle />
+                                                        </div>
+                                                        <div className="animate-loading3">
+                                                            <BiLoaderCircle />
+                                                        </div>
+                                                        <div className="animate-loading3">
+                                                            <BiLoaderCircle />
+                                                        </div>
+                                                        <div className="animate-loading3">
+                                                            <BiLoaderCircle />
+                                                        </div>
+                                                    </>
+                                                ) : i <= 5 ? (
+                                                    <>
+                                                        <div className="animate-loading3">
+                                                            <BiLoaderCircle />
+                                                        </div>
+                                                        <div className="animate-loading3">
+                                                            <BiLoaderCircle />
+                                                        </div>
+                                                        <div className="animate-loading3">
+                                                            <BiLoaderCircle />
+                                                        </div>
+                                                        <div className="animate-loading3">
+                                                            <BiLoaderCircle />
+                                                        </div>
+                                                    </>
+                                                ) : i <= 6 ? (
+                                                    <>
+                                                        <div className="animate-loading3">
+                                                            <BiLoaderCircle />
+                                                        </div>
+                                                        <div className="animate-loading3">
+                                                            <BiLoaderCircle />
+                                                        </div>
+                                                        <div className="animate-loading3">
+                                                            <BiLoaderCircle />
+                                                        </div>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <div className="animate-loading3">
+                                                            <BiLoaderCircle />
+                                                        </div>
+                                                        <div className="animate-loading3">
+                                                            <BiLoaderCircle />
+                                                        </div>
+                                                    </>
+                                                )}
+                                            </div>
+                                        )}
                                     </div>
                                 ))}
                             </td>

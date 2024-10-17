@@ -13,10 +13,6 @@ module.exports = {
                     '0%': { transform: 'rotate(0deg)' },
                     '100%': { transform: 'rotate(360deg)' },
                 },
-                loading2: {
-                    '0%': { transform: 'rotate(0deg)' },
-                    '100%': { transform: 'rotate(360deg)' },
-                },
                 loadingSlice: {
                     '0%': { width: '0%' },
                     '100%': { width: '100%' },
@@ -73,6 +69,7 @@ module.exports = {
 
                 loading: 'loading .8s linear infinite',
                 loading2: 'loading .4s linear infinite',
+                loading3: 'loading .6s linear infinite',
                 loadingSlice: 'loadingSlice .8s linear forwards',
                 modalDownSlide: 'modalDownSlide .1s linear',
                 noticeSlideLeft: 'noticeSlideLeft .6s linear forwards',

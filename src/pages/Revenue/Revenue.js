@@ -168,7 +168,7 @@ function Revenue() {
                     }
                 });
 
-                if (mn.length >= 3) {
+                if (mn.length >= 1) {
                     const resRevenue = await axios.post(`${process.env.REACT_APP_API_URL}/v1/revenue/delete`, {
                         resultDate: formattedDate,
                         idUser: user.login.currentUser._id,
@@ -179,7 +179,7 @@ function Revenue() {
                         await payTotalSmsByDate(formattedDate, date, 'mn', user.login.currentUser._id, mn);
                     }
                 }
-                if (mt.length >= 2) {
+                if (mt.length >= 1) {
                     const resRevenue = await axios.post(`${process.env.REACT_APP_API_URL}/v1/revenue/delete`, {
                         resultDate: formattedDate,
                         idUser: user.login.currentUser._id,

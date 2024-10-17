@@ -88,6 +88,10 @@ function convertContentDetail(content, date) {
             // eslint-disable-next-line no-loop-func, array-callback-return
             changeBaoDao.map((item, index) => {
                 contentTmp = contentTmp.slice(0, item + 2 * index) + 'bdao' + contentTmp.slice(item + 2 * index + 2);
+
+                if (item > pos[0] && item < pos[1]) {
+                    pos[1] += 2;
+                }
             });
         }
 

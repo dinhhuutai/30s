@@ -13,6 +13,7 @@ import parseDate from '~/utils/parseDate';
 import { useDispatch, useSelector } from 'react-redux';
 import noticeAdminSlice from '~/redux/slices/noticeAdminSlice';
 import { noticeAdminSelector } from '~/redux/selectors';
+import paySms from './component/paySms';
 
 let setTimeoutTmp;
 
@@ -118,6 +119,7 @@ function Kqxs() {
 
     useEffect(() => {
         handleFindKqxs();
+        startInterval();
     }, [date]);
 
     const handleFindKqxs = async () => {
@@ -252,6 +254,36 @@ function Kqxs() {
             setKqxsMN(mnMain);
         }
     };
+
+    let intervalId;
+
+    async function updateKQXS() {
+        const now = new Date();
+        const hour = now.getHours();
+        const minutes = now.getMinutes();
+
+        if (hour === 18 && minutes >= 40) {
+            console.log('Đã quá 19h, dừng cập nhật.');
+            clearInterval(intervalId); // Dừng kiểm tra sau 18h40
+            return;
+        }
+
+        await handleFindKqxs();
+        console.log('cập nhật.');
+    }
+
+    function startInterval() {
+        const now = new Date();
+        const hour = now.getHours();
+        const minutes = now.getMinutes();
+
+        if (hour >= 16 && (hour < 18 || (hour === 18 && minutes <= 40))) {
+            // Bắt đầu kiểm tra mỗi phút
+            intervalId = setInterval(updateKQXS, 1000);
+        } else {
+            console.log('Không phải thời gian cập nhật.');
+        }
+    }
 
     const notice = useSelector(noticeAdminSelector);
     useEffect(() => {
@@ -412,6 +444,8 @@ function Kqxs() {
                         }, [5000]);
                     }
 
+                    paySms(domain);
+
                     console.log('lấy kết quả xổ số mn success');
                 } else {
                     setLoading(false);
@@ -502,15 +536,15 @@ function Kqxs() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-[30px] lg:gap-[10px] mt-[30px]">
                     <div className="text-center">
                         <h2 className="text-[16px] uppercase font-[650]">miền nam</h2>
-                        {kqxsMN && <TableKqxsMN kqxsMN={kqxsMN} setKqxsMN={setKqxsMN} day={day} date={date} />}
+                        {kqxsMN && <TableKqxsMN handleFindKqxs={handleFindKqxs} kqxsMN={kqxsMN} setKqxsMN={setKqxsMN} day={day} date={date} />}
                     </div>
                     <div className="text-center">
                         <h2 className="text-[16px] uppercase font-[650]">miền trung</h2>
-                        {kqxsMT && <TableKqxsMT kqxsMT={kqxsMT} setKqxsMT={setKqxsMT} day={day} date={date} />}
+                        {kqxsMT && <TableKqxsMT handleFindKqxs={handleFindKqxs} kqxsMT={kqxsMT} setKqxsMT={setKqxsMT} day={day} date={date} />}
                     </div>
                     <div className="text-center">
                         <h2 className="text-[16px] uppercase font-[650]">miền bắc</h2>
-                        {kqxsMB && <TableKqxsMB kqxsMB={kqxsMB} setKqxsMB={setKqxsMB} date={date} />}
+                        {kqxsMB && <TableKqxsMB handleFindKqxs={handleFindKqxs} kqxsMB={kqxsMB} setKqxsMB={setKqxsMB} date={date} />}
                     </div>
                 </div>
             </div>

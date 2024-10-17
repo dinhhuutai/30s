@@ -55,6 +55,8 @@ function KqxsCreate() {
     const [urlqg, setUrlqg] = useState('');
     const [urldo, setUrldo] = useState('');
     const [urlkt, setUrlkt] = useState('');
+    const [urlmn, setUrlmn] = useState('');
+    const [urlmt, setUrlmt] = useState('');
     const [urlmb, setUrlmb] = useState('');
     const [codeRegister, setCodeRegister] = useState('');
     const [tokenChatBotTelegram, setTokenChatBotTelegram] = useState('');
@@ -114,6 +116,8 @@ function KqxsCreate() {
             setUrlqg(rs?.urlqg);
             setUrldo(rs?.urldo);
             setUrlkt(rs?.urlkt);
+            setUrlmn(rs?.urlmn);
+            setUrlmt(rs?.urlmt);
             setUrlmb(rs?.urlmb);
             setCodeRegister(rs?.codeRegister);
             setTokenChatBotTelegram(rs?.tokenChatBotTelegram);
@@ -164,6 +168,8 @@ function KqxsCreate() {
                 urlqg,
                 urldo,
                 urlkt,
+                urlmn,
+                urlmt,
                 urlmb,
                 codeRegister,
                 tokenChatBotTelegram,
@@ -231,7 +237,19 @@ function KqxsCreate() {
             <div className="m-[20px] p-[16px] bg-[#fff] rounded-[4px] box-shadow-admin-path">
                 <div className="flex gap-[20px]">
                     <div className="flex flex-col gap-[4px] w-[33%]">
-                        <div className="mb-[4px] font-[600] text-[12px] uppercase">Miền Nam</div>
+                        <div className="mb-[20px] font-[600] text-[12px] uppercase">Miền Nam</div>
+                        <div className="flex flex-col gap-[4px]">
+                            <label className="text-[12px]">Miền Nam</label>
+                            <input
+                                value={urlmn}
+                                name="urlmn"
+                                onChange={(e) => setUrlmn(e.target.value)}
+                                className="border-[1px] px-[8px] py-[2px] text-[12px] outline-none border-solid border-[#a9a5a5] rounded-[4px]"
+                                type="text"
+                                placeholder="Link url"
+                            />
+                        </div>
+
                         <div className="mb-[6px] mt-[16px] font-[600] text-[12px] uppercase">Thứ 2</div>
                         <div className="flex flex-col gap-[4px]">
                             <label className="text-[12px]">Tp.Hồ Chí Minh</label>
@@ -479,7 +497,19 @@ function KqxsCreate() {
                     </div>
 
                     <div className="flex flex-col gap-[4px] w-[33%]">
-                        <div className="mb-[4px] font-[600] text-[12px] uppercase">Miền Trung</div>
+                        <div className="mb-[20px] font-[600] text-[12px] uppercase">Miền Trung</div>
+                        <div className="flex flex-col gap-[4px]">
+                            <label className="text-[12px]">Miền Trung</label>
+                            <input
+                                value={urlmt}
+                                name="urlmt"
+                                onChange={(e) => setUrlmt(e.target.value)}
+                                className="border-[1px] px-[8px] py-[2px] text-[12px] outline-none border-solid border-[#a9a5a5] rounded-[4px]"
+                                type="text"
+                                placeholder="Link url"
+                            />
+                        </div>
+
                         <div className="mb-[6px] mt-[16px] font-[600] text-[12px] uppercase">Thứ 2</div>
                         <div className="flex flex-col gap-[4px]">
                             <label className="text-[12px]">Phú Yên</label>

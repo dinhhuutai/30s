@@ -26,6 +26,7 @@ function Dashboard() {
 
     useEffect(() => {
         handleFindKqxs();
+        startInterval();
     }, [date]);
 
     const handleFindKqxs = async () => {
@@ -160,6 +161,169 @@ function Dashboard() {
             setKqxsMT(mtMain);
             setKqxsMN(mnMain);
             setLoading(false);
+        }
+    };
+
+    let intervalId;
+
+    async function updateKQXS() {
+        const now = new Date();
+        const hour = now.getHours();
+        const minutes = now.getMinutes();
+
+        if (hour === 18 && minutes >= 40) {
+            console.log('Đã quá 19h, dừng cập nhật.');
+            clearInterval(intervalId); // Dừng kiểm tra sau 18h40
+            return;
+        }
+
+        await handleFindKqxs2();
+        console.log('cập nhật.');
+    }
+
+    function startInterval() {
+        const now = new Date();
+        const hour = now.getHours();
+        const minutes = now.getMinutes();
+
+        if (hour >= 16 && (hour < 18 || (hour === 18 && minutes <= 40))) {
+            // Bắt đầu kiểm tra mỗi phút
+            intervalId = setInterval(updateKQXS, 10000);
+        } else {
+            console.log('Không phải thời gian cập nhật.');
+        }
+    }
+
+    const handleFindKqxs2 = async () => {
+        const formattedDate = moment(date).format('DD/MM/YYYY');
+        const res = await axios.post(`${process.env.REACT_APP_API_URL}/v1/kqxs/findKqxsByDate`, {
+            date: formattedDate,
+        });
+
+        if (res.data.success) {
+            const mn = [];
+            const mt = [];
+            const mb = [];
+
+            res.data.data.map((e) => {
+                if (e.domain === 'mb') {
+                    mb.push(e);
+                } else if (e.domain === 'mt') {
+                    mt.push(e);
+                } else if (e.domain === 'mn') {
+                    mn.push(e);
+                }
+            });
+
+            const mnMain = [];
+            let mangTmp0 = [];
+            let mangTmp1 = [];
+            let mangTmp2 = [];
+            let mangTmp3 = [];
+            for (let i = 0; i < 18; i++) {
+                let obj;
+
+                mangTmp0.push(mn[0]?.result[i]);
+                mangTmp1.push(mn[1]?.result[i]);
+                mangTmp2.push(mn[2]?.result[i]);
+                mangTmp3.push(mn[3]?.result[i]);
+
+                if (
+                    i === 0 ||
+                    i === 1 ||
+                    i === 4 ||
+                    i === 5 ||
+                    i === 12 ||
+                    i === 14 ||
+                    i === 15 ||
+                    i === 16 ||
+                    i === 17
+                ) {
+                    if (mn.length === 3) {
+                        obj = {
+                            [mn[0]?.province]: mangTmp0,
+                            [mn[1]?.province]: mangTmp1,
+                            [mn[2]?.province]: mangTmp2,
+                        };
+                    } else {
+                        obj = {
+                            [mn[0]?.province]: mangTmp0,
+                            [mn[1]?.province]: mangTmp1,
+                            [mn[2]?.province]: mangTmp2,
+                            [mn[3]?.province]: mangTmp3,
+                        };
+                    }
+
+                    mangTmp0 = [];
+                    mangTmp1 = [];
+                    mangTmp2 = [];
+                    mangTmp3 = [];
+
+                    mnMain.push(obj);
+                }
+            }
+
+            const mtMain = [];
+            let mangTmp0mt = [];
+            let mangTmp1mt = [];
+            let mangTmp2mt = [];
+            for (let i = 0; i < 18; i++) {
+                let obj;
+
+                mangTmp0mt.push(mt[0]?.result[i]);
+                mangTmp1mt.push(mt[1]?.result[i]);
+                mangTmp2mt.push(mt[2]?.result[i]);
+
+                if (
+                    i === 0 ||
+                    i === 1 ||
+                    i === 4 ||
+                    i === 5 ||
+                    i === 12 ||
+                    i === 14 ||
+                    i === 15 ||
+                    i === 16 ||
+                    i === 17
+                ) {
+                    if (mt.length === 2) {
+                        obj = {
+                            [mt[0]?.province]: mangTmp0mt,
+                            [mt[1]?.province]: mangTmp1mt,
+                        };
+                    } else {
+                        obj = {
+                            [mt[0]?.province]: mangTmp0mt,
+                            [mt[1]?.province]: mangTmp1mt,
+                            [mt[2]?.province]: mangTmp2mt,
+                        };
+                    }
+
+                    mangTmp0mt = [];
+                    mangTmp1mt = [];
+                    mangTmp2mt = [];
+
+                    mtMain.push(obj);
+                }
+            }
+
+            const mbMain = [];
+            let mangTmpmb = [];
+            for (let i = 0; i < 27; i++) {
+                mangTmpmb.push(mb[0]?.result[i]);
+
+                if (i === 0 || i === 2 || i === 8 || i === 12 || i === 18 || i === 21 || i === 25 || i === 26) {
+                    mbMain.push(mangTmpmb);
+
+                    mangTmpmb = [];
+                }
+            }
+
+            let lastElement = mbMain.pop();
+            mbMain.unshift(lastElement);
+
+            setKqxsMB(mbMain);
+            setKqxsMT(mtMain);
+            setKqxsMN(mnMain);
         }
     };
 
