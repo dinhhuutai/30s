@@ -25,9 +25,9 @@ function payDaXienWin(content, info, kqxs) {
 
     if (hasSo1 && hasSo2) {
         if (
-            (content.domain === 'mn' && info.typeTrungdathangMN) ||
-            (content.domain === 'mt' && info.typeTrungdathangMT) ||
-            (content.domain === 'mb' && info.typeTrungdathangMB)
+            (content.domain === 'mn' && info.typeTrungdaxienMN) ||
+            (content.domain === 'mt' && info.typeTrungdaxienMT) ||
+            (content.domain === 'mb' && info.typeTrungdaxienMB)
         ) {
             quantitySoTrung = (quantitySoTrung1 + quantitySoTrung2) / 2;
         } else {
