@@ -78,8 +78,14 @@ function BotTelegram() {
                 <div className="mt-[10px]">
                     <h2 className="text-[14px] font-[600]">I. Hướng dẫn bằng video:</h2>
                     <div className="flex justify-center mt-[10px]">
-                        <video width="90%" controls>
-                        </video>
+                        <iframe
+                            src="https://drive.google.com/file/d/1GRXjG0J823C-cPG3w5_ZokCDGt_pK5lC/preview"
+                            width="90%"
+                            height="480"
+                            allow="autoplay"
+                            allowFullScreen
+                            title="Video"
+                        />
                     </div>
                 </div>
                 <div className="mt-[20px]">
