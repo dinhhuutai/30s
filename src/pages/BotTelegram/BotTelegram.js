@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import HeaderPage from '../component/HeaderPage';
 import { BsArrowClockwise } from 'react-icons/bs';
-import videoChatBotTelegram from '~/assets/videos/videoChatBotTelegram.mp4';
 import { BiSolidBot } from 'react-icons/bi';
 
 import img1BotTelegram from '~/assets/imgs/botTelegram1.png';
@@ -80,7 +79,6 @@ function BotTelegram() {
                     <h2 className="text-[14px] font-[600]">I. Hướng dẫn bằng video:</h2>
                     <div className="flex justify-center mt-[10px]">
                         <video width="90%" controls>
-                            <source src={videoChatBotTelegram} type="video/mp4" />
                         </video>
                     </div>
                 </div>
