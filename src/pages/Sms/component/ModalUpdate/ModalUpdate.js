@@ -122,9 +122,18 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
 
             let form = {};
             if (
-                (mien === 'mn' && mn.length >= 3) ||
-                (mien === 'mt' && mt.length >= 2) ||
-                (mien === 'mb' && mb.length === 1) ||
+                (mien === 'mn' &&
+                    mn.length >= 3 &&
+                    mn[0].result.length === 18 &&
+                    mn[1].result.length === 18 &&
+                    mn[2].result.length === 18 &&
+                    (mn.length === 4 ? mn[3].result.length === 18 : true)) ||
+                (mien === 'mt' &&
+                    mt.length >= 2 &&
+                    mt[0].result.length === 18 &&
+                    mt[1].result.length === 18 &&
+                    (mt.length === 3 ? mt[2].result.length === 18 : true)) ||
+                (mien === 'mb' && mb.length === 1 && mb[0].length === 27) ||
                 mien !== selectorSms?.sm?.domain ||
                 selectorSmsTmp.sm.idMember._id !== selecMember
             ) {

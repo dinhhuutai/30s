@@ -61,7 +61,7 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
             const mt = [];
             const mb = [];
             if (resKQXS.data.success) {
-                resKQXS.data.data.map((e) => {
+                resKQXS.data.data?.map((e) => {
                     if (e.domain === 'mb') {
                         mb.push(e);
                     } else if (e.domain === 'mt') {
@@ -125,9 +125,18 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
             dateTmp.setUTCHours(0, 0, 0, 0);
 
             if (
-                (mien === 'mn' && mn.length >= 3) ||
-                (mien === 'mt' && mt.length >= 2) ||
-                (mien === 'mb' && mb.length === 1)
+                (mien === 'mn' &&
+                    mn.length >= 3 &&
+                    mn[0].result.length === 18 &&
+                    mn[1].result.length === 18 &&
+                    mn[2].result.length === 18 &&
+                    (mn.length === 4 ? mn[3].result.length === 18 : true)) ||
+                (mien === 'mt' &&
+                    mt.length >= 2 &&
+                    mt[0].result.length === 18 &&
+                    mt[1].result.length === 18 &&
+                    (mt.length === 3 ? mt[2].result.length === 18 : true)) ||
+                (mien === 'mb' && mb.length === 1 && mb[0].length === 27)
             ) {
                 let revenue = resMember?.data?.member.runNumber ? 0 - (tongxac - tongtrung) : tongxac - tongtrung;
 
@@ -137,7 +146,13 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
                     resultDate: formattedDate,
                 });
 
-                if (resRevenue.data.revenue.length > 0 && !errorSyntax) {
+                console.log({
+                    idMember: idMember,
+                    domain: mien,
+                    resultDate: formattedDate,
+                });
+
+                if (resRevenue.data.revenue?.length > 0 && !errorSyntax) {
                     await axios.post(
                         `${process.env.REACT_APP_API_URL}/v1/revenue/update/${resRevenue.data.revenue[0]._id}`,
                         {

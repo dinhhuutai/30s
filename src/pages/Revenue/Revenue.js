@@ -84,7 +84,9 @@ function Revenue() {
                 idUser: user.login.currentUser._id,
             });
 
-            if (res.data.success) {
+            console.log(res.data)
+
+            if (res?.data.success) {
                 let revenueNew = res.data.data?.reduce((acc, curr) => {
                     let group = acc.find((item) => item.idMember?._id === curr.idMember?._id);
 
