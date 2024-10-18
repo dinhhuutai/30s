@@ -11,6 +11,7 @@ import paySms from './paySms';
 let setTimeoutTmp;
 
 function TableKqxsMB({ handleFindKqxs, kqxsMB, date, setKqxsMB }) {
+    
     const [localSelect, setLocalSelect] = useState({
         rank: 0,
         indexInRank: 0,
@@ -190,7 +191,7 @@ function TableKqxsMB({ handleFindKqxs, kqxsMB, date, setKqxsMB }) {
                                 }`}
                             >
                                 {e?.map((el, ii) => (
-                                    <div key={el} className="grid col-span-1 justify-center">
+                                    <div key={ii} className="grid col-span-1 justify-center">
                                         {el ? (
                                             <button
                                                 onDoubleClick={() => {

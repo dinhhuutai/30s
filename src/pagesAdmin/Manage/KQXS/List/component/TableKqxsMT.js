@@ -292,7 +292,7 @@ function TableKqxsMT({ handleFindKqxs, kqxsMT, day, date, setKqxsMT }) {
                                                   setValue(el);
                                               }}
                                               className="w-[100%] flex justify-center"
-                                              key={el}
+                                              key={ii}
                                           >
                                               {localSelect.rank === i &&
                                               localSelect.indexInRank === ii &&
@@ -433,7 +433,7 @@ function TableKqxsMT({ handleFindKqxs, kqxsMT, day, date, setKqxsMT }) {
                                           </button>
                                       ))
                                     : e?.undefined?.map((el, ii) => (
-                                          <div className="flex gap-[1px] text-[12px] text-[#5d5c5c]">
+                                          <div key={ii} className="flex gap-[1px] text-[12px] text-[#5d5c5c]">
                                               {i === 0 ? (
                                                   <>
                                                       <div className="animate-loading3">
@@ -534,7 +534,7 @@ function TableKqxsMT({ handleFindKqxs, kqxsMT, day, date, setKqxsMT }) {
                                                   setValue(el);
                                               }}
                                               className="w-[100%] flex justify-center"
-                                              key={el}
+                                              key={ii}
                                           >
                                               {localSelect.rank === i &&
                                               localSelect.indexInRank === ii &&
@@ -675,7 +675,7 @@ function TableKqxsMT({ handleFindKqxs, kqxsMT, day, date, setKqxsMT }) {
                                           </button>
                                       ))
                                     : e?.undefined?.map((el, ii) => (
-                                          <div className="flex gap-[1px] text-[12px] text-[#5d5c5c]">
+                                          <div key={ii} className="flex gap-[1px] text-[12px] text-[#5d5c5c]">
                                               {i === 0 ? (
                                                   <>
                                                       <div className="animate-loading3">
@@ -775,7 +775,7 @@ function TableKqxsMT({ handleFindKqxs, kqxsMT, day, date, setKqxsMT }) {
                                                       setValue(el);
                                                   }}
                                                   className="w-[100%] flex justify-center"
-                                                  key={el}
+                                                  key={ii}
                                               >
                                                   {localSelect.rank === i &&
                                                   localSelect.indexInRank === ii &&
@@ -916,7 +916,7 @@ function TableKqxsMT({ handleFindKqxs, kqxsMT, day, date, setKqxsMT }) {
                                               </button>
                                           ))
                                         : e?.undefined?.map((el, ii) => (
-                                              <div className="flex gap-[1px] text-[12px] text-[#5d5c5c]">
+                                              <div key={ii} className="flex gap-[1px] text-[12px] text-[#5d5c5c]">
                                                   {i === 0 ? (
                                                       <>
                                                           <div className="animate-loading3">

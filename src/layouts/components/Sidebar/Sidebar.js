@@ -1,6 +1,7 @@
 import { Link, NavLink } from 'react-router-dom';
 import config from '~/config';
 import { AiFillHome, AiFillMessage, AiFillCalculator } from 'react-icons/ai';
+import { BiSolidBot } from 'react-icons/bi';
 import { BsPeopleFill } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
 
@@ -120,6 +121,27 @@ function Sidebar({ setSidebarWidth }) {
                                 >
                                     <BsPeopleFill className="mr-[8px] text-[14px]" />
                                     <span>danh bạ</span>
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink
+                                    onClick={() => {
+                                        if (width < 768) {
+                                            setSidebarWidth('0px');
+                                            document.documentElement.style.setProperty('--width-sidebar', '0px');
+                                        }
+                                    }}
+                                    className={(nav) =>
+                                        `text-[12px] items-center text-[var(--color-text-sidebar)] font-[650] uppercase px-[16px] py-[8px] flex border-t-[1px] border-b-[1px] border-[#eaecf0] border-solid ${
+                                            nav.isActive
+                                                ? 'bg-active-path text-[var(--color-white)]'
+                                                : 'hover:text-[var(--color-black)]'
+                                        }`
+                                    }
+                                    to={config.routes.botTelegram}
+                                >
+                                    <BiSolidBot className="mr-[8px] text-[14px]" />
+                                    <span>bot telegram</span>
                                 </NavLink>
                             </li>
                         </ul>

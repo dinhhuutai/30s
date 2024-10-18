@@ -3,6 +3,7 @@ const routes = {
     sms: '/sms',
     revenue: '/revenue',
     member: '/member',
+    botTelegram: '/bot-telegram',
     login: '/login',
     register: '/register',
 

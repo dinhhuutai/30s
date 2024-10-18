@@ -326,7 +326,7 @@ function TableKqxsMN({ handleFindKqxs, kqxsMN, day, date, setKqxsMN }) {
                                                   setValue(el);
                                               }}
                                               className="w-[100%] flex justify-center"
-                                              key={el}
+                                              key={ii}
                                           >
                                               {localSelect.rank === i &&
                                               localSelect.indexInRank === ii &&
@@ -467,7 +467,7 @@ function TableKqxsMN({ handleFindKqxs, kqxsMN, day, date, setKqxsMN }) {
                                           </button>
                                       ))
                                     : e?.undefined?.map((el, ii) => (
-                                          <div className="flex gap-[1px] text-[12px] text-[#5d5c5c]">
+                                          <div key={ii} className="flex gap-[1px] text-[12px] text-[#5d5c5c]">
                                               {i === 0 ? (
                                                   <>
                                                       <div className="animate-loading3">
@@ -566,7 +566,7 @@ function TableKqxsMN({ handleFindKqxs, kqxsMN, day, date, setKqxsMN }) {
                                                   setValue(el);
                                               }}
                                               className="w-[100%] flex justify-center"
-                                              key={el}
+                                              key={ii}
                                           >
                                               {localSelect.rank === i &&
                                               localSelect.indexInRank === ii &&
@@ -707,7 +707,7 @@ function TableKqxsMN({ handleFindKqxs, kqxsMN, day, date, setKqxsMN }) {
                                           </button>
                                       ))
                                     : e?.undefined?.map((el, ii) => (
-                                          <div className="flex gap-[1px] text-[12px] text-[#5d5c5c]">
+                                          <div key={ii} className="flex gap-[1px] text-[12px] text-[#5d5c5c]">
                                               {i === 0 ? (
                                                   <>
                                                       <div className="animate-loading3">
@@ -806,7 +806,7 @@ function TableKqxsMN({ handleFindKqxs, kqxsMN, day, date, setKqxsMN }) {
                                                   setValue(el);
                                               }}
                                               className="w-[100%] flex justify-center"
-                                              key={el}
+                                              key={ii}
                                           >
                                               {localSelect.rank === i &&
                                               localSelect.indexInRank === ii &&
@@ -947,7 +947,7 @@ function TableKqxsMN({ handleFindKqxs, kqxsMN, day, date, setKqxsMN }) {
                                           </button>
                                       ))
                                     : e?.undefined?.map((el, ii) => (
-                                          <div className="flex gap-[1px] text-[12px] text-[#5d5c5c]">
+                                          <div key={ii} className="flex gap-[1px] text-[12px] text-[#5d5c5c]">
                                               {i === 0 ? (
                                                   <>
                                                       <div className="animate-loading3">
@@ -1035,78 +1035,238 @@ function TableKqxsMN({ handleFindKqxs, kqxsMN, day, date, setKqxsMN }) {
                                             : 'text-[#000] font-[600]'
                                     }`}
                                 >
-                                    {e?.hg?.map((el, ii) => (
-                                        <button
-                                            onDoubleClick={() => {
-                                                setLocalSelect({
-                                                    rank: i,
-                                                    indexInRank: ii,
-                                                    province: 'hg',
-                                                });
-                                                setValue(el);
-                                            }}
-                                            className="w-[100%] flex justify-center"
-                                            key={el}
-                                        >
-                                            {localSelect.rank === i &&
-                                            localSelect.indexInRank === ii &&
-                                            localSelect.province === 'hg' ? (
-                                                <div className="w-[80%]">
-                                                    <input
-                                                        className="w-[100%] px-[4px] outline-none border-[1px] border-solid border-[#bdbcbc] rounded-[2px]"
-                                                        value={value}
-                                                        onChange={(eValue) => setValue(eValue.target.value)}
-                                                    />
+                                    {e?.hg
+                                        ? e?.hg?.map((el, ii) => (
+                                              <button
+                                                  onDoubleClick={() => {
+                                                      setLocalSelect({
+                                                          rank: i,
+                                                          indexInRank: ii,
+                                                          province: 'hg',
+                                                      });
+                                                      setValue(el);
+                                                  }}
+                                                  className="w-[100%] flex justify-center"
+                                                  key={ii}
+                                              >
+                                                  {localSelect.rank === i &&
+                                                  localSelect.indexInRank === ii &&
+                                                  localSelect.province === 'hg' ? (
+                                                      <div className="w-[80%]">
+                                                          <input
+                                                              className="w-[100%] px-[4px] outline-none border-[1px] border-solid border-[#bdbcbc] rounded-[2px]"
+                                                              value={value}
+                                                              onChange={(eValue) => setValue(eValue.target.value)}
+                                                          />
 
-                                                    <div className="mt-[6px] flex gap-[4px] justify-center">
-                                                        <button
-                                                            disabled={loading}
-                                                            onClick={handleUpdate}
-                                                            className={`${
-                                                                loading
-                                                                    ? 'opacity-[.7] hover:opacity-[.7]'
-                                                                    : 'hover:opacity-[.9]'
-                                                            } px-[4px] py-[2px] bg-[#4ecb40] text-[#fff] text-[14px] rounded-[2px]`}
-                                                        >
-                                                            {loading ? (
-                                                                <div className="text-[20px] animate-loading">
-                                                                    <BsArrowRepeat />
-                                                                </div>
-                                                            ) : (
-                                                                <BsCheck2 />
-                                                            )}
-                                                        </button>
-                                                        <button
-                                                            disabled={loading}
-                                                            onClick={() => {
-                                                                setLocalSelect({
-                                                                    rank: 0,
-                                                                    indexInRank: 0,
-                                                                    province: '',
-                                                                });
-                                                                setValue('');
-                                                            }}
-                                                            className={`${
-                                                                loading
-                                                                    ? 'opacity-[.7] hover:opacity-[.7]'
-                                                                    : 'hover:opacity-[.9]'
-                                                            } px-[4px] py-[2px] bg-[#f1513f] text-[#fff] text-[14px] rounded-[2px]`}
-                                                        >
-                                                            {loading ? (
-                                                                <div className="text-[20px] animate-loading">
-                                                                    <BsArrowRepeat />
-                                                                </div>
-                                                            ) : (
-                                                                <BsX />
-                                                            )}
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            ) : (
-                                                el
-                                            )}
-                                        </button>
-                                    ))}
+                                                          <div className="mt-[6px] flex gap-[4px] justify-center">
+                                                              <button
+                                                                  disabled={loading}
+                                                                  onClick={handleUpdate}
+                                                                  className={`${
+                                                                      loading
+                                                                          ? 'opacity-[.7] hover:opacity-[.7]'
+                                                                          : 'hover:opacity-[.9]'
+                                                                  } px-[4px] py-[2px] bg-[#4ecb40] text-[#fff] text-[14px] rounded-[2px]`}
+                                                              >
+                                                                  {loading ? (
+                                                                      <div className="text-[20px] animate-loading">
+                                                                          <BsArrowRepeat />
+                                                                      </div>
+                                                                  ) : (
+                                                                      <BsCheck2 />
+                                                                  )}
+                                                              </button>
+                                                              <button
+                                                                  disabled={loading}
+                                                                  onClick={() => {
+                                                                      setLocalSelect({
+                                                                          rank: 0,
+                                                                          indexInRank: 0,
+                                                                          province: '',
+                                                                      });
+                                                                      setValue('');
+                                                                  }}
+                                                                  className={`${
+                                                                      loading
+                                                                          ? 'opacity-[.7] hover:opacity-[.7]'
+                                                                          : 'hover:opacity-[.9]'
+                                                                  } px-[4px] py-[2px] bg-[#f1513f] text-[#fff] text-[14px] rounded-[2px]`}
+                                                              >
+                                                                  {loading ? (
+                                                                      <div className="text-[20px] animate-loading">
+                                                                          <BsArrowRepeat />
+                                                                      </div>
+                                                                  ) : (
+                                                                      <BsX />
+                                                                  )}
+                                                              </button>
+                                                          </div>
+                                                      </div>
+                                                  ) : el ? (
+                                                      el
+                                                  ) : (
+                                                      <div className="flex gap-[1px] text-[12px] text-[#5d5c5c]">
+                                                          {i === 0 ? (
+                                                              <>
+                                                                  <div className="animate-loading3">
+                                                                      <BiLoaderCircle />
+                                                                  </div>
+                                                                  <div className="animate-loading3">
+                                                                      <BiLoaderCircle />
+                                                                  </div>
+                                                              </>
+                                                          ) : i === 1 ? (
+                                                              <>
+                                                                  <div className="animate-loading3">
+                                                                      <BiLoaderCircle />
+                                                                  </div>
+                                                                  <div className="animate-loading3">
+                                                                      <BiLoaderCircle />
+                                                                  </div>
+                                                                  <div className="animate-loading3">
+                                                                      <BiLoaderCircle />
+                                                                  </div>
+                                                              </>
+                                                          ) : i <= 3 ? (
+                                                              <>
+                                                                  <div className="animate-loading3">
+                                                                      <BiLoaderCircle />
+                                                                  </div>
+                                                                  <div className="animate-loading3">
+                                                                      <BiLoaderCircle />
+                                                                  </div>
+                                                                  <div className="animate-loading3">
+                                                                      <BiLoaderCircle />
+                                                                  </div>
+                                                                  <div className="animate-loading3">
+                                                                      <BiLoaderCircle />
+                                                                  </div>
+                                                              </>
+                                                          ) : i <= 7 ? (
+                                                              <>
+                                                                  <div className="animate-loading3">
+                                                                      <BiLoaderCircle />
+                                                                  </div>
+                                                                  <div className="animate-loading3">
+                                                                      <BiLoaderCircle />
+                                                                  </div>
+                                                                  <div className="animate-loading3">
+                                                                      <BiLoaderCircle />
+                                                                  </div>
+                                                                  <div className="animate-loading3">
+                                                                      <BiLoaderCircle />
+                                                                  </div>
+                                                                  <div className="animate-loading3">
+                                                                      <BiLoaderCircle />
+                                                                  </div>
+                                                              </>
+                                                          ) : (
+                                                              <div>
+                                                                  <div className="animate-loading3">
+                                                                      <BiLoaderCircle />
+                                                                  </div>
+                                                                  <div className="animate-loading3">
+                                                                      <BiLoaderCircle />
+                                                                  </div>
+                                                                  <div className="animate-loading3">
+                                                                      <BiLoaderCircle />
+                                                                  </div>
+                                                                  <div className="animate-loading3">
+                                                                      <BiLoaderCircle />
+                                                                  </div>
+                                                                  <div className="animate-loading3">
+                                                                      <BiLoaderCircle />
+                                                                  </div>
+                                                                  <div className="animate-loading3">
+                                                                      <BiLoaderCircle />
+                                                                  </div>
+                                                              </div>
+                                                          )}
+                                                      </div>
+                                                  )}
+                                              </button>
+                                          ))
+                                        : e?.undefined?.map((el, ii) => (
+                                              <div key={ii} className="flex gap-[1px] text-[12px] text-[#5d5c5c]">
+                                                  {i === 0 ? (
+                                                      <>
+                                                          <div className="animate-loading3">
+                                                              <BiLoaderCircle />
+                                                          </div>
+                                                          <div className="animate-loading3">
+                                                              <BiLoaderCircle />
+                                                          </div>
+                                                      </>
+                                                  ) : i === 1 ? (
+                                                      <>
+                                                          <div className="animate-loading3">
+                                                              <BiLoaderCircle />
+                                                          </div>
+                                                          <div className="animate-loading3">
+                                                              <BiLoaderCircle />
+                                                          </div>
+                                                          <div className="animate-loading3">
+                                                              <BiLoaderCircle />
+                                                          </div>
+                                                      </>
+                                                  ) : i <= 3 ? (
+                                                      <>
+                                                          <div className="animate-loading3">
+                                                              <BiLoaderCircle />
+                                                          </div>
+                                                          <div className="animate-loading3">
+                                                              <BiLoaderCircle />
+                                                          </div>
+                                                          <div className="animate-loading3">
+                                                              <BiLoaderCircle />
+                                                          </div>
+                                                          <div className="animate-loading3">
+                                                              <BiLoaderCircle />
+                                                          </div>
+                                                      </>
+                                                  ) : i <= 7 ? (
+                                                      <>
+                                                          <div className="animate-loading3">
+                                                              <BiLoaderCircle />
+                                                          </div>
+                                                          <div className="animate-loading3">
+                                                              <BiLoaderCircle />
+                                                          </div>
+                                                          <div className="animate-loading3">
+                                                              <BiLoaderCircle />
+                                                          </div>
+                                                          <div className="animate-loading3">
+                                                              <BiLoaderCircle />
+                                                          </div>
+                                                          <div className="animate-loading3">
+                                                              <BiLoaderCircle />
+                                                          </div>
+                                                      </>
+                                                  ) : (
+                                                      <>
+                                                          <div className="animate-loading3">
+                                                              <BiLoaderCircle />
+                                                          </div>
+                                                          <div className="animate-loading3">
+                                                              <BiLoaderCircle />
+                                                          </div>
+                                                          <div className="animate-loading3">
+                                                              <BiLoaderCircle />
+                                                          </div>
+                                                          <div className="animate-loading3">
+                                                              <BiLoaderCircle />
+                                                          </div>
+                                                          <div className="animate-loading3">
+                                                              <BiLoaderCircle />
+                                                          </div>
+                                                          <div className="animate-loading3">
+                                                              <BiLoaderCircle />
+                                                          </div>
+                                                      </>
+                                                  )}
+                                              </div>
+                                          ))}
                                 </td>
                             )}
                         </tr>

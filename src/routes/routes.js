@@ -2,6 +2,7 @@ import Dashboard from '../pages/Dashboard';
 import Member from '~/pages/Member';
 import Sms from '~/pages/Sms';
 import Revenue from '~/pages/Revenue';
+import BotTelegram from '~/pages/BotTelegram';
 import Login from '~/pages/Login';
 import Register from '~/pages/Register';
 
@@ -39,6 +40,11 @@ export const routes = [
     {
         path: config.routes.revenue,
         component: Revenue,
+        login: true,
+    },
+    {
+        path: config.routes.botTelegram,
+        component: BotTelegram,
         login: true,
     },
     {
