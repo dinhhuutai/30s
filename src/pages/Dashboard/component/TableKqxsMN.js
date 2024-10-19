@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { BiLoaderCircle } from 'react-icons/bi';
 
 function TableKqxsMN({ kqxsMN, day }) {
@@ -43,6 +44,100 @@ function TableKqxsMN({ kqxsMN, day }) {
             : day === 7
             ? 'bp'
             : 'lt';
+
+    const [vtRotateCol1, setVtRotateCol1] = useState({
+        i: undefined,
+        ii: undefined,
+    });
+
+    const [vtRotateCol2, setVtRotateCol2] = useState({
+        i: undefined,
+        ii: undefined,
+    });
+
+    const [vtRotateCol3, setVtRotateCol3] = useState({
+        i: undefined,
+        ii: undefined,
+    });
+
+    const [vtRotateCol4, setVtRotateCol4] = useState({
+        i: undefined,
+        ii: undefined,
+    });
+
+    const [numbers, setNumbers] = useState([0, 7, 5, 8, 2, 6]);
+
+    useEffect(() => {
+        const intervals = numbers.map(
+            (_, index) =>
+                setInterval(() => {
+                    setNumbers((prevNumbers) => {
+                        const newNumbers = [...prevNumbers];
+                        newNumbers[index] = (newNumbers[index] + 1) % 10; // Tăng từng số
+                        return newNumbers;
+                    });
+                }, 100), // Thay đổi thời gian giữa các số
+        );
+
+        return () => intervals.forEach(clearInterval); // Dọn dẹp tất cả interval khi component unmount
+    }, []);
+
+    useEffect(() => {
+        handleVt();
+    }, []);
+
+    const handleVt = async () => {
+        let kt1 = true;
+        let kt2 = true;
+        let kt3 = true;
+        let kt4 = true;
+
+        kqxsMN?.map((e, i) => {
+            e?.[pro1]?.map((el, ii) => {
+                if (el === '' && kt1) {
+                    setVtRotateCol1({
+                        i,
+                        ii,
+                    });
+
+                    kt1 = false;
+                }
+            });
+
+            e?.[pro2]?.map((el, ii) => {
+                if (el === '' && kt2) {
+                    setVtRotateCol2({
+                        i,
+                        ii,
+                    });
+
+                    kt2 = false;
+                }
+            });
+
+            e?.[pro3]?.map((el, ii) => {
+                if (el === '' && kt3) {
+                    setVtRotateCol3({
+                        i,
+                        ii,
+                    });
+
+                    kt3 = false;
+                }
+            });
+
+            e?.hg?.map((el, ii) => {
+                if (el === '' && kt4) {
+                    setVtRotateCol4({
+                        i,
+                        ii,
+                    });
+
+                    kt4 = false;
+                }
+            });
+        });
+    };
 
     return (
         <div class="mt-[10px] overflow-x-auto w-[100%] flex">
@@ -119,6 +214,45 @@ function TableKqxsMN({ kqxsMN, day }) {
                                           <div className="w-[100%] flex justify-center" key={ii}>
                                               {el ? (
                                                   el
+                                              ) : i === vtRotateCol1.i && ii === vtRotateCol1.ii ? (
+                                                  <div className="flex gap-[1px]">
+                                                      {i === 0 ? (
+                                                          <>
+                                                              <div className="">{numbers[0]}</div>
+                                                              <div className="">{numbers[1]}</div>
+                                                          </>
+                                                      ) : i === 1 ? (
+                                                          <>
+                                                              <div className="">{numbers[0]}</div>
+                                                              <div className="">{numbers[1]}</div>
+                                                              <div className="">{numbers[2]}</div>
+                                                          </>
+                                                      ) : i <= 3 ? (
+                                                          <>
+                                                              <div className="">{numbers[0]}</div>
+                                                              <div className="">{numbers[1]}</div>
+                                                              <div className="">{numbers[2]}</div>
+                                                              <div className="">{numbers[3]}</div>
+                                                          </>
+                                                      ) : i <= 7 ? (
+                                                          <>
+                                                              <div className="">{numbers[0]}</div>
+                                                              <div className="">{numbers[1]}</div>
+                                                              <div className="">{numbers[2]}</div>
+                                                              <div className="">{numbers[3]}</div>
+                                                              <div className="">{numbers[4]}</div>
+                                                          </>
+                                                      ) : (
+                                                          <>
+                                                              <div className="">{numbers[0]}</div>
+                                                              <div className="">{numbers[1]}</div>
+                                                              <div className="">{numbers[2]}</div>
+                                                              <div className="">{numbers[3]}</div>
+                                                              <div className="">{numbers[4]}</div>
+                                                              <div className="">{numbers[5]}</div>
+                                                          </>
+                                                      )}
+                                                  </div>
                                               ) : (
                                                   <div className="flex gap-[1px] text-[12px] text-[#5d5c5c]">
                                                       {i === 0 ? (
@@ -294,6 +428,45 @@ function TableKqxsMN({ kqxsMN, day }) {
                                           <div className="w-[100%] flex justify-center" key={ii}>
                                               {el ? (
                                                   el
+                                              ) : i === vtRotateCol2.i && ii === vtRotateCol2.ii ? (
+                                                  <div className="flex gap-[1px]">
+                                                      {i === 0 ? (
+                                                          <>
+                                                              <div className="">{numbers[0]}</div>
+                                                              <div className="">{numbers[1]}</div>
+                                                          </>
+                                                      ) : i === 1 ? (
+                                                          <>
+                                                              <div className="">{numbers[0]}</div>
+                                                              <div className="">{numbers[1]}</div>
+                                                              <div className="">{numbers[2]}</div>
+                                                          </>
+                                                      ) : i <= 3 ? (
+                                                          <>
+                                                              <div className="">{numbers[0]}</div>
+                                                              <div className="">{numbers[1]}</div>
+                                                              <div className="">{numbers[2]}</div>
+                                                              <div className="">{numbers[3]}</div>
+                                                          </>
+                                                      ) : i <= 7 ? (
+                                                          <>
+                                                              <div className="">{numbers[0]}</div>
+                                                              <div className="">{numbers[1]}</div>
+                                                              <div className="">{numbers[2]}</div>
+                                                              <div className="">{numbers[3]}</div>
+                                                              <div className="">{numbers[4]}</div>
+                                                          </>
+                                                      ) : (
+                                                          <>
+                                                              <div className="">{numbers[0]}</div>
+                                                              <div className="">{numbers[1]}</div>
+                                                              <div className="">{numbers[2]}</div>
+                                                              <div className="">{numbers[3]}</div>
+                                                              <div className="">{numbers[4]}</div>
+                                                              <div className="">{numbers[5]}</div>
+                                                          </>
+                                                      )}
+                                                  </div>
                                               ) : (
                                                   <div className="flex gap-[1px] text-[12px] text-[#5d5c5c]">
                                                       {i === 0 ? (
@@ -469,6 +642,45 @@ function TableKqxsMN({ kqxsMN, day }) {
                                           <div className="w-[100%] flex justify-center" key={ii}>
                                               {el ? (
                                                   el
+                                              ) : i === vtRotateCol3.i && ii === vtRotateCol3.ii ? (
+                                                  <div className="flex gap-[1px]">
+                                                      {i === 0 ? (
+                                                          <>
+                                                              <div className="">{numbers[0]}</div>
+                                                              <div className="">{numbers[1]}</div>
+                                                          </>
+                                                      ) : i === 1 ? (
+                                                          <>
+                                                              <div className="">{numbers[0]}</div>
+                                                              <div className="">{numbers[1]}</div>
+                                                              <div className="">{numbers[2]}</div>
+                                                          </>
+                                                      ) : i <= 3 ? (
+                                                          <>
+                                                              <div className="">{numbers[0]}</div>
+                                                              <div className="">{numbers[1]}</div>
+                                                              <div className="">{numbers[2]}</div>
+                                                              <div className="">{numbers[3]}</div>
+                                                          </>
+                                                      ) : i <= 7 ? (
+                                                          <>
+                                                              <div className="">{numbers[0]}</div>
+                                                              <div className="">{numbers[1]}</div>
+                                                              <div className="">{numbers[2]}</div>
+                                                              <div className="">{numbers[3]}</div>
+                                                              <div className="">{numbers[4]}</div>
+                                                          </>
+                                                      ) : (
+                                                          <>
+                                                              <div className="">{numbers[0]}</div>
+                                                              <div className="">{numbers[1]}</div>
+                                                              <div className="">{numbers[2]}</div>
+                                                              <div className="">{numbers[3]}</div>
+                                                              <div className="">{numbers[4]}</div>
+                                                              <div className="">{numbers[5]}</div>
+                                                          </>
+                                                      )}
+                                                  </div>
                                               ) : (
                                                   <div className="flex gap-[1px] text-[12px] text-[#5d5c5c]">
                                                       {i === 0 ? (
@@ -645,6 +857,45 @@ function TableKqxsMN({ kqxsMN, day }) {
                                               <div className="w-[100%] flex justify-center" key={ii}>
                                                   {el ? (
                                                       el
+                                                  ) : i === vtRotateCol4.i && ii === vtRotateCol4.ii ? (
+                                                      <div className="flex gap-[1px]">
+                                                          {i === 0 ? (
+                                                              <>
+                                                                  <div className="">{numbers[0]}</div>
+                                                                  <div className="">{numbers[1]}</div>
+                                                              </>
+                                                          ) : i === 1 ? (
+                                                              <>
+                                                                  <div className="">{numbers[0]}</div>
+                                                                  <div className="">{numbers[1]}</div>
+                                                                  <div className="">{numbers[2]}</div>
+                                                              </>
+                                                          ) : i <= 3 ? (
+                                                              <>
+                                                                  <div className="">{numbers[0]}</div>
+                                                                  <div className="">{numbers[1]}</div>
+                                                                  <div className="">{numbers[2]}</div>
+                                                                  <div className="">{numbers[3]}</div>
+                                                              </>
+                                                          ) : i <= 7 ? (
+                                                              <>
+                                                                  <div className="">{numbers[0]}</div>
+                                                                  <div className="">{numbers[1]}</div>
+                                                                  <div className="">{numbers[2]}</div>
+                                                                  <div className="">{numbers[3]}</div>
+                                                                  <div className="">{numbers[4]}</div>
+                                                              </>
+                                                          ) : (
+                                                              <>
+                                                                  <div className="">{numbers[0]}</div>
+                                                                  <div className="">{numbers[1]}</div>
+                                                                  <div className="">{numbers[2]}</div>
+                                                                  <div className="">{numbers[3]}</div>
+                                                                  <div className="">{numbers[4]}</div>
+                                                                  <div className="">{numbers[5]}</div>
+                                                              </>
+                                                          )}
+                                                      </div>
                                                   ) : (
                                                       <div className="flex gap-[1px] text-[12px] text-[#5d5c5c]">
                                                           {i === 0 ? (
