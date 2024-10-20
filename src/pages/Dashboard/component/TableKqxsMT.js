@@ -68,7 +68,7 @@ function TableKqxsMT({ kqxsMT, day }) {
 
     useEffect(() => {
         handleVt();
-    }, []);
+    }, [kqxsMT]);
 
     const handleVt = async () => {
         let kt1 = true;

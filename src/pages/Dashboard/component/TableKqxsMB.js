@@ -27,7 +27,7 @@ function TableKqxsMB({ kqxsMB }) {
 
     useEffect(() => {
         handleVt();
-    }, []);
+    }, [kqxsMB]);
 
     const handleVt = async () => {
         let kt = true;

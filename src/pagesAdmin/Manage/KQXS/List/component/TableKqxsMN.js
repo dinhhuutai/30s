@@ -101,7 +101,7 @@ function TableKqxsMN({ handleFindKqxs, kqxsMN, day, date, setKqxsMN }) {
 
     useEffect(() => {
         handleVt();
-    }, []);
+    }, [kqxsMN]);
 
     const handleVt = async () => {
         let kt1 = true;
