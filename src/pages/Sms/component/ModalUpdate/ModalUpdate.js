@@ -14,9 +14,9 @@ let setTimeoutTmp;
 function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members }) {
     const [smsDetails, setSmsDetails] = useState([]);
     const [selectorSms, setSelectorSms] = useState(selectorSmsTmp);
-    const [selecMember, setSelecMember] = useState(selectorSmsTmp.sm.idMember._id);
-    const [contentEdit, setContentEdit] = useState(selectorSmsTmp.sm.contentEdit);
-    const [errorLocation, setErrorLocation] = useState([]);
+    const [selecMember, setSelecMember] = useState(selectorSmsTmp.sm.idMember?._id);
+    const [contentEdit, setContentEdit] = useState(selectorSmsTmp.sm?.contentEdit);
+    const [errorLocation, setErrorLocation] = useState(selectorSmsTmp.sm?.locationError);
 
     const textareaRef = useRef(null);
 

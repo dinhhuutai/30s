@@ -533,7 +533,6 @@ function markError(content, errorSyntaxDetail, mien, dayOfWeek) {
         let positionEnd;
         let ddTmp = '';
 
-        console.log(errorSyntaxDetail.num);
 
         while (positionFirstTmp !== -1) {
             if (
@@ -581,7 +580,6 @@ function markError(content, errorSyntaxDetail, mien, dayOfWeek) {
             } else {
                 positionFirst = content.indexOf(errorSyntaxDetail.num, positionFirst + errorSyntaxDetail.num.length);
 
-                console.log('positionFirst: ', positionFirst);
 
                 positionFirstTmp = positionFirst;
                 ddTmp = '';
@@ -604,9 +602,7 @@ function markError(content, errorSyntaxDetail, mien, dayOfWeek) {
                     content[positionFirst + errorSyntaxDetail.num.length],
                 )
             ) {
-                console.log(xcTmp);
                 for (let i = positionFirst + errorSyntaxDetail.num.length; i < length; i++) {
-                    console.log(xcTmp);
                     if (
                         /^[a-zA-ZÀÁẢÃẠÂẤẦẬẪẨẮĂẰẴẶẲÊẾỀỆỂỄÉÈẺẼẸÓÒỎÕỌƠỚỜỞỠỢƯỨỪỮỬỰĐÌÍỊĨỈàáảãạâấầậẫẩắằẵặẳêếềệểễéèẻẽẹóòỏõọơớờởỡợưứừữửựđìíịĩỉ]$/.test(
                             content[i],
@@ -996,7 +992,6 @@ function markError(content, errorSyntaxDetail, mien, dayOfWeek) {
             } else {
                 positionFirst = content.indexOf(errorSyntaxDetail.num, positionFirst + errorSyntaxDetail.num.length);
 
-                console.log('positionFirst: ', positionFirst);
 
                 positionFirstTmp = positionFirst;
                 xcTmp = '';
@@ -1010,7 +1005,6 @@ function markError(content, errorSyntaxDetail, mien, dayOfWeek) {
         let positionEnd;
         let kdTmp = '';
 
-        console.log(errorSyntaxDetail);
 
         while (positionFirstTmp !== -1) {
             if (
@@ -1058,7 +1052,6 @@ function markError(content, errorSyntaxDetail, mien, dayOfWeek) {
             } else {
                 positionFirst = content.indexOf(errorSyntaxDetail.num, positionFirst + errorSyntaxDetail.num.length);
 
-                console.log('positionFirst: ', positionFirst);
 
                 positionFirstTmp = positionFirst;
                 kdTmp = '';
