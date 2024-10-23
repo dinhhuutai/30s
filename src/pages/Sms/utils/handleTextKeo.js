@@ -2,6 +2,7 @@ function handleTextKeo(content) {
     let contentTmp = content;
 
     let errorSyntax = false;
+    let errorSyntaxDetail = {};
     /// Kiểm tra chữ keo
 
     let index = contentTmp.indexOf('keo');
@@ -77,6 +78,10 @@ function handleTextKeo(content) {
                     soSau[0] !== soSau[1]))
         ) {
             errorSyntax = true;
+            errorSyntaxDetail = {
+                code: 'keo',
+                num: [soTruoc, soSau],
+            };
         } else {
             for (let i = 0; i < lengthSo; i++) {
                 if (soTruoc[i] !== soSau[i]) {
@@ -106,6 +111,10 @@ function handleTextKeo(content) {
         console.log('Mang so keo: ', mangSoKeo);
         if (mangSoKeo.length === 0) {
             errorSyntax = true;
+            errorSyntaxDetail = {
+                code: 'keo',
+                num: [soTruoc, soSau],
+            };
         }
 
         let chuoiSoKeo = mangSoKeo.join('.');
@@ -204,6 +213,10 @@ function handleTextKeo(content) {
                         soSau[0] !== soSau[1]))
             ) {
                 errorSyntax = true;
+                errorSyntaxDetail = {
+                    code: 'keo',
+                    num: [soTruoc, soSau],
+                };
             } else {
                 for (let i = 0; i < lengthSo; i++) {
                     if (soTruoc[i] !== soSau[i]) {
@@ -233,6 +246,10 @@ function handleTextKeo(content) {
             console.log('Mang so keo: ', mangSoKeo);
             if (mangSoKeo.length === 0) {
                 errorSyntax = true;
+                errorSyntaxDetail = {
+                    code: 'keo',
+                    num: [soTruoc, soSau],
+                };
             }
 
             let chuoiSoKeo = mangSoKeo.join('.');
@@ -331,6 +348,10 @@ function handleTextKeo(content) {
                     soSau[0] !== soSau[1]))
         ) {
             errorSyntax = true;
+            errorSyntaxDetail = {
+                code: 'keo',
+                num: [soTruoc, soSau],
+            };
         } else {
             for (let i = 0; i < lengthSo; i++) {
                 if (soTruoc[i] !== soSau[i]) {
@@ -360,6 +381,10 @@ function handleTextKeo(content) {
         console.log('Mang so keo: ', mangSoKeo);
         if (mangSoKeo.length === 0) {
             errorSyntax = true;
+            errorSyntaxDetail = {
+                code: 'keo',
+                num: [soTruoc, soSau],
+            };
         }
 
         let chuoiSoKeo = mangSoKeo.join('.');
@@ -457,6 +482,10 @@ function handleTextKeo(content) {
                     soSau[0] !== soSau[1]))
         ) {
             errorSyntax = true;
+            errorSyntaxDetail = {
+                code: 'keo',
+                num: [soTruoc, soSau],
+            };
         } else {
             for (let i = 0; i < lengthSo; i++) {
                 if (soTruoc[i] !== soSau[i]) {
@@ -486,6 +515,10 @@ function handleTextKeo(content) {
         console.log('Mang so keo: ', mangSoKeo);
         if (mangSoKeo.length === 0) {
             errorSyntax = true;
+            errorSyntaxDetail = {
+                code: 'keo',
+                num: [soTruoc, soSau],
+            };
         }
 
         let chuoiSoKeo = mangSoKeo.join('.');
@@ -508,7 +541,7 @@ function handleTextKeo(content) {
         index = contentTmp.indexOf('den');
     }
 
-    return { data1: contentTmp, data2: errorSyntax };
+    return { data1: contentTmp, data2: errorSyntax, data22: errorSyntaxDetail };
 }
 
 export default handleTextKeo;

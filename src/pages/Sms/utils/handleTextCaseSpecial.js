@@ -23,7 +23,12 @@ function handleXiu(contentTmp) {
 
     let index = contentTmp.indexOf('xiu');
 
-    while (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 3] === '.') {
+    while (
+        index !== -1 &&
+        contentTmp[index - 1] === '.' &&
+        contentTmp[index + 3] === '.' &&
+        contentTmp[index + 4] !== 'c'
+    ) {
         let mangSo = [];
 
         for (let i = 0; i <= 9; i++) {

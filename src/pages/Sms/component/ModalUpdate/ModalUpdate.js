@@ -1,6 +1,6 @@
 import axios from 'axios';
 import moment from 'moment';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { BsArrowRepeat, BsArrowRightCircleFill } from 'react-icons/bs';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +16,9 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
     const [selectorSms, setSelectorSms] = useState(selectorSmsTmp);
     const [selecMember, setSelecMember] = useState(selectorSmsTmp.sm.idMember._id);
     const [contentEdit, setContentEdit] = useState(selectorSmsTmp.sm.contentEdit);
+    const [errorLocation, setErrorLocation] = useState([]);
+
+    const textareaRef = useRef(null);
 
     const [loading, setLoading] = useState(false);
 
@@ -70,11 +73,23 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
 
             const date = new Date(selectorSms.sm.resultDate);
 
-            let { arr, errorSyntax } = convertContentDetail(contentEdit, date);
+            let { arr, errorSyntax, locationError } = convertContentDetail(contentEdit, date);
             let smsDetailList = arr;
 
+            if (locationError?.location?.length >= 2) {
+                if (locationError?.location[0] === undefined || locationError?.location[1] === undefined) {
+                    setErrorLocation([0, 0]);
+                } else {
+                    setErrorLocation(locationError?.location);
+                }
+            }
+
             if (errorSyntax) {
-                dispatch(noticeAdminSlice.actions.errorNotice('Lỗi cú pháp!!!'));
+                dispatch(
+                    noticeAdminSlice.actions.errorNotice(
+                        `${locationError?.code === 'dai' ? 'Hôm nay không có đài này' : 'Lỗi cú pháp!!!'}`,
+                    ),
+                );
 
                 setTimeoutTmp = setTimeout(() => {
                     setLoading(false);
@@ -497,12 +512,36 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
                             <label>
                                 Nội dung đã sửa <span className="text-[#e92d2d] ml-[2px]">*</span>
                             </label>
+
+                            {errorLocation?.length >= 2 && (
+                                <div
+                                    onClick={() => {
+                                        setErrorLocation([]);
+                                        if (textareaRef.current) {
+                                            textareaRef.current.focus();
+                                        }
+                                    }}
+                                    className="rounded-[4px] max-h-[136px] h-[136px] overflow-y-auto flex-1 outline-none border-[1px] border-solid border-[#bdc3d1] text-[12px] py-[4px] px-[8px] whitespace-pre-wrap"
+                                >
+                                    {contentEdit.slice(0, errorLocation[0])}
+                                    <span className="bg-[#F1AF00]">
+                                        {contentEdit.slice(errorLocation[0], errorLocation[1])}
+                                    </span>
+                                    {contentEdit.slice(errorLocation[1])}
+                                </div>
+                            )}
                             <textarea
-                                className="rounded-[4px] mt-[2px] flex-1 outline-none border-[1px] border-solid border-[#bdc3d1] text-[12px] py-[4px] px-[8px]"
-                                rows={7}
-                                cols={36}
-                                value={contentEdit}
+                                ref={textareaRef}
+                                value={errorLocation?.length >= 2 ? '' : contentEdit}
                                 onChange={(e) => setContentEdit(e.target.value)}
+                                className={`${
+                                    errorLocation?.length >= 2
+                                        ? 'none h-0 w-0 flex-none resize-none overflow-hidden py-[0px] px-[0px]'
+                                        : 'block py-[4px] px-[8px]'
+                                } rounded-[4px] flex-1 outline-none border-[1px] border-solid border-[#bdc3d1] text-[12px]`}
+                                rows={errorLocation?.length >= 2 ? 0 : 7}
+                                cols={errorLocation?.length >= 2 ? 0 : 36}
+                                placeholder="Nội dung"
                             ></textarea>
                         </div>
                     </div>

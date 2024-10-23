@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -18,10 +18,9 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
     const [loading, setLoading] = useState(false);
     const [idMember, setIdMember] = useState(members[0]?._id);
     const [content, setContent] = useState('');
+    const [errorLocation, setErrorLocation] = useState([]);
 
-    const [kqxsMB, setKqxsMB] = useState([]);
-    const [kqxsMN, setKqxsMN] = useState([]);
-    const [kqxsMT, setKqxsMT] = useState([]);
+    const textareaRef = useRef(null);
 
     const notice = useSelector(noticeAdminSelector);
     useEffect(() => {
@@ -72,11 +71,23 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
                 });
             }
 
-            let { arr, errorSyntax } = await convertContentDetail(content, dateCreate);
+            let { arr, errorSyntax, locationError } = await convertContentDetail(content, dateCreate);
             let smsDetailList = arr;
 
+            if (locationError?.location?.length >= 2) {
+                if (locationError?.location[0] === undefined || locationError?.location[1] === undefined) {
+                    setErrorLocation([0, 0]);
+                } else {
+                    setErrorLocation(locationError?.location);
+                }
+            }
+
             if (errorSyntax) {
-                dispatch(noticeAdminSlice.actions.errorNotice('Lỗi cú pháp!!!'));
+                dispatch(
+                    noticeAdminSlice.actions.errorNotice(
+                        `${locationError?.code === 'dai' ? 'Hôm nay không có đài này' : 'Lỗi cú pháp!!!'}`,
+                    ),
+                );
 
                 setTimeoutTmp = setTimeout(() => {
                     setLoading(false);
@@ -306,12 +317,34 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
                                 Nội dung <span className="text-[#e92d2d] ml-[2px]">*</span>
                             </label>
 
+                            {errorLocation?.length >= 2 && (
+                                <div
+                                    onClick={() => {
+                                        setErrorLocation([]);
+                                        if (textareaRef.current) {
+                                            textareaRef.current.focus();
+                                        }
+                                    }}
+                                    className="rounded-[4px] max-h-[82px] h-[82px] overflow-y-auto flex-1 outline-none border-[1px] border-solid border-[#bdc3d1] text-[12px] py-[4px] px-[8px] whitespace-pre-wrap"
+                                >
+                                    {content.slice(0, errorLocation[0])}
+                                    <span className="bg-[#F1AF00]">
+                                        {content.slice(errorLocation[0], errorLocation[1])}
+                                    </span>
+                                    {content.slice(errorLocation[1])}
+                                </div>
+                            )}
                             <textarea
-                                value={content}
+                                ref={textareaRef}
+                                value={errorLocation?.length >= 2 ? '' : content}
                                 onChange={(e) => setContent(e.target.value)}
-                                className="rounded-[4px] flex-1 outline-none border-[1px] border-solid border-[#bdc3d1] text-[12px] py-[4px] px-[8px]"
-                                rows={4}
-                                cols={60}
+                                className={`${
+                                    errorLocation?.length >= 2
+                                        ? 'none h-0 w-0 flex-none resize-none overflow-hidden py-[0px] px-[0px]'
+                                        : 'block py-[4px] px-[8px]'
+                                } rounded-[4px] flex-1 outline-none border-[1px] border-solid border-[#bdc3d1] text-[12px]`}
+                                rows={errorLocation?.length >= 2 ? 0 : 4}
+                                cols={errorLocation?.length >= 2 ? 0 : 60}
                                 placeholder="Nội dung"
                             ></textarea>
                         </div>

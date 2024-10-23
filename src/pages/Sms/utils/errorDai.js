@@ -2,6 +2,7 @@ function errorDai(dai, mien, dayOfWeek) {
     let daiTmpError = [...dai];
 
     let errorSyntaxDai = false;
+    let errorSyntaxDetail = {};
 
     if (
         !(mien === 'mn' && dayOfWeek === 2 && daiTmpError.every((item) => ['tp', 'dt', 'cm'].includes(item))) &&
@@ -21,11 +22,15 @@ function errorDai(dai, mien, dayOfWeek) {
         mien !== 'mb'
     ) {
         errorSyntaxDai = true;
+        errorSyntaxDetail = {
+            code: 'dai',
+            dais: daiTmpError,
+        };
 
         console.log('Loi hom nay khong co dai nay');
     }
 
-    return errorSyntaxDai;
+    return { data5: errorSyntaxDai, data52: errorSyntaxDetail };
 }
 
 export default errorDai;

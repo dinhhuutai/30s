@@ -92,29 +92,29 @@ function TableKqxsMB({ kqxsMB }) {
                                             <div className="flex gap-[1px]">
                                                 {i <= 3 ? (
                                                     <>
-                                                        <div className="">{numbers[0]}</div>
-                                                        <div className="">{numbers[1]}</div>
-                                                        <div className="">{numbers[2]}</div>
-                                                        <div className="">{numbers[3]}</div>
-                                                        <div className="">{numbers[4]}</div>
+                                                        <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[0]}</div>
+                                                        <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[1]}</div>
+                                                        <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[2]}</div>
+                                                        <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[3]}</div>
+                                                        <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[4]}</div>
                                                     </>
                                                 ) : i <= 5 ? (
                                                     <>
-                                                        <div className="">{numbers[0]}</div>
-                                                        <div className="">{numbers[1]}</div>
-                                                        <div className="">{numbers[2]}</div>
-                                                        <div className="">{numbers[3]}</div>
+                                                        <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[0]}</div>
+                                                        <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[1]}</div>
+                                                        <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[2]}</div>
+                                                        <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[3]}</div>
                                                     </>
                                                 ) : i <= 6 ? (
                                                     <>
-                                                        <div className="">{numbers[0]}</div>
-                                                        <div className="">{numbers[1]}</div>
-                                                        <div className="">{numbers[2]}</div>
+                                                        <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[0]}</div>
+                                                        <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[1]}</div>
+                                                        <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[2]}</div>
                                                     </>
                                                 ) : (
                                                     <>
-                                                        <div className="">{numbers[0]}</div>
-                                                        <div className="">{numbers[1]}</div>
+                                                        <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[0]}</div>
+                                                        <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[1]}</div>
                                                     </>
                                                 )}
                                             </div>

@@ -10,6 +10,7 @@ import handleListNumComboBao from './handleListNumComboBao';
 import handleMien from './handleMien';
 import handleTextCaseSpecial from './handleTextCaseSpecial';
 import handleTextKeo from './handleTextKeo';
+import markError from './markError';
 import shortenText from './shortenText';
 
 function convertContentDetail(content, date) {
@@ -27,6 +28,8 @@ function convertContentDetail(content, date) {
 
     let errorSyntax = false;
 
+    let errorSyntaxDetail = {};
+
     let arr = [];
 
     let kt = true;
@@ -35,9 +38,10 @@ function convertContentDetail(content, date) {
     let contentTmp = shortenText(content);
     console.log('Làm gọn: ', contentTmp);
 
-    let { data1, data2 } = handleTextKeo(contentTmp);
+    let { data1, data2, data22 } = handleTextKeo(contentTmp);
     contentTmp = data1;
     errorSyntax = data2;
+    errorSyntaxDetail = data22;
 
     console.log('Làm gọn sau kéo: ', contentTmp);
 
@@ -62,10 +66,11 @@ function convertContentDetail(content, date) {
     contentTmp = handleConvertSymbol(contentTmp, mien, dayOfWeek);
     console.log('Làm gọn sau viết tắc: ', contentTmp);
 
-    let { data3, data4 } = handleDeleteStringFrontRedundant(contentTmp);
+    let { data3, data4, data42 } = handleDeleteStringFrontRedundant(contentTmp);
     contentTmp = data3;
     if (!errorSyntax) {
         errorSyntax = data4;
+        errorSyntaxDetail = data42;
     }
     console.log('Làm gọn sau xóa các chuỗi dư thừa phía trước: ', contentTmp);
 
@@ -145,7 +150,9 @@ function convertContentDetail(content, date) {
                 dai = handleDai(dai, mien, dayOfWeek);
 
                 if (!errorSyntax) {
-                    errorSyntax = errorDai(dai, mien, dayOfWeek);
+                    let { data5, data52 } = errorDai(dai, mien, dayOfWeek);
+                    errorSyntax = data5;
+                    errorSyntaxDetail = data52;
                 }
                 break;
             }
@@ -254,6 +261,14 @@ function convertContentDetail(content, date) {
                     }
 
                     if (dai.length > 2) {
+                        if (mangSoDa[0]?.length <= 1) {
+                            errorSyntax = true;
+                            errorSyntaxDetail = {
+                                code: 'da1',
+                                num: mangSoDa[0][0],
+                            };
+                            console.log(123);
+                        }
                         // eslint-disable-next-line no-loop-func
                         daiTmps.map((daiTmp) => {
                             mangSoDa.map((soDa) => {
@@ -268,6 +283,10 @@ function convertContentDetail(content, date) {
                                     soDa[1].length < 2 ||
                                     soDa[0] === soDa[1]
                                 ) {
+                                    errorSyntaxDetail = {
+                                        code: 'da2',
+                                        num: [soDa[0], soDa[1]],
+                                    };
                                     errorSyntax = true;
                                     console.log(123);
                                 }
@@ -308,6 +327,14 @@ function convertContentDetail(content, date) {
                             });
                         });
                     } else {
+                        if (mangSoDa[0]?.length <= 1) {
+                            errorSyntax = true;
+                            errorSyntaxDetail = {
+                                code: 'da1',
+                                num: mangSoDa[0][0],
+                            };
+                            console.log(123);
+                        }
                         // eslint-disable-next-line no-loop-func
                         mangSoDa.map((soDa) => {
                             if (
@@ -321,6 +348,10 @@ function convertContentDetail(content, date) {
                                 soDa[1].length < 2 ||
                                 soDa[0] === soDa[1]
                             ) {
+                                errorSyntaxDetail = {
+                                    code: 'da2',
+                                    num: [soDa[0], soDa[1]],
+                                };
                                 errorSyntax = true;
                                 console.log(123);
                             }
@@ -414,6 +445,10 @@ function convertContentDetail(content, date) {
                     // eslint-disable-next-line no-loop-func
                     mangSo.map((eSo) => {
                         if (eSo.length < 2) {
+                            errorSyntaxDetail = {
+                                code: 'quantity1',
+                                num: eSo,
+                            };
                             errorSyntax = true;
                         }
 
@@ -505,6 +540,10 @@ function convertContentDetail(content, date) {
                             mangSoDao.map((soDao) => {
                                 if (soDao.length < 2) {
                                     errorSyntax = true;
+                                    errorSyntaxDetail = {
+                                        code: 'quantity1',
+                                        num: soDao,
+                                    };
                                     console.log(123);
                                 }
 
@@ -548,10 +587,6 @@ function convertContentDetail(content, date) {
 
                         if (kdSS === 'baylo' || kdSS === 'baobay' || kdSS === 'baobaylo') {
                             kdanhMain = 'baylo';
-
-                            if (eSo.length !== 2) {
-                                errorSyntax = true;
-                            }
 
                             const daiTmpContent = [...dai];
 
@@ -605,6 +640,10 @@ function convertContentDetail(content, date) {
                             kdanhMain = 'dauduoi';
 
                             if (eSo.length !== 2) {
+                                errorSyntaxDetail = {
+                                    code: 'quantity2',
+                                    num: eSo,
+                                };
                                 errorSyntax = true;
                             }
 
@@ -644,25 +683,29 @@ function convertContentDetail(content, date) {
                         }
 
                         if (
-                            kdanh === 'x' ||
-                            kdanh === 'xc' ||
-                            kdanh === 'xiuchu' ||
-                            kdanh === 'xiuch' ||
-                            kdanh === 'xiuc' ||
-                            kdanh === 'xch' ||
-                            kdanh === 'xchu' ||
-                            kdanh === 's' ||
-                            kdanh === 'sc' ||
-                            kdanh === 'siuchu' ||
-                            kdanh === 'siuch' ||
-                            kdanh === 'siuc' ||
-                            kdanh === 'sch' ||
-                            kdanh === 'schu'
+                            kdSS === 'x' ||
+                            kdSS === 'xc' ||
+                            kdSS === 'xiuchu' ||
+                            kdSS === 'xiuch' ||
+                            kdSS === 'xiuc' ||
+                            kdSS === 'xch' ||
+                            kdSS === 'xchu' ||
+                            kdSS === 's' ||
+                            kdSS === 'sc' ||
+                            kdSS === 'siuchu' ||
+                            kdSS === 'siuch' ||
+                            kdSS === 'siuc' ||
+                            kdSS === 'sch' ||
+                            kdSS === 'schu'
                         ) {
                             kdanhMain = 'xiuchu';
 
                             if (eSo.length !== 3) {
                                 errorSyntax = true;
+                                errorSyntaxDetail = {
+                                    code: 'quantity3',
+                                    num: eSo,
+                                };
                             }
 
                             const daiTmpContent = [...dai];
@@ -701,31 +744,35 @@ function convertContentDetail(content, date) {
                         }
 
                         if (
-                            kdanh === 'xdau' ||
-                            kdanh === 'xcdau' ||
-                            kdanh === 'xchdau' ||
-                            kdanh === 'xchudau' ||
-                            kdanh === 'xiuchudau' ||
-                            kdanh === 'xiuchdau' ||
-                            kdanh === 'xiucdau' ||
-                            kdanh === 'xđau' ||
-                            kdanh === 'xcđau' ||
-                            kdanh === 'xiuchuđau' ||
-                            kdanh === 'sdau' ||
-                            kdanh === 'scdau' ||
-                            kdanh === 'schdau' ||
-                            kdanh === 'schudau' ||
-                            kdanh === 'siuchudau' ||
-                            kdanh === 'siuchdau' ||
-                            kdanh === 'siucdau' ||
-                            kdanh === 'sđau' ||
-                            kdanh === 'scđau' ||
-                            kdanh === 'siuchuđau'
+                            kdSS === 'xdau' ||
+                            kdSS === 'xcdau' ||
+                            kdSS === 'xchdau' ||
+                            kdSS === 'xchudau' ||
+                            kdSS === 'xiuchudau' ||
+                            kdSS === 'xiuchdau' ||
+                            kdSS === 'xiucdau' ||
+                            kdSS === 'xđau' ||
+                            kdSS === 'xcđau' ||
+                            kdSS === 'xiuchuđau' ||
+                            kdSS === 'sdau' ||
+                            kdSS === 'scdau' ||
+                            kdSS === 'schdau' ||
+                            kdSS === 'schudau' ||
+                            kdSS === 'siuchudau' ||
+                            kdSS === 'siuchdau' ||
+                            kdSS === 'siucdau' ||
+                            kdSS === 'sđau' ||
+                            kdSS === 'scđau' ||
+                            kdSS === 'siuchuđau'
                         ) {
                             kdanhMain = 'xiuchudau';
 
                             if (eSo.length !== 3) {
                                 errorSyntax = true;
+                                errorSyntaxDetail = {
+                                    code: 'quantity3',
+                                    num: eSo,
+                                };
                             }
 
                             const daiTmpContent = [...dai];
@@ -764,51 +811,55 @@ function convertContentDetail(content, date) {
                         }
 
                         if (
-                            kdanh === 'xduoi' ||
-                            kdanh === 'xcduoi' ||
-                            kdanh === 'xchduoi' ||
-                            kdanh === 'xchuduoi' ||
-                            kdanh === 'xiuchuduoi' ||
-                            kdanh === 'xiuchduoi' ||
-                            kdanh === 'xiucduoi' ||
-                            kdanh === 'xduoi' ||
-                            kdanh === 'xcduoi' ||
-                            kdanh === 'xiuchuduoi' ||
-                            kdanh === 'xdui' ||
-                            kdanh === 'xcdui' ||
-                            kdanh === 'xchdui' ||
-                            kdanh === 'xchudui' ||
-                            kdanh === 'xiuchudui' ||
-                            kdanh === 'xiuchdui' ||
-                            kdanh === 'xiucdui' ||
-                            kdanh === 'xdui' ||
-                            kdanh === 'xcdui' ||
-                            kdanh === 'xiuchudui' ||
-                            kdanh === 'sduoi' ||
-                            kdanh === 'scduoi' ||
-                            kdanh === 'schduoi' ||
-                            kdanh === 'schuduoi' ||
-                            kdanh === 'siuchuduoi' ||
-                            kdanh === 'siuchduoi' ||
-                            kdanh === 'siucduoi' ||
-                            kdanh === 'sduoi' ||
-                            kdanh === 'scduoi' ||
-                            kdanh === 'siuchuduoi' ||
-                            kdanh === 'sdui' ||
-                            kdanh === 'scdui' ||
-                            kdanh === 'schdui' ||
-                            kdanh === 'schudui' ||
-                            kdanh === 'siuchudui' ||
-                            kdanh === 'siuchdui' ||
-                            kdanh === 'siucdui' ||
-                            kdanh === 'sdui' ||
-                            kdanh === 'scdui' ||
-                            kdanh === 'siuchudui'
+                            kdSS === 'xduoi' ||
+                            kdSS === 'xcduoi' ||
+                            kdSS === 'xchduoi' ||
+                            kdSS === 'xchuduoi' ||
+                            kdSS === 'xiuchuduoi' ||
+                            kdSS === 'xiuchduoi' ||
+                            kdSS === 'xiucduoi' ||
+                            kdSS === 'xduoi' ||
+                            kdSS === 'xcduoi' ||
+                            kdSS === 'xiuchuduoi' ||
+                            kdSS === 'xdui' ||
+                            kdSS === 'xcdui' ||
+                            kdSS === 'xchdui' ||
+                            kdSS === 'xchudui' ||
+                            kdSS === 'xiuchudui' ||
+                            kdSS === 'xiuchdui' ||
+                            kdSS === 'xiucdui' ||
+                            kdSS === 'xdui' ||
+                            kdSS === 'xcdui' ||
+                            kdSS === 'xiuchudui' ||
+                            kdSS === 'sduoi' ||
+                            kdSS === 'scduoi' ||
+                            kdSS === 'schduoi' ||
+                            kdSS === 'schuduoi' ||
+                            kdSS === 'siuchuduoi' ||
+                            kdSS === 'siuchduoi' ||
+                            kdSS === 'siucduoi' ||
+                            kdSS === 'sduoi' ||
+                            kdSS === 'scduoi' ||
+                            kdSS === 'siuchuduoi' ||
+                            kdSS === 'sdui' ||
+                            kdSS === 'scdui' ||
+                            kdSS === 'schdui' ||
+                            kdSS === 'schudui' ||
+                            kdSS === 'siuchudui' ||
+                            kdSS === 'siuchdui' ||
+                            kdSS === 'siucdui' ||
+                            kdSS === 'sdui' ||
+                            kdSS === 'scdui' ||
+                            kdSS === 'siuchudui'
                         ) {
                             kdanhMain = 'xiuchuduoi';
 
                             if (eSo.length !== 3) {
                                 errorSyntax = true;
+                                errorSyntaxDetail = {
+                                    code: 'quantity3',
+                                    num: eSo,
+                                };
                             }
 
                             const daiTmpContent = [...dai];
@@ -936,6 +987,10 @@ function convertContentDetail(content, date) {
 
                             if (eSo.length !== 3) {
                                 errorSyntax = true;
+                                errorSyntaxDetail = {
+                                    code: 'quantity3',
+                                    num: eSo,
+                                };
                             }
 
                             let mangSoDao = findListOverturn(eSo);
@@ -1079,6 +1134,10 @@ function convertContentDetail(content, date) {
 
                             if (eSo.length !== 3) {
                                 errorSyntax = true;
+                                errorSyntaxDetail = {
+                                    code: 'quantity3',
+                                    num: eSo,
+                                };
                             }
 
                             let mangSoDao = findListOverturn(eSo);
@@ -1222,6 +1281,10 @@ function convertContentDetail(content, date) {
 
                             if (eSo.length !== 3) {
                                 errorSyntax = true;
+                                errorSyntaxDetail = {
+                                    code: 'quantity3',
+                                    num: eSo,
+                                };
                             }
 
                             let mangSoDao = findListOverturn(eSo);
@@ -1268,6 +1331,10 @@ function convertContentDetail(content, date) {
 
                             if (eSo.length !== 2) {
                                 errorSyntax = true;
+                                errorSyntaxDetail = {
+                                    code: 'quantity2',
+                                    num: eSo,
+                                };
                             }
 
                             const daiTmpContent = [...dai];
@@ -1317,6 +1384,10 @@ function convertContentDetail(content, date) {
 
                             if (eSo.length !== 2) {
                                 errorSyntax = true;
+                                errorSyntaxDetail = {
+                                    code: 'quantity2',
+                                    num: eSo,
+                                };
                             }
 
                             const daiTmpContent = [...dai];
@@ -1359,6 +1430,10 @@ function convertContentDetail(content, date) {
 
                             if (eSo.length !== 2) {
                                 errorSyntax = true;
+                                errorSyntaxDetail = {
+                                    code: 'quantity2',
+                                    num: eSo,
+                                };
                             }
 
                             const daiTmpContent = [...dai];
@@ -1399,6 +1474,10 @@ function convertContentDetail(content, date) {
 
                             if (eSo.length !== 2) {
                                 errorSyntax = true;
+                                errorSyntaxDetail = {
+                                    code: 'quantity2',
+                                    num: eSo,
+                                };
                             }
 
                             const daiTmpContent = [...dai];
@@ -1446,6 +1525,12 @@ function convertContentDetail(content, date) {
 
                 if (!isKD) {
                     errorSyntax = true;
+                    errorSyntaxDetail = {
+                        code: 'notKD',
+                        num: mangSo[mangSo.length - 1],
+                        kdanh: kdanh,
+                        gtien: gtien,
+                    };
                 }
 
                 fSo = true;
@@ -1469,9 +1554,17 @@ function convertContentDetail(content, date) {
         contentTmp = contentTmp.slice(ktThemCham ? kth - 1 : kth);
     }
 
+    let locationError = {};
+
+    if (errorSyntax) {
+        locationError = markError(content, errorSyntaxDetail, mien, dayOfWeek);
+    }
+
+    console.log('locationError: ', locationError);
+
     console.log('errorSyntax: ', errorSyntax);
 
-    return { arr, errorSyntax };
+    return { arr, errorSyntax, locationError };
 }
 
 export default convertContentDetail;

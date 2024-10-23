@@ -29,13 +29,13 @@ function Dashboard() {
         startInterval();
     }, [date]);
 
+
     const handleFindKqxs = async () => {
         setLoading(true);
         const formattedDate = moment(date).format('DD/MM/YYYY');
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/v1/kqxs/findKqxsByDate`, {
             date: formattedDate,
         });
-
 
         if (res.data.success) {
             const mn = [];
@@ -169,6 +169,7 @@ function Dashboard() {
 
     async function updateKQXS() {
         const now = new Date();
+        const dateNow = now.getDate();
         const hour = now.getHours();
         const minutes = now.getMinutes();
 

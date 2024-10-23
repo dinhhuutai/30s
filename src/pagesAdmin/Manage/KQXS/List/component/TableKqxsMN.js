@@ -482,38 +482,38 @@ function TableKqxsMN({ handleFindKqxs, kqxsMN, day, date, setKqxsMN }) {
                                                   <div className="flex gap-[1px]">
                                                       {i === 0 ? (
                                                           <>
-                                                              <div className="">{numbers[0]}</div>
-                                                              <div className="">{numbers[1]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[0]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[1]}</div>
                                                           </>
                                                       ) : i === 1 ? (
                                                           <>
-                                                              <div className="">{numbers[0]}</div>
-                                                              <div className="">{numbers[1]}</div>
-                                                              <div className="">{numbers[2]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[0]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[1]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[2]}</div>
                                                           </>
                                                       ) : i <= 3 ? (
                                                           <>
-                                                              <div className="">{numbers[0]}</div>
-                                                              <div className="">{numbers[1]}</div>
-                                                              <div className="">{numbers[2]}</div>
-                                                              <div className="">{numbers[3]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[0]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[1]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[2]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[3]}</div>
                                                           </>
                                                       ) : i <= 7 ? (
                                                           <>
-                                                              <div className="">{numbers[0]}</div>
-                                                              <div className="">{numbers[1]}</div>
-                                                              <div className="">{numbers[2]}</div>
-                                                              <div className="">{numbers[3]}</div>
-                                                              <div className="">{numbers[4]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[0]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[1]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[2]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[3]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[4]}</div>
                                                           </>
                                                       ) : (
                                                           <>
-                                                              <div className="">{numbers[0]}</div>
-                                                              <div className="">{numbers[1]}</div>
-                                                              <div className="">{numbers[2]}</div>
-                                                              <div className="">{numbers[3]}</div>
-                                                              <div className="">{numbers[4]}</div>
-                                                              <div className="">{numbers[5]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[0]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[1]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[2]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[3]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[4]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[5]}</div>
                                                           </>
                                                       )}
                                                   </div>
@@ -761,38 +761,38 @@ function TableKqxsMN({ handleFindKqxs, kqxsMN, day, date, setKqxsMN }) {
                                                   <div className="flex gap-[1px]">
                                                       {i === 0 ? (
                                                           <>
-                                                              <div className="">{numbers[0]}</div>
-                                                              <div className="">{numbers[1]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[0]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[1]}</div>
                                                           </>
                                                       ) : i === 1 ? (
                                                           <>
-                                                              <div className="">{numbers[0]}</div>
-                                                              <div className="">{numbers[1]}</div>
-                                                              <div className="">{numbers[2]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[0]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[1]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[2]}</div>
                                                           </>
                                                       ) : i <= 3 ? (
                                                           <>
-                                                              <div className="">{numbers[0]}</div>
-                                                              <div className="">{numbers[1]}</div>
-                                                              <div className="">{numbers[2]}</div>
-                                                              <div className="">{numbers[3]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[0]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[1]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[2]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[3]}</div>
                                                           </>
                                                       ) : i <= 7 ? (
                                                           <>
-                                                              <div className="">{numbers[0]}</div>
-                                                              <div className="">{numbers[1]}</div>
-                                                              <div className="">{numbers[2]}</div>
-                                                              <div className="">{numbers[3]}</div>
-                                                              <div className="">{numbers[4]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[0]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[1]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[2]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[3]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[4]}</div>
                                                           </>
                                                       ) : (
                                                           <>
-                                                              <div className="">{numbers[0]}</div>
-                                                              <div className="">{numbers[1]}</div>
-                                                              <div className="">{numbers[2]}</div>
-                                                              <div className="">{numbers[3]}</div>
-                                                              <div className="">{numbers[4]}</div>
-                                                              <div className="">{numbers[5]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[0]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[1]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[2]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[3]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[4]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[5]}</div>
                                                           </>
                                                       )}
                                                   </div>
@@ -1040,38 +1040,38 @@ function TableKqxsMN({ handleFindKqxs, kqxsMN, day, date, setKqxsMN }) {
                                                   <div className="flex gap-[1px]">
                                                       {i === 0 ? (
                                                           <>
-                                                              <div className="">{numbers[0]}</div>
-                                                              <div className="">{numbers[1]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[0]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[1]}</div>
                                                           </>
                                                       ) : i === 1 ? (
                                                           <>
-                                                              <div className="">{numbers[0]}</div>
-                                                              <div className="">{numbers[1]}</div>
-                                                              <div className="">{numbers[2]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[0]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[1]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[2]}</div>
                                                           </>
                                                       ) : i <= 3 ? (
                                                           <>
-                                                              <div className="">{numbers[0]}</div>
-                                                              <div className="">{numbers[1]}</div>
-                                                              <div className="">{numbers[2]}</div>
-                                                              <div className="">{numbers[3]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[0]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[1]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[2]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[3]}</div>
                                                           </>
                                                       ) : i <= 7 ? (
                                                           <>
-                                                              <div className="">{numbers[0]}</div>
-                                                              <div className="">{numbers[1]}</div>
-                                                              <div className="">{numbers[2]}</div>
-                                                              <div className="">{numbers[3]}</div>
-                                                              <div className="">{numbers[4]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[0]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[1]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[2]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[3]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[4]}</div>
                                                           </>
                                                       ) : (
                                                           <>
-                                                              <div className="">{numbers[0]}</div>
-                                                              <div className="">{numbers[1]}</div>
-                                                              <div className="">{numbers[2]}</div>
-                                                              <div className="">{numbers[3]}</div>
-                                                              <div className="">{numbers[4]}</div>
-                                                              <div className="">{numbers[5]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[0]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[1]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[2]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[3]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[4]}</div>
+                                                              <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[5]}</div>
                                                           </>
                                                       )}
                                                   </div>
@@ -1320,38 +1320,38 @@ function TableKqxsMN({ handleFindKqxs, kqxsMN, day, date, setKqxsMN }) {
                                                       <div className="flex gap-[1px]">
                                                           {i === 0 ? (
                                                               <>
-                                                                  <div className="">{numbers[0]}</div>
-                                                                  <div className="">{numbers[1]}</div>
+                                                                  <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[0]}</div>
+                                                                  <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[1]}</div>
                                                               </>
                                                           ) : i === 1 ? (
                                                               <>
-                                                                  <div className="">{numbers[0]}</div>
-                                                                  <div className="">{numbers[1]}</div>
-                                                                  <div className="">{numbers[2]}</div>
+                                                                  <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[0]}</div>
+                                                                  <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[1]}</div>
+                                                                  <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[2]}</div>
                                                               </>
                                                           ) : i <= 3 ? (
                                                               <>
-                                                                  <div className="">{numbers[0]}</div>
-                                                                  <div className="">{numbers[1]}</div>
-                                                                  <div className="">{numbers[2]}</div>
-                                                                  <div className="">{numbers[3]}</div>
+                                                                  <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[0]}</div>
+                                                                  <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[1]}</div>
+                                                                  <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[2]}</div>
+                                                                  <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[3]}</div>
                                                               </>
                                                           ) : i <= 7 ? (
                                                               <>
-                                                                  <div className="">{numbers[0]}</div>
-                                                                  <div className="">{numbers[1]}</div>
-                                                                  <div className="">{numbers[2]}</div>
-                                                                  <div className="">{numbers[3]}</div>
-                                                                  <div className="">{numbers[4]}</div>
+                                                                  <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[0]}</div>
+                                                                  <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[1]}</div>
+                                                                  <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[2]}</div>
+                                                                  <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[3]}</div>
+                                                                  <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[4]}</div>
                                                               </>
                                                           ) : (
                                                               <>
-                                                                  <div className="">{numbers[0]}</div>
-                                                                  <div className="">{numbers[1]}</div>
-                                                                  <div className="">{numbers[2]}</div>
-                                                                  <div className="">{numbers[3]}</div>
-                                                                  <div className="">{numbers[4]}</div>
-                                                                  <div className="">{numbers[5]}</div>
+                                                                  <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[0]}</div>
+                                                                  <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[1]}</div>
+                                                                  <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[2]}</div>
+                                                                  <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[3]}</div>
+                                                                  <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[4]}</div>
+                                                                  <div className="bg-[#f9ffa9] rounded-[10px] px-[1px]">{numbers[5]}</div>
                                                               </>
                                                           )}
                                                       </div>

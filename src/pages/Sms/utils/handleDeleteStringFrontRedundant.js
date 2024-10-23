@@ -53,11 +53,19 @@ function handleDeleteStringFrontRedundant(content) {
     let stringRedun = '';
     let countDelete = 0;
     let errorSyntax = false;
+    let errorSyntaxDetail = {};
+    let stringRedunFirst = '';
+    let isStringRedunFirst = false;
 
     for (let i = 0; i < length; i++) {
         if (contentTmp[i] !== '.' && !(isFinite(Number(contentTmp[i])) && isFinite(Number(contentTmp[i + 1])))) {
             stringRedun += contentTmp[i];
         } else {
+            if (!isStringRedunFirst && stringRedun.length > 1) {
+                stringRedunFirst = stringRedun;
+                isStringRedunFirst = true;
+            }
+
             if (searchChars.includes(stringRedun)) {
                 break;
             } else {
@@ -72,9 +80,13 @@ function handleDeleteStringFrontRedundant(content) {
 
     if (countDelete >= 4) {
         errorSyntax = true;
+        errorSyntaxDetail = {
+            code: 'duaphiatruoc',
+            string: stringRedunFirst,
+        };
     }
 
-    return { data3: contentTmp, data4: errorSyntax };
+    return { data3: contentTmp, data4: errorSyntax, data42: errorSyntaxDetail };
 }
 
 export default handleDeleteStringFrontRedundant;

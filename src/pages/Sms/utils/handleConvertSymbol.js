@@ -396,7 +396,7 @@ function handleConvertSymbol(content, mien, dayOfWeek) {
                     daiMain = 'qg';
                 } else if (dai === 'dacnong' || dai === 'daknong' || dai === 'dnong' || dai === 'dno') {
                     daiMain = 'do';
-                } else if (dai === 'kontum' || dai === 'kontom' || dai === 'ktum' || dai === 'ktum') {
+                } else if (dai === 'kontum' || dai === 'kontom' || dai === 'ktum') {
                     daiMain = 'kt';
                 }
 
