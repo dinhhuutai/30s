@@ -19,7 +19,8 @@ function ProtectedCheckUser() {
     const Token = () => {
         axiosJWT = axios.create({
             withCredentials: true, //mang theo cookie
-            baseURL: 'http://localhost:5000/', //địa chỉ của BE
+            //baseURL: 'http://localhost:5000/', //địa chỉ của BE
+            baseURL: 'http://13.211.159.58:5000/', //địa chỉ của BE
         });
 
         axiosJWT.interceptors.request.use(
