@@ -9,6 +9,7 @@ import payXiuChuDuoiWin from './pay/payXiuChuDuoiWin';
 import payDaThangWin from './pay/payDaThangWin';
 import payDaXienWin from './pay/payDaXienWin';
 import payBayLoWin from './pay/payBayLoWin';
+import payTamLoWin from './pay/payTamLoWin';
 import moment from 'moment';
 import payRevenue from './payRevenue';
 
@@ -50,6 +51,8 @@ async function payTotalSmsByDate(date, dateSelect, domain, idUser, kqxs) {
                                 pay = payDaXienWin(e, sms.idMember, kqxs);
                             } else if (e.typePlay === 'baylo') {
                                 pay = payBayLoWin(e, sms.idMember, kqxs);
+                            } else if (e.typePlay === 'tamlo') {
+                                pay = payTamLoWin(e, sms.idMember, kqxs);
                             }
 
                             await axios.post(`${process.env.REACT_APP_API_URL}/v1/smsDetail/update/${e._id}`, pay);

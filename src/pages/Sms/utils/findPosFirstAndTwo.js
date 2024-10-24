@@ -534,7 +534,34 @@ function findPosFirstAndTwo(content) {
             stringChildTest.includes('schuduoid') ||
             stringChildTest.includes('baylo') ||
             stringChildTest.includes('baobay') ||
-            stringChildTest.includes('baobaylo')
+            stringChildTest.includes('baobaylo') ||
+            stringChildTest.includes('baylod') ||
+            stringChildTest.includes('baobayd') ||
+            stringChildTest.includes('baobaylod') ||
+            stringChildTest.includes('baylodao') ||
+            stringChildTest.includes('baobaydao') ||
+            stringChildTest.includes('baobaylodao') ||
+            stringChildTest.includes('dbaylo') ||
+            stringChildTest.includes('dbaobay') ||
+            stringChildTest.includes('dbaobaylo') ||
+            stringChildTest.includes('daobaylo') ||
+            stringChildTest.includes('daobaobay') ||
+            stringChildTest.includes('daobaobaylo') ||
+            stringChildTest.includes('tamlo') ||
+            stringChildTest.includes('baotam') ||
+            stringChildTest.includes('baotamlo') ||
+            stringChildTest.includes('tamlod') ||
+            stringChildTest.includes('baotamd') ||
+            stringChildTest.includes('baotamlod') ||
+            stringChildTest.includes('tamlodao') ||
+            stringChildTest.includes('baotamdao') ||
+            stringChildTest.includes('baotamlodao') ||
+            stringChildTest.includes('dtamlo') ||
+            stringChildTest.includes('dbaotam') ||
+            stringChildTest.includes('dbaotamlo') ||
+            stringChildTest.includes('daotamlo') ||
+            stringChildTest.includes('daobaotam') ||
+            stringChildTest.includes('daobaotamlo')
         ) {
             if (content[firstTwoPositions[1] + 2] === '.') {
                 // la dai Bac Lieu
@@ -1039,7 +1066,34 @@ function findPosFirstAndTwo(content) {
             stringChildTest.includes('schuduoid') ||
             stringChildTest.includes('baylo') ||
             stringChildTest.includes('baobay') ||
-            stringChildTest.includes('baobaylo')
+            stringChildTest.includes('baobaylo') ||
+            stringChildTest.includes('baylod') ||
+            stringChildTest.includes('baobayd') ||
+            stringChildTest.includes('baobaylod') ||
+            stringChildTest.includes('baylodao') ||
+            stringChildTest.includes('baobaydao') ||
+            stringChildTest.includes('baobaylodao') ||
+            stringChildTest.includes('dbaylo') ||
+            stringChildTest.includes('dbaobay') ||
+            stringChildTest.includes('dbaobaylo') ||
+            stringChildTest.includes('daobaylo') ||
+            stringChildTest.includes('daobaobay') ||
+            stringChildTest.includes('daobaobaylo') ||
+            stringChildTest.includes('tamlo') ||
+            stringChildTest.includes('baotam') ||
+            stringChildTest.includes('baotamlo') ||
+            stringChildTest.includes('tamlod') ||
+            stringChildTest.includes('baotamd') ||
+            stringChildTest.includes('baotamlod') ||
+            stringChildTest.includes('tamlodao') ||
+            stringChildTest.includes('baotamdao') ||
+            stringChildTest.includes('baotamlodao') ||
+            stringChildTest.includes('dtamlo') ||
+            stringChildTest.includes('dbaotam') ||
+            stringChildTest.includes('dbaotamlo') ||
+            stringChildTest.includes('daotamlo') ||
+            stringChildTest.includes('daobaotam') ||
+            stringChildTest.includes('daobaotamlo')
         ) {
             if (content[firstTwoPositions[1] + 2] === '.') {
             } else {

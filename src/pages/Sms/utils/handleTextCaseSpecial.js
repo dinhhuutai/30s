@@ -24,10 +24,11 @@ function handleXiu(contentTmp) {
     let index = contentTmp.indexOf('xiu');
 
     while (
-        index !== -1 &&
-        contentTmp[index - 1] === '.' &&
-        contentTmp[index + 3] === '.' &&
-        contentTmp[index + 4] !== 'c'
+        (index !== -1 &&
+            contentTmp[index - 1] === '.' &&
+            contentTmp[index + 3] === '.' &&
+            contentTmp[index + 4] !== 'c') ||
+        (index === 0 && contentTmp[index + 3] === '.' && contentTmp[index + 4] !== 'c')
     ) {
         let mangSo = [];
 
@@ -69,7 +70,10 @@ function handleTai(contentTmp) {
 
     let index = contentTmp.indexOf('tai');
 
-    while (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 3] === '.') {
+    while (
+        (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 3] === '.') ||
+        (index === 0 && contentTmp[index + 3] === '.')
+    ) {
         let mangSo = [];
 
         for (let i = 0; i <= 9; i++) {
@@ -110,7 +114,10 @@ function handleTaiXiu(contentTmp) {
 
     let index = contentTmp.indexOf('taixiu');
 
-    while (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 6] === '.') {
+    while (
+        (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 6] === '.') ||
+        (index === 0 && contentTmp[index + 6] === '.')
+    ) {
         let mangSo = [];
 
         for (let i = 0; i <= 9; i++) {
@@ -153,7 +160,10 @@ function handleXiuTai(contentTmp) {
 
     let index = contentTmp.indexOf('xiutai');
 
-    while (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 6] === '.') {
+    while (
+        (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 6] === '.') ||
+        (index === 0 && contentTmp[index + 6] === '.')
+    ) {
         let mangSo = [];
 
         for (let i = 0; i <= 9; i++) {
@@ -196,7 +206,10 @@ function handleXiuXiu(contentTmp) {
 
     let index = contentTmp.indexOf('xiuxiu');
 
-    while (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 6] === '.') {
+    while (
+        (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 6] === '.') ||
+        (index === 0 && contentTmp[index + 6] === '.')
+    ) {
         let mangSo = [];
 
         for (let i = 0; i <= 9; i++) {
@@ -239,7 +252,10 @@ function handleTaiTai(contentTmp) {
 
     let index = contentTmp.indexOf('taitai');
 
-    while (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 6] === '.') {
+    while (
+        (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 6] === '.') ||
+        (index === 0 && contentTmp[index + 6] === '.')
+    ) {
         let mangSo = [];
 
         for (let i = 0; i <= 9; i++) {
@@ -282,7 +298,10 @@ function handleChan(contentTmp) {
 
     let index = contentTmp.indexOf('chan');
 
-    while (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 4] === '.') {
+    while (
+        (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 4] === '.') ||
+        (index === 0 && contentTmp[index + 4] === '.')
+    ) {
         let mangSo = [];
 
         for (let i = 0; i <= 9; i++) {
@@ -323,7 +342,10 @@ function handleLe(contentTmp) {
 
     let index = contentTmp.indexOf('le');
 
-    while (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 2] === '.') {
+    while (
+        (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 2] === '.') ||
+        (index === 0 && contentTmp[index + 2] === '.')
+    ) {
         let mangSo = [];
 
         for (let i = 0; i <= 9; i++) {
@@ -364,7 +386,10 @@ function handleChanLe(contentTmp) {
 
     let index = contentTmp.indexOf('chanle');
 
-    while (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 6] === '.') {
+    while (
+        (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 6] === '.') ||
+        (index === 0 && contentTmp[index + 6] === '.')
+    ) {
         let mangSo = [];
 
         for (let i = 0; i <= 9; i++) {
@@ -407,7 +432,10 @@ function handleLeChan(contentTmp) {
 
     let index = contentTmp.indexOf('lechan');
 
-    while (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 6] === '.') {
+    while (
+        (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 6] === '.') ||
+        (index === 0 && contentTmp[index + 6] === '.')
+    ) {
         let mangSo = [];
 
         for (let i = 0; i <= 9; i++) {
@@ -450,7 +478,10 @@ function handleChanChan(contentTmp) {
 
     let index = contentTmp.indexOf('chanchan');
 
-    while (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 8] === '.') {
+    while (
+        (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 8] === '.') ||
+        (index === 0 && contentTmp[index + 8] === '.')
+    ) {
         let mangSo = [];
 
         for (let i = 0; i <= 9; i++) {
@@ -492,7 +523,10 @@ function handleLeLe(contentTmp) {
     contentTmp = contentTmp.replace(/le.le/g, 'lele');
     let index = contentTmp.indexOf('lele');
 
-    while (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 4] === '.') {
+    while (
+        (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 4] === '.') ||
+        (index === 0 && contentTmp[index + 4] === '.')
+    ) {
         let mangSo = [];
 
         for (let i = 0; i <= 9; i++) {
@@ -533,7 +567,10 @@ function handleLeLe(contentTmp) {
 function handleGiap(contentTmp) {
     let index = contentTmp.indexOf('giap');
 
-    while (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 4] === '.') {
+    while (
+        (index !== -1 && contentTmp[index - 1] === '.' && contentTmp[index + 4] === '.') ||
+        (index === 0 && contentTmp[index + 4] === '.')
+    ) {
         let mangSo = [
             '06',
             '07',

@@ -4,6 +4,9 @@ const routes = {
     revenue: '/revenue',
     member: '/member',
     botTelegram: '/bot-telegram',
+    botWhatsApp: '/bot-whatsapp',
+    guide: '/guide',
+    download: '/download-app',
     login: '/login',
     register: '/register',
 

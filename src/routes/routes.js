@@ -3,6 +3,9 @@ import Member from '~/pages/Member';
 import Sms from '~/pages/Sms';
 import Revenue from '~/pages/Revenue';
 import BotTelegram from '~/pages/BotTelegram';
+import BotWhatsapp from '~/pages/BotWhatsapp';
+import Guide from '~/pages/Guide';
+import Download from '~/pages/Download';
 import Login from '~/pages/Login';
 import Register from '~/pages/Register';
 
@@ -45,6 +48,21 @@ export const routes = [
     {
         path: config.routes.botTelegram,
         component: BotTelegram,
+        login: true,
+    },
+    {
+        path: config.routes.botWhatsApp,
+        component: BotWhatsapp,
+        login: true,
+    },
+    {
+        path: config.routes.guide,
+        component: Guide,
+        login: true,
+    },
+    {
+        path: config.routes.download,
+        component: Download,
         login: true,
     },
     {

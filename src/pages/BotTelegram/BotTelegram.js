@@ -62,7 +62,8 @@ function BotTelegram() {
             <div className="bg-[var(--color-white)] px-[16px] mt-[12px] py-[14px] pb-[68px] rounded-[6px]">
                 <div className="flex justify-center">
                     <h1 className="text-[16px] font-[600] uppercase text-center">
-                        Hướng dẫn tự động thêm tin nhắn vào hệ thống bằng bot telegram
+                        Hướng dẫn tự động thêm tin nhắn vào hệ thống bằng bot{' '}
+                        <span className="bg-[#fdfa29]">telegram</span>
                     </h1>
                 </div>
                 <div className="mt-[20px]">
@@ -76,7 +77,7 @@ function BotTelegram() {
                     </div>
                 </div>
                 <div className="mt-[10px]">
-                    <h2 className="text-[14px] font-[600]">I. Hướng dẫn bằng video:</h2>
+                    <h2 className="text-[14px] font-[600]">I. Hướng dẫn video:</h2>
                     <div className="flex justify-center mt-[10px]">
                         <iframe
                             src="https://drive.google.com/file/d/1GRXjG0J823C-cPG3w5_ZokCDGt_pK5lC/preview"

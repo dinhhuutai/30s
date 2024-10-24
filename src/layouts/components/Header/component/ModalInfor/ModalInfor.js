@@ -22,7 +22,7 @@ function ModalInfor({ setModalInfor, user, setUser }) {
                 status: true,
                 text: 'Tên không để trống',
             });
-        } else if (!(/^\d+$/.test(phone) && phone.length >= 9 && phone.length <= 11)) {
+        } else if (!(/^\d+$/.test(phone) && phone.length >= 9 && phone.length <= 11) && phone.length > 0) {
             setNoticeError({
                 status: true,
                 text: 'Số điện thoại không đúng',
@@ -71,7 +71,7 @@ function ModalInfor({ setModalInfor, user, setUser }) {
             <div className="fixed flex justify-center overflow-y-auto overflow-x-hidden top-0 left-0 right-0 bottom-0 pb-[60px] opacity-[1] z-[999]">
                 <div
                     onClick={(e) => e.stopPropagation()}
-                    className="bg-[#fff] animate-modalDownSlide text-[12px] lg:w-[500px] w-[370px] h-fit pb-[20px] shadow-xl rounded-[6px] mt-[30px] py-[14px]"
+                    className="bg-[#fff] animate-modalDownSlide text-[12px] lg:w-[500px] w-[96%] h-fit pb-[20px] shadow-xl rounded-[6px] mt-[30px] py-[14px]"
                 >
                     <div className="flex justify-between items-center pb-[12px] border-b-[1px] border-solid border-[#f0f0f0] px-[26px]">
                         <h1 className="text-[14px] capitalize text-[#000] font-[620]">Chỉnh sửa thông tin cá nhân</h1>

@@ -624,6 +624,172 @@ function convertContentDetail(content, date) {
                         }
 
                         if (
+                            kdSS === 'baylod' ||
+                            kdSS === 'baobayd' ||
+                            kdSS === 'baobaylod' ||
+                            kdSS === 'baylodao' ||
+                            kdSS === 'baobaydao' ||
+                            kdSS === 'baobaylodao' ||
+                            kdSS === 'dbaylo' ||
+                            kdSS === 'dbaobay' ||
+                            kdSS === 'dbaobaylo' ||
+                            kdSS === 'daobaylo' ||
+                            kdSS === 'daobaobay' ||
+                            kdSS === 'daobaobaylo'
+                        ) {
+                            kdanhMain = 'baylo';
+
+                            let mangSoDao = findListOverturn(eSo);
+
+                            mangSoDao.map((soDao) => {
+                                if (soDao.length < 2) {
+                                    errorSyntax = true;
+                                    errorSyntaxDetail = {
+                                        code: 'quantity1',
+                                        num: soDao,
+                                    };
+                                    console.log(123);
+                                }
+
+                                const daiTmpContent = [...dai];
+
+                                if (daiTmpContent.includes('br')) {
+                                    daiTmpContent[daiTmpContent.indexOf('br')] = 'btr';
+                                } else if (daiTmpContent.includes('bi')) {
+                                    daiTmpContent[daiTmpContent.indexOf('bi')] = 'bl';
+                                } else if (daiTmpContent.includes('bu')) {
+                                    daiTmpContent[daiTmpContent.indexOf('bu')] = 'bd';
+                                } else if (daiTmpContent.includes('lt')) {
+                                    daiTmpContent[daiTmpContent.indexOf('lt')] = 'dl';
+                                } else if (daiTmpContent.includes('dg')) {
+                                    daiTmpContent[daiTmpContent.indexOf('dg')] = 'dn';
+                                } else if (daiTmpContent.includes('qg')) {
+                                    daiTmpContent[daiTmpContent.indexOf('qg')] = 'qn';
+                                } else if (daiTmpContent.includes('do')) {
+                                    daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
+                                }
+
+                                const obj = {
+                                    content: `${daiTmpContent}.${soDao}.${kdanhMain}.${gtien}ngan`,
+                                    domain: mien,
+                                    province: dai,
+                                    number: [soDao],
+                                    typePlay: kdanhMain,
+                                    price: gtien,
+                                    resultDate: now,
+                                    dayOfWeek: dayOfWeek,
+                                };
+
+                                arr = [...arr, obj];
+                                isKD = true;
+
+                                console.log(`${dai}.${soDao}.${kdanhMain}.${gtien}ngan`);
+                            });
+                        }
+
+                        if (kdSS === 'tamlo' || kdSS === 'baotam' || kdSS === 'baotamlo') {
+                            kdanhMain = 'tamlo';
+
+                            const daiTmpContent = [...dai];
+
+                            if (daiTmpContent.includes('br')) {
+                                daiTmpContent[daiTmpContent.indexOf('br')] = 'btr';
+                            } else if (daiTmpContent.includes('bi')) {
+                                daiTmpContent[daiTmpContent.indexOf('bi')] = 'bl';
+                            } else if (daiTmpContent.includes('bu')) {
+                                daiTmpContent[daiTmpContent.indexOf('bu')] = 'bd';
+                            } else if (daiTmpContent.includes('lt')) {
+                                daiTmpContent[daiTmpContent.indexOf('lt')] = 'dl';
+                            } else if (daiTmpContent.includes('dg')) {
+                                daiTmpContent[daiTmpContent.indexOf('dg')] = 'dn';
+                            } else if (daiTmpContent.includes('qg')) {
+                                daiTmpContent[daiTmpContent.indexOf('qg')] = 'qn';
+                            } else if (daiTmpContent.includes('do')) {
+                                daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
+                            }
+
+                            const obj = {
+                                content: `${daiTmpContent}.${eSo}.${kdanhMain}.${gtien}ngan`,
+                                domain: mien,
+                                province: dai,
+                                number: [eSo],
+                                typePlay: kdanhMain,
+                                price: gtien,
+                                resultDate: now,
+                                dayOfWeek: dayOfWeek,
+                            };
+
+                            arr = [...arr, obj];
+                            isKD = true;
+
+                            console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
+                        }
+
+                        if (
+                            kdSS === 'tamlod' ||
+                            kdSS === 'baotamd' ||
+                            kdSS === 'baotamlod' ||
+                            kdSS === 'tamlodao' ||
+                            kdSS === 'baotamdao' ||
+                            kdSS === 'baotamlodao' ||
+                            kdSS === 'dtamlo' ||
+                            kdSS === 'dbaotam' ||
+                            kdSS === 'dbaotamlo' ||
+                            kdSS === 'daotamlo' ||
+                            kdSS === 'daobaotam' ||
+                            kdSS === 'daobaotamlo'
+                        ) {
+                            kdanhMain = 'tamlo';
+
+                            let mangSoDao = findListOverturn(eSo);
+
+                            mangSoDao.map((soDao) => {
+                                if (soDao.length < 2) {
+                                    errorSyntax = true;
+                                    errorSyntaxDetail = {
+                                        code: 'quantity1',
+                                        num: soDao,
+                                    };
+                                    console.log(123);
+                                }
+
+                                const daiTmpContent = [...dai];
+
+                                if (daiTmpContent.includes('br')) {
+                                    daiTmpContent[daiTmpContent.indexOf('br')] = 'btr';
+                                } else if (daiTmpContent.includes('bi')) {
+                                    daiTmpContent[daiTmpContent.indexOf('bi')] = 'bl';
+                                } else if (daiTmpContent.includes('bu')) {
+                                    daiTmpContent[daiTmpContent.indexOf('bu')] = 'bd';
+                                } else if (daiTmpContent.includes('lt')) {
+                                    daiTmpContent[daiTmpContent.indexOf('lt')] = 'dl';
+                                } else if (daiTmpContent.includes('dg')) {
+                                    daiTmpContent[daiTmpContent.indexOf('dg')] = 'dn';
+                                } else if (daiTmpContent.includes('qg')) {
+                                    daiTmpContent[daiTmpContent.indexOf('qg')] = 'qn';
+                                } else if (daiTmpContent.includes('do')) {
+                                    daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
+                                }
+
+                                const obj = {
+                                    content: `${daiTmpContent}.${soDao}.${kdanhMain}.${gtien}ngan`,
+                                    domain: mien,
+                                    province: dai,
+                                    number: [soDao],
+                                    typePlay: kdanhMain,
+                                    price: gtien,
+                                    resultDate: now,
+                                    dayOfWeek: dayOfWeek,
+                                };
+
+                                arr = [...arr, obj];
+                                isKD = true;
+
+                                console.log(`${dai}.${soDao}.${kdanhMain}.${gtien}ngan`);
+                            });
+                        }
+
+                        if (
                             kdSS === 'dd' ||
                             kdSS === 'đđ' ||
                             kdSS === 'dauduoi' ||

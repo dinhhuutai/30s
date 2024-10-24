@@ -429,7 +429,7 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
             <div className="fixed flex justify-center overflow-y-auto overflow-x-hidden top-0 left-0 right-0 bottom-0 pb-[60px] opacity-[1] z-[999]">
                 <div
                     onClick={(e) => e.stopPropagation()}
-                    className="bg-[#fff] animate-modalDownSlide text-[12px] lg:w-[900px] w-[370px] h-fit pb-[20px] shadow-xl rounded-[6px] mt-[30px] py-[14px]"
+                    className="bg-[#fff] animate-modalDownSlide text-[12px] lg:w-[900px] w-[96%] h-fit pb-[20px] shadow-xl rounded-[6px] mt-[30px] py-[14px]"
                 >
                     <div className="flex justify-between items-center pb-[12px] border-b-[1px] border-solid border-[#f0f0f0] px-[26px]">
                         <h1 className="text-[14px] capitalize text-[#000] font-[620]">{`Chỉnh sửa tin nhắn STT #${selectorSms.index} - ${selectorSms?.sm?.idMember?.name}`}</h1>
@@ -521,7 +521,7 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
                                             textareaRef.current.focus();
                                         }
                                     }}
-                                    className="rounded-[4px] max-h-[136px] h-[136px] overflow-y-auto flex-1 outline-none border-[1px] border-solid border-[#bdc3d1] text-[12px] py-[4px] px-[8px] whitespace-pre-wrap"
+                                    className="rounded-[4px] max-h-[136px] min-h-[136px] h-[136px] overflow-y-auto flex-1 outline-none border-[1px] border-solid border-[#bdc3d1] text-[12px] py-[4px] px-[8px] whitespace-pre-wrap"
                                 >
                                     {contentEdit.slice(0, errorLocation[0])}
                                     <span className="bg-[#F1AF00]">
@@ -718,7 +718,7 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
                                                                 ? 'Đ.Nông'
                                                                 : pro === 'kt'
                                                                 ? 'K.Tum'
-                                                                : ''
+                                                                : 'Miền Bắc'
                                                         }`}</div>
                                                     ))}
                                                 </div>
@@ -745,6 +745,8 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
                                                         ? 'Đá Thẳng'
                                                         : sms.typePlay === 'baylo'
                                                         ? 'Bảy Lô'
+                                                        : sms.typePlay === 'tamlo'
+                                                        ? 'Tám Lô'
                                                         : 'Đá Xiên'}
                                                 </div>
                                             </td>

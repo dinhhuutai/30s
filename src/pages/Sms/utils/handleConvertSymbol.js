@@ -185,6 +185,17 @@ function handleConvertSymbol(content, mien, dayOfWeek) {
                 length = contentTmp.length;
 
                 bDai = true;
+            } else if (dai === 'hcm') {
+                vtkt = i;
+
+                daiMain = 'tp';
+
+                contentTmp = contentTmp.slice(0, vtbd) + daiMain + contentTmp.slice(vtkt);
+
+                i = vtbd + 1;
+                length = contentTmp.length;
+
+                bDai = true;
             } else if (dai === 'btr') {
                 vtkt = i;
 

@@ -1,8 +1,8 @@
 import { Link, NavLink } from 'react-router-dom';
 import config from '~/config';
-import { AiFillHome, AiFillMessage, AiFillCalculator } from 'react-icons/ai';
-import { BiSolidBot } from 'react-icons/bi';
-import { BsPeopleFill } from 'react-icons/bs';
+import { AiFillHome, AiFillMessage, AiFillCalculator, AiFillRobot, AiFillPhone } from 'react-icons/ai';
+import { BiSolidBot, BiSolidBook, BiSolidCloudDownload } from 'react-icons/bi';
+import { BsPeopleFill, BsTelegram } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
 
 function Sidebar({ setSidebarWidth }) {
@@ -123,6 +123,12 @@ function Sidebar({ setSidebarWidth }) {
                                     <span>danh bạ</span>
                                 </NavLink>
                             </li>
+                        </ul>
+
+                        <h5 className="text-[10px] px-[16px] mt-[10px] tracking-[1px] text-[var(--color-gray)] uppercase font-[500]">
+                            hướng dẫn
+                        </h5>
+                        <ul className="mt-[10px]">
                             <li>
                                 <NavLink
                                     onClick={() => {
@@ -144,7 +150,98 @@ function Sidebar({ setSidebarWidth }) {
                                     <span>bot telegram</span>
                                 </NavLink>
                             </li>
+                            <li>
+                                <NavLink
+                                    onClick={() => {
+                                        if (width < 768) {
+                                            setSidebarWidth('0px');
+                                            document.documentElement.style.setProperty('--width-sidebar', '0px');
+                                        }
+                                    }}
+                                    className={(nav) =>
+                                        `text-[12px] items-center text-[var(--color-text-sidebar)] font-[650] uppercase px-[16px] py-[8px] flex border-b-[1px] border-[#eaecf0] border-solid ${
+                                            nav.isActive
+                                                ? 'bg-active-path text-[var(--color-white)]'
+                                                : 'hover:text-[var(--color-black)]'
+                                        }`
+                                    }
+                                    to={config.routes.botWhatsApp}
+                                >
+                                    <AiFillRobot className="mr-[8px] text-[14px]" />
+                                    <span>bot whatsapp</span>
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink
+                                    onClick={() => {
+                                        if (width < 768) {
+                                            setSidebarWidth('0px');
+                                            document.documentElement.style.setProperty('--width-sidebar', '0px');
+                                        }
+                                    }}
+                                    className={(nav) =>
+                                        `text-[12px] items-center text-[var(--color-text-sidebar)] font-[650] uppercase px-[16px] py-[8px] flex border-b-[1px] border-[#eaecf0] border-solid ${
+                                            nav.isActive
+                                                ? 'bg-active-path text-[var(--color-white)]'
+                                                : 'hover:text-[var(--color-black)]'
+                                        }`
+                                    }
+                                    to={config.routes.guide}
+                                >
+                                    <BiSolidBook className="mr-[8px] text-[14px]" />
+                                    <span>hd sử dụng</span>
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink
+                                    onClick={() => {
+                                        if (width < 768) {
+                                            setSidebarWidth('0px');
+                                            document.documentElement.style.setProperty('--width-sidebar', '0px');
+                                        }
+                                    }}
+                                    className={(nav) =>
+                                        `text-[12px] items-center text-[var(--color-text-sidebar)] font-[650] uppercase px-[16px] py-[8px] flex border-b-[1px] border-[#eaecf0] border-solid ${
+                                            nav.isActive
+                                                ? 'bg-active-path text-[var(--color-white)]'
+                                                : 'hover:text-[var(--color-black)]'
+                                        }`
+                                    }
+                                    to={config.routes.download}
+                                >
+                                    <BiSolidCloudDownload className="mr-[8px] text-[16px]" />
+                                    <span>tải ứng dụng</span>
+                                </NavLink>
+                            </li>
                         </ul>
+
+                        {/* <h5 className="text-[10px] px-[16px] mt-[10px] tracking-[1px] text-[var(--color-gray)] uppercase font-[500]">
+                            hỗ trợ
+                        </h5>
+                        <ul className="mt-[10px]">
+                            <li>
+                                <div
+                                    className={`text-[12px] cursor-pointer items-center text-[var(--color-text-sidebar)] font-[650] uppercase px-[16px] py-[8px] flex border-t-[1px] border-b-[1px] border-[#eaecf0] border-solid hover:text-[var(--color-black)]`}
+                                >
+                                    <AiFillPhone className="mr-[8px] text-[14px]" />
+                                    <span>0999.999.999</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div
+                                    className={`text-[12px] cursor-pointer items-center text-[var(--color-text-sidebar)] font-[650] px-[16px] py-[8px] flex border-b-[1px] border-[#eaecf0] border-solid hover:text-[var(--color-black)]`}
+                                >
+                                    <BsTelegram className="mr-[8px] text-[14px]" />
+                                    <span>Telegram</span>
+                                </div>
+                            </li>
+                        </ul> */}
+
+                        <div className='mt-[14px] px-[16px]'>
+                            <h5 className="text-[12px] tracking-[1px] font-[600]">
+                                Ngày hết hạn:
+                            </h5>
+                        </div>
                     </div>
                 </div>
             </div>

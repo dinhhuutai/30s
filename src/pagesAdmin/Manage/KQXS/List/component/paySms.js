@@ -2,6 +2,7 @@ import axios from 'axios';
 import moment from 'moment';
 import payBaoLo from '~/pages/Sms/utils/pay/payBaoLo';
 import payBayLo from '~/pages/Sms/utils/pay/payBayLo';
+import payTamLo from '~/pages/Sms/utils/pay/payTamLo';
 import payDaThang from '~/pages/Sms/utils/pay/payDaThang';
 import payDau from '~/pages/Sms/utils/pay/payDau';
 import payDauDuoi from '~/pages/Sms/utils/pay/payDauDuoi';
@@ -70,6 +71,8 @@ const paySms = async (domain) => {
                                     pay = payDaXien(e, sms.idMember, kqxs);
                                 } else if (e.typePlay === 'baylo') {
                                     pay = payBayLo(e, sms.idMember, kqxs);
+                                } else if (e.typePlay === 'tamlo') {
+                                    pay = payTamLo(e, sms.idMember, kqxs);
                                 }
 
                                 await axios.post(`${process.env.REACT_APP_API_URL}/v1/smsDetail/update/${e._id}`, pay);

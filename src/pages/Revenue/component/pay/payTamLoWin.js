@@ -1,4 +1,4 @@
-function payBayLoWin(content, info, kqxs) {
+function payTamLoWin(content, info, kqxs) {
     let tientrung = 0;
     let quantitySoTrung = 0;
 
@@ -10,8 +10,8 @@ function payBayLoWin(content, info, kqxs) {
                 if (
                     s.length >= content.number[0].length &&
                     s.endsWith(content.number[0]) &&
-                    ((i <= 6 && (content.domain === 'mn' || content.domain === 'mt')) ||
-                        (content.domain === 'mb' && i <= 6))
+                    ((i <= 7 && (content.domain === 'mn' || content.domain === 'mt')) ||
+                        (content.domain === 'mb' && i <= 7))
                 ) {
                     quantitySoTrung += 1;
                 }
@@ -46,4 +46,4 @@ function payBayLoWin(content, info, kqxs) {
     };
 }
 
-export default payBayLoWin;
+export default payTamLoWin;
