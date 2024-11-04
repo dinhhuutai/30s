@@ -6,6 +6,7 @@ import config from '~/config';
 import { useDispatch } from 'react-redux';
 import authSlice from '~/redux/slices/authSlice';
 import axios from 'axios';
+import setAuthToken from '~/middlewares/setAuthToken';
 
 function Register() {
     const [name, setName] = useState('');
@@ -44,7 +45,7 @@ function Register() {
         }
     };
 
-    const handleLogin = async () => {
+    const handleRegister = async () => {
         if (!username) {
             setNoticeError({
                 status: true,
@@ -101,6 +102,8 @@ function Register() {
                         }),
                     );
 
+                    setAuthToken(res.data?.accessToken);
+
                     setLoading(false);
                     navigate(config.routes.dashboard);
                 } else {
@@ -114,7 +117,6 @@ function Register() {
             }
         }
     };
-    
 
     useEffect(() => {
         setTimeout(() => {
@@ -274,7 +276,7 @@ function Register() {
                     </div>
 
                     <div className="mt-[50px]">
-                        <button className="bg-[#257081] text-white rounded w-full py-2" onClick={handleLogin}>
+                        <button className="bg-[#257081] text-white rounded w-full py-2" onClick={handleRegister}>
                             Đăng ký
                         </button>
                     </div>

@@ -67,6 +67,8 @@ function ProtectedCheckUser() {
             setAuthToken(user.login.accessToken);
         }
 
+        console.log('user.login.accessToken: ', user.login.accessToken)
+
         try {
             const res = await axiosJWT.get(`${process.env.REACT_APP_API_URL}/v1/user/check`, {
                 headers: { Authorization: `Bearer ${user.login.accessToken}` },

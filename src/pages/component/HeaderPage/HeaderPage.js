@@ -1,9 +1,18 @@
+import { useEffect, useState } from 'react';
 import { AiFillHome, AiOutlineRight } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import config from '~/config';
 
 function HeaderPage({ pageCurr }) {
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const width = window.innerWidth;
+
+        if (width < 768) {
+            document.documentElement.style.setProperty('--width-sidebar', 0);
+        }
+    }, []);
 
     return (
         <div className="text-[12px] w-[300px] w-min-[200px] lg:w-auto flex items-center">

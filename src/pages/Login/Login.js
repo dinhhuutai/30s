@@ -6,6 +6,7 @@ import config from '~/config';
 import { useDispatch } from 'react-redux';
 import authSlice from '~/redux/slices/authSlice';
 import axios from 'axios';
+import setAuthToken from '~/middlewares/setAuthToken';
 
 function Login() {
     const [username, setUsername] = useState('');
@@ -52,6 +53,8 @@ function Login() {
                         }),
                     );
 
+                    setAuthToken(res.data?.accessToken);
+
                     setLoading(false);
                     if (res.data?.user?.isAdmin) {
                         navigate(config.routes.adminAnalytics);
@@ -60,6 +63,10 @@ function Login() {
                     }
                 } else {
                     dispatch(authSlice.actions.loginFailed());
+                    setNoticeError({
+                        status: true,
+                        text: 'username hoặc password không chính xác',
+                    });
                 }
             } catch (error) {
                 setNoticeError({
@@ -69,7 +76,6 @@ function Login() {
             }
         }
     };
-
 
     useEffect(() => {
         setTimeout(() => {

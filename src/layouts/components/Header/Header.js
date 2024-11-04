@@ -47,7 +47,7 @@ function Header({ sidebarWidth, setSidebarWidth }) {
                 dispatch(authSlice.actions.logoutSuccess());
 
                 //window.location.reload();
-                navigate(config.routes.explore);
+                navigate(config.routes.dashboard);
             } else {
                 dispatch(authSlice.actions.loginFailed());
             }

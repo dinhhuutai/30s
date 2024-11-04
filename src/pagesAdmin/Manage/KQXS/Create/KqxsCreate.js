@@ -58,6 +58,7 @@ function KqxsCreate() {
     const [urlmn, setUrlmn] = useState('');
     const [urlmt, setUrlmt] = useState('');
     const [urlmb, setUrlmb] = useState('');
+    const [urlmbtt, setUrlmbtt] = useState('');
     const [codeRegister, setCodeRegister] = useState('');
     const [tokenChatBotTelegram, setTokenChatBotTelegram] = useState('');
     const [tokenChatBotWhatsApp, setTokenChatBotWhatsApp] = useState('');
@@ -119,6 +120,7 @@ function KqxsCreate() {
             setUrlmn(rs?.urlmn);
             setUrlmt(rs?.urlmt);
             setUrlmb(rs?.urlmb);
+            setUrlmbtt(rs?.urlmbtt);
             setCodeRegister(rs?.codeRegister);
             setTokenChatBotTelegram(rs?.tokenChatBotTelegram);
             setTokenChatBotWhatsApp(rs?.tokenChatBotWhatsApp);
@@ -171,6 +173,7 @@ function KqxsCreate() {
                 urlmn,
                 urlmt,
                 urlmb,
+                urlmbtt,
                 codeRegister,
                 tokenChatBotTelegram,
                 tokenChatBotWhatsApp,
@@ -682,6 +685,18 @@ function KqxsCreate() {
                     <div className="flex flex-col gap-[4px] w-[33%]">
                         <div className="mb-[20px] font-[600] text-[12px] uppercase">Miền Bắc</div>
                         <div className="flex flex-col gap-[4px]">
+                            <label className="text-[12px]">Miền Bắc Trực Tiếp</label>
+                            <input
+                                value={urlmbtt}
+                                name="urlmbtt"
+                                onChange={(e) => setUrlmbtt(e.target.value)}
+                                className="border-[1px] px-[8px] py-[2px] text-[12px] outline-none border-solid border-[#a9a5a5] rounded-[4px]"
+                                type="text"
+                                placeholder="Link url"
+                            />
+                        </div>
+                        
+                        <div className="flex flex-col gap-[4px] mt-[4px]">
                             <label className="text-[12px]">Miền Bắc</label>
                             <input
                                 value={urlmb}
