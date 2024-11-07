@@ -148,7 +148,7 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
                     mt[0].result.length === 18 &&
                     mt[1].result.length === 18 &&
                     (mt.length === 3 ? mt[2].result.length === 18 : true)) ||
-                (mien === 'mb' && mb.length === 1 && mb[0].length === 27) ||
+                (mien === 'mb' && mb.length === 1 && mb[0].result.length === 27) ||
                 mien !== selectorSms?.sm?.domain ||
                 selectorSmsTmp.sm.idMember._id !== selecMember
             ) {

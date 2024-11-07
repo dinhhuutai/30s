@@ -82,9 +82,10 @@ function Revenue() {
             const res = await axios.post(`${process.env.REACT_APP_API_URL}/v1/revenue/findRevenueByDateAndIdMember`, {
                 date: formattedDate,
                 idUser: user.login.currentUser._id,
+                idMember: idMember,
             });
 
-            console.log(res.data)
+            console.log(res.data);
 
             if (res?.data.success) {
                 let revenueNew = res.data.data?.reduce((acc, curr) => {
@@ -225,6 +226,8 @@ function Revenue() {
             console.log(error);
         }
     };
+
+    console.log(revenues);
 
     useEffect(() => {
         window.scrollTo({

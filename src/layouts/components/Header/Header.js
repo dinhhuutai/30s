@@ -5,16 +5,18 @@ import { Link, useNavigate } from 'react-router-dom';
 import config from '~/config';
 import { userSelector } from '~/redux/selectors';
 import { AiOutlineMenu, AiOutlineUser, AiOutlineLogout } from 'react-icons/ai';
-import { BsFillCaretUpFill, BsFillCaretDownFill, BsFillGearFill } from 'react-icons/bs';
+import { BsFillCaretUpFill, BsFillCaretDownFill, BsFillGearFill, BsFillKeyFill } from 'react-icons/bs';
 import authSlice from '~/redux/slices/authSlice';
 import axios from 'axios';
 import ModalInfor from './component/ModalInfor';
+import ModalChangePassword from './component/ModalChangePassword';
 
 function Header({ sidebarWidth, setSidebarWidth }) {
     const tmp = useSelector(userSelector);
     const [user, setUser] = useState(tmp);
     const [downUser, setDownUser] = useState(false);
     const [modalInfor, setModalInfor] = useState(false);
+    const [modalChangePassword, setModalChangePassword] = useState(false);
 
     const [width, setWidth] = useState(0);
 
@@ -91,10 +93,20 @@ function Header({ sidebarWidth, setSidebarWidth }) {
                             <li>
                                 <button
                                     onClick={() => setModalInfor(true)}
-                                    className="flex gap-[8px] text-[#505b72] py-[6px] items-center px-[14px] rounded-[4px] cursor-pointer hover:bg-[#262b36] hover:text-[#9fa8bc]"
+                                    className="flex gap-[8px] w-full text-[#505b72] py-[6px] items-center px-[14px] rounded-[4px] cursor-pointer hover:bg-[#262b36] hover:text-[#9fa8bc]"
                                 >
-                                    <BsFillGearFill />
+                                    <BsFillGearFill className='min-w-[18px]' />
                                     <span>Thông tin cá nhân</span>
+                                </button>
+                            </li>
+
+                            <li>
+                                <button
+                                    onClick={() => setModalChangePassword(true)}
+                                    className="flex gap-[8px] w-full text-[#505b72] py-[6px] items-center px-[14px] rounded-[4px] cursor-pointer hover:bg-[#262b36] hover:text-[#9fa8bc]"
+                                >
+                                    <BsFillKeyFill className='text-[16px] min-w-[18px]' />
+                                    <span>Đổi mật khẩu</span>
                                 </button>
                             </li>
 
@@ -103,7 +115,7 @@ function Header({ sidebarWidth, setSidebarWidth }) {
                                     onClick={handleLogout}
                                     className="flex gap-[8px] w-full text-[#505b72] py-[6px] items-center px-[14px] rounded-[4px] cursor-pointer hover:bg-[#262b36] hover:text-[#9fa8bc]"
                                 >
-                                    <AiOutlineLogout />
+                                    <AiOutlineLogout className='min-w-[18px]' />
                                     <span>Đăng xuất</span>
                                 </button>
                             </li>
@@ -125,6 +137,7 @@ function Header({ sidebarWidth, setSidebarWidth }) {
             </HeadlessTippy>
 
             {modalInfor && <ModalInfor setUser={setUser} setModalInfor={setModalInfor} user={user.login.currentUser} />}
+            {modalChangePassword && <ModalChangePassword setUser={setUser} setModalChangePassword={setModalChangePassword} user={user.login.currentUser} />}
         </div>
     );
 }

@@ -135,6 +135,10 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
 
             dateTmp.setUTCHours(0, 0, 0, 0);
 
+            console.log('1111: ',
+                mb
+            );
+
             if (
                 (mien === 'mn' &&
                     mn.length >= 3 &&
@@ -147,7 +151,7 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
                     mt[0].result.length === 18 &&
                     mt[1].result.length === 18 &&
                     (mt.length === 3 ? mt[2].result.length === 18 : true)) ||
-                (mien === 'mb' && mb.length === 1 && mb[0].length === 27)
+                (mien === 'mb' && mb.length === 1 && mb[0].result.length === 27)
             ) {
                 let revenue = resMember?.data?.member.runNumber ? 0 - (tongxac - tongtrung) : tongxac - tongtrung;
 
