@@ -154,6 +154,7 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
             ) {
                 let revenue = resMember?.data?.member.runNumber ? 0 - (tongxac - tongtrung) : tongxac - tongtrung;
 
+                console.log('revenue: ', revenue)
                 console.log('Tin cũ: ', selectorSms);
 
                 if (selectorSmsTmp.sm.idMember._id !== selecMember) {

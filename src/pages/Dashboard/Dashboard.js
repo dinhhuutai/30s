@@ -37,6 +37,8 @@ function Dashboard() {
             date: formattedDate,
         });
 
+        console.log(res.data)
+
         if (res.data.success) {
             const mn = [];
             const mt = [];

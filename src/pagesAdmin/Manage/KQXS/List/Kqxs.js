@@ -69,47 +69,49 @@ function Kqxs() {
     }, []);
 
     const handleFindOnlyAdminEdit = async () => {
-        const resOnlyAdminEdit = await axios.post(`${process.env.REACT_APP_API_URL}/v1/onlyAdminEdit/find`);
-        const rs = resOnlyAdminEdit.data.onlyAdminEdit[0];
+        try {
+            const resOnlyAdminEdit = await axios.post(`${process.env.REACT_APP_API_URL}/v1/onlyAdminEdit/find`);
+            const rs = resOnlyAdminEdit.data.onlyAdminEdit[0];
 
-        if (resOnlyAdminEdit.data.onlyAdminEdit.length > 0 && resOnlyAdminEdit.data.success) {
-            setUrltp(rs?.urltp);
-            setUrldt(rs?.urldt);
-            setUrlcm(rs?.urlcm);
-            setUrlbr(rs?.urlbr);
-            setUrlvt(rs?.urlvt);
-            setUrlbi(rs?.urlbi);
-            setUrldn(rs?.urldn);
-            setUrlct(rs?.urlct);
-            setUrlst(rs?.urlst);
-            setUrltn(rs?.urltn);
-            setUrlag(rs?.urlag);
-            setUrlbt(rs?.urlbt);
-            setUrlbu(rs?.urlbu);
-            setUrlvl(rs?.urlvl);
-            setUrltv(rs?.urltv);
-            setUrlla(rs?.urlla);
-            setUrlbp(rs?.urlbp);
-            setUrlhg(rs?.urlhg);
-            setUrltg(rs?.urltg);
-            setUrlkg(rs?.urlkg);
-            setUrllt(rs?.urllt);
-            setUrlpy(rs?.urlpy);
-            setUrlhu(rs?.urlhu);
-            setUrldl(rs?.urldl);
-            setUrlqn(rs?.urlqn);
-            setUrldg(rs?.urldg);
-            setUrlkh(rs?.urlkh);
-            setUrlqb(rs?.urlqb);
-            setUrlbd(rs?.urlbd);
-            setUrlqt(rs?.urlqt);
-            setUrlgl(rs?.urlgl);
-            setUrlnt(rs?.urlnt);
-            setUrlqg(rs?.urlqg);
-            setUrldo(rs?.urldo);
-            setUrlkt(rs?.urlkt);
-            setUrlmb(rs?.urlmb);
-        }
+            if (resOnlyAdminEdit.data.onlyAdminEdit.length > 0 && resOnlyAdminEdit.data.success) {
+                setUrltp(rs?.urltp);
+                setUrldt(rs?.urldt);
+                setUrlcm(rs?.urlcm);
+                setUrlbr(rs?.urlbr);
+                setUrlvt(rs?.urlvt);
+                setUrlbi(rs?.urlbi);
+                setUrldn(rs?.urldn);
+                setUrlct(rs?.urlct);
+                setUrlst(rs?.urlst);
+                setUrltn(rs?.urltn);
+                setUrlag(rs?.urlag);
+                setUrlbt(rs?.urlbt);
+                setUrlbu(rs?.urlbu);
+                setUrlvl(rs?.urlvl);
+                setUrltv(rs?.urltv);
+                setUrlla(rs?.urlla);
+                setUrlbp(rs?.urlbp);
+                setUrlhg(rs?.urlhg);
+                setUrltg(rs?.urltg);
+                setUrlkg(rs?.urlkg);
+                setUrllt(rs?.urllt);
+                setUrlpy(rs?.urlpy);
+                setUrlhu(rs?.urlhu);
+                setUrldl(rs?.urldl);
+                setUrlqn(rs?.urlqn);
+                setUrldg(rs?.urldg);
+                setUrlkh(rs?.urlkh);
+                setUrlqb(rs?.urlqb);
+                setUrlbd(rs?.urlbd);
+                setUrlqt(rs?.urlqt);
+                setUrlgl(rs?.urlgl);
+                setUrlnt(rs?.urlnt);
+                setUrlqg(rs?.urlqg);
+                setUrldo(rs?.urldo);
+                setUrlkt(rs?.urlkt);
+                setUrlmb(rs?.urlmb);
+            }
+        } catch (error) {}
     };
 
     const handleDateChange = (e) => {
@@ -472,6 +474,34 @@ function Kqxs() {
         });
     }, []);
 
+    const handleFindDeleteKQXS = async () => {
+        try {
+            setLoading(true);
+            const formattedDate = moment(date).format('DD/MM/YYYY');
+            const res = await axios.post(`${process.env.REACT_APP_API_URL}/v1/kqxs/deleteKQSXToday`, {
+                date: formattedDate,
+            });
+
+            if (res.data.success) {
+                setLoading(false);
+
+                handleFindKqxs();
+                dispatch(noticeAdminSlice.actions.successNotice('Xóa KQXS thành công'));
+
+                setTimeoutTmp = setTimeout(() => {
+                    dispatch(noticeAdminSlice.actions.hiddenNotice());
+                }, [5000]);
+            }
+        } catch (error) {
+            setLoading(false);
+            console.error('Lỗi khi lấy kết quả xổ số:', error);
+
+            setTimeoutTmp = setTimeout(() => {
+                dispatch(noticeAdminSlice.actions.hiddenNotice());
+            }, [5000]);
+        }
+    };
+
     return (
         <div className="pb-[30px]">
             <div className="py-[14px] px-[30px] bg-[#F7F9FA] flex items-center justify-between">
@@ -506,29 +536,47 @@ function Kqxs() {
             </div>
 
             <div className="bg-[var(--color-white)] mx-[20px] px-[16px] mt-[12px] py-[14px] pb-[28px] rounded-[6px]">
-                <div className="w-[100%] flex gap-[30px] items-center">
-                    <DatePicker
-                        wrapperClassName="w-[100%] lg:w-auto"
-                        maxDate={new Date()}
-                        selected={date}
-                        dateFormat="dd-MM-yyyy"
-                        onChange={handleDateChange}
-                        className="border-[1px] w-[100%] border-solid px-[6px] py-[4px] outline-none rounded-[4px] text-[12px] border-[#ccc]"
-                    />
+                <div className="w-[100%] flex gap-[30px] justify-between">
+                    <div className="w-[100%] flex gap-[30px] items-center">
+                        <DatePicker
+                            wrapperClassName="w-[100%] lg:w-auto"
+                            maxDate={new Date()}
+                            selected={date}
+                            dateFormat="dd-MM-yyyy"
+                            onChange={handleDateChange}
+                            className="border-[1px] w-[100%] border-solid px-[6px] py-[4px] outline-none rounded-[4px] text-[12px] border-[#ccc]"
+                        />
+
+                        <button
+                            disabled={loading}
+                            onClick={() => handleFindKQXS()}
+                            className={`${
+                                loading ? 'opacity-[.7] hover:opacity-[.7]' : 'hover:opacity-[.9]'
+                            } uppercase font-[620] text-[12px] w-[150px] h-[28px] flex justify-center items-center bg-[#2574ab] rounded-[4px] text-[#fff] active:opacity-[.7]`}
+                        >
+                            {loading ? (
+                                <div className="text-[20px] animate-loading">
+                                    <BsArrowRepeat />
+                                </div>
+                            ) : (
+                                'Lấy kết quả xổ số'
+                            )}
+                        </button>
+                    </div>
 
                     <button
                         disabled={loading}
-                        onClick={() => handleFindKQXS()}
+                        onClick={() => handleFindDeleteKQXS()}
                         className={`${
                             loading ? 'opacity-[.7] hover:opacity-[.7]' : 'hover:opacity-[.9]'
-                        } uppercase font-[620] text-[12px] w-[150px] h-[28px] flex justify-center items-center bg-[#2574ab] rounded-[4px] text-[#fff] active:opacity-[.7]`}
+                        } uppercase font-[620] text-[12px] w-[250px] h-[28px] flex justify-center items-center bg-[#e52e2e] rounded-[4px] text-[#fff] active:opacity-[.7]`}
                     >
                         {loading ? (
                             <div className="text-[20px] animate-loading">
                                 <BsArrowRepeat />
                             </div>
                         ) : (
-                            'Lấy kết quả xổ số'
+                            'Xóa kết quả xổ số hôm nay'
                         )}
                     </button>
                 </div>
@@ -536,15 +584,38 @@ function Kqxs() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-[30px] lg:gap-[10px] mt-[30px]">
                     <div className="text-center">
                         <h2 className="text-[16px] uppercase font-[650]">miền nam</h2>
-                        {kqxsMN && <TableKqxsMN handleFindKqxs={handleFindKqxs} kqxsMN={kqxsMN} setKqxsMN={setKqxsMN} day={day} date={date} />}
+                        {kqxsMN && (
+                            <TableKqxsMN
+                                handleFindKqxs={handleFindKqxs}
+                                kqxsMN={kqxsMN}
+                                setKqxsMN={setKqxsMN}
+                                day={day}
+                                date={date}
+                            />
+                        )}
                     </div>
                     <div className="text-center">
                         <h2 className="text-[16px] uppercase font-[650]">miền trung</h2>
-                        {kqxsMT && <TableKqxsMT handleFindKqxs={handleFindKqxs} kqxsMT={kqxsMT} setKqxsMT={setKqxsMT} day={day} date={date} />}
+                        {kqxsMT && (
+                            <TableKqxsMT
+                                handleFindKqxs={handleFindKqxs}
+                                kqxsMT={kqxsMT}
+                                setKqxsMT={setKqxsMT}
+                                day={day}
+                                date={date}
+                            />
+                        )}
                     </div>
                     <div className="text-center">
                         <h2 className="text-[16px] uppercase font-[650]">miền bắc</h2>
-                        {kqxsMB && <TableKqxsMB handleFindKqxs={handleFindKqxs} kqxsMB={kqxsMB} setKqxsMB={setKqxsMB} date={date} />}
+                        {kqxsMB && (
+                            <TableKqxsMB
+                                handleFindKqxs={handleFindKqxs}
+                                kqxsMB={kqxsMB}
+                                setKqxsMB={setKqxsMB}
+                                date={date}
+                            />
+                        )}
                     </div>
                 </div>
             </div>

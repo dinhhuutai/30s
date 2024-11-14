@@ -178,6 +178,8 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
                             revenue: revenue + resRevenue.data.revenue[0].revenue,
                         },
                     );
+
+                    console.log('0000000000')
                 } else if (!errorSyntax) {
                     const formRevenue = {
                         idMember,
@@ -191,9 +193,11 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
                         resultDate: formattedDate,
                     };
 
+                    console.log('11111111111')
                     await axios.post(`${process.env.REACT_APP_API_URL}/v1/revenue/create`, formRevenue);
                 }
 
+                console.log('22222222222')
                 form = {
                     idUser: user.login.currentUser._id,
                     idMember,
@@ -209,6 +213,7 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
                     revenue,
                 };
             } else {
+                console.log('333333333333')
                 form = {
                     idUser: user.login.currentUser._id,
                     idMember,
