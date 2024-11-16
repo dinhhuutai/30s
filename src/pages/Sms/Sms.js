@@ -10,6 +10,7 @@ import {
     BsArrowCounterclockwise,
     BsArrowRepeat,
     BsArrowClockwise,
+    BsFillGrid3X3GapFill,
 } from 'react-icons/bs';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -26,15 +27,19 @@ import Tippy from '@tippyjs/react';
 import convertContentDetail from './utils/convertContentDetail';
 import payBySms from './utils/payBySms';
 import HeaderPage from '../component/HeaderPage';
+import ModalDistribute from './component/ModalDistribute';
+import Select from 'react-select';
 
 let setTimeoutTmp;
 
 function Sms() {
     const [members, setMembers] = useState([]);
     const [idMember, setIdMember] = useState(0);
+    const [idMemberSelect, setIdMemberSelect] = useState(0);
     const [domain, setDomain] = useState('mn');
     const [modalCreate, setModalCreate] = useState(false);
     const [modalContent, setModalContent] = useState(false);
+    const [modalDistribute, setModalDistribute] = useState(false);
     const [selectorContent, setSelectorContent] = useState({});
     const [modalUpdate, setModalUpdate] = useState(false);
     const [selectorSms, setSelectorSms] = useState();
@@ -93,8 +98,17 @@ function Sms() {
                 `${process.env.REACT_APP_API_URL}/v1/member/findAllMemberByIdUser/${user.login.currentUser._id}`,
             );
 
-            if (resMembers.data.success) {
-                setMembers(resMembers.data.members);
+            const membersTmp = resMembers?.data?.members?.map((mem) => {
+                return {
+                    value: mem._id,
+                    label: mem.name,
+                };
+            });
+
+            membersTmp.unshift({ value: '0', label: 'Tất cả' });
+
+            if (resMembers?.data?.success) {
+                setMembers(membersTmp);
             }
         } catch (error) {}
     };
@@ -125,10 +139,6 @@ function Sms() {
         } catch (error) {
             console.log(error);
         }
-    };
-
-    const handleMember = async (e) => {
-        setIdMember(e.target.value);
     };
 
     const handleDateChange = (e) => {
@@ -671,13 +681,21 @@ function Sms() {
                 <></>
             )}
             <HeaderPage pageCurr={'Quản Lý Tin Nhắn'} />
-            <div className="bg-[var(--color-white)] overflow-hidden w-[100%] px-[16px] mt-[12px] py-[14px] pb-[28px] rounded-[6px]">
-                <div>
+            <div className="bg-[var(--color-white)] w-[100%] px-[16px] mt-[12px] py-[14px] pb-[28px] rounded-[6px]">
+                <div className="flex justify-between">
                     <button
                         onClick={() => setModalCreate(true)}
                         className={`hover:opacity-[.9] uppercase font-[620] text-[12px] w-[120px] h-[30px] flex justify-center items-center bg-[#2574ab] rounded-[4px] text-[#fff] active:opacity-[.7]`}
                     >
                         Thêm mới
+                    </button>
+
+                    <button
+                        onClick={() => setModalDistribute(true)}
+                        className={`hover:opacity-[.9] uppercase font-[620] text-[12px] gap-[6px] w-[110px] h-[30px] flex justify-center items-center bg-[#e6ad5c] rounded-[4px] text-[#fff] active:opacity-[.7]`}
+                    >
+                        <BsFillGrid3X3GapFill className="text-[16px]" />
+                        Phân loại
                     </button>
                 </div>
 
@@ -692,18 +710,36 @@ function Sms() {
                             className="border-[1px] w-[100%] h-[100%] lg:w-auto border-solid px-[6px] py-[4px] outline-none rounded-[4px] text-[12px] border-[#ccc]"
                         />
                     </div>
-                    <select
-                        value={idMember}
-                        onChange={handleMember}
-                        className="px-[4px] w-[100%] py-[4px] lg:w-[150px] text-[#000] font-[500] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
-                    >
-                        <option className="font-[500]" value={0}>
-                            Tất cả
-                        </option>
-                        {members?.map((member, index) => {
-                            return <option key={index} value={`${member._id}`}>{`${member.name}`}</option>;
-                        })}
-                    </select>
+
+                    <div className="w-[100%] lg:w-[150px] text-[#000] font-[500] outline-none text-[12px]">
+                        <Select
+                            options={members}
+                            value={idMemberSelect}
+                            onChange={(selectedOption) => {
+                                setIdMemberSelect(selectedOption);
+                                setIdMember(selectedOption.value);
+                            }}
+                            placeholder="Tên hoặc SĐT"
+                            isSearchable={true} // Kích hoạt ô tìm kiếm
+                            styles={{
+                                control: (provided) => ({
+                                    ...provided,
+                                    minHeight: '26px', // Chiều cao tối thiểu
+                                    height: '26px', // Chiều cao cố định
+                                    width: '150px',
+                                }),
+                                input: (provided) => ({
+                                    ...provided,
+                                    margin: '0', // Loại bỏ khoảng cách thừa
+                                }),
+                                indicatorsContainer: (provided) => ({
+                                    ...provided,
+                                    height: '26px', // Độ cao của vùng chứa các icon
+                                }),
+                            }}
+                        />
+                    </div>
+
                     <div className="flex mt-[10px] lg:mt-[0px]">
                         <div className="flex items-center gap-[4px] lg:ml-[10px] ml-[0px]">
                             <input checked={deleted} onChange={(e) => setDeleted(e.target.checked)} type="checkbox" />
@@ -767,6 +803,23 @@ function Sms() {
                                 </Alert>
                             )}
                         </div>
+
+                        <button
+                            onClick={() => handleFindSms()}
+                            disabled={loading}
+                            className={`gap-[6px] ml-[16px] uppercase font-[620] text-[12px] w-[100px] h-[30px] flex justify-center items-center bg-[#2574ab] rounded-[4px] text-[#fff]`}
+                        >
+                            {loading ? (
+                                <div className="text-[20px] animate-loading">
+                                    <BsArrowRepeat />
+                                </div>
+                            ) : (
+                                <>
+                                    <BsArrowRepeat className="text-[18px]" />
+                                    Tải lại
+                                </>
+                            )}
+                        </button>
                     </div>
                 </div>
 
@@ -939,7 +992,10 @@ function Sms() {
                                     </td>
                                     <td className="px-[10px] py-[8px] w-[17%] border-[1px] border-solid border-[#fff]">
                                         <div
-                                            onClick={() => setIdMember(sm.idMember._id)}
+                                            onClick={() => {
+                                                setIdMember(sm.idMember._id);
+                                                setIdMemberSelect({ value: sm.idMember._id, label: sm.idMember.name });
+                                            }}
                                             className="text-[#259dba] flex items-center font-[500] hover:text-[#505b72] cursor-pointer"
                                         >
                                             {sm.idMember?.name}
@@ -1113,6 +1169,10 @@ function Sms() {
                         members={members}
                         date={date}
                     />
+                )}
+
+                {modalDistribute && (
+                    <ModalDistribute setModalDistribute={setModalDistribute} members={members} date={date} />
                 )}
 
                 {modalContent && <ModalContent setModalContent={setModalContent} selectorContent={selectorContent} />}

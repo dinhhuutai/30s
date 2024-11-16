@@ -111,7 +111,7 @@ function convertContentDetail(content, date) {
         ) {
             contentTmp = contentTmp.slice(0, 9) + 'bi' + contentTmp.slice(11);
         }
-        const { firstTwoPositions, changeDaiBacLieu, changeBaoDao } = findPosFirstAndTwo(contentTmp);
+        const { firstTwoPositions, changeDaiBacLieu, changeBaoDao } = findPosFirstAndTwo(contentTmp, dayOfWeek);
 
         const pos = firstTwoPositions;
         if (changeDaiBacLieu) {
@@ -848,6 +848,8 @@ function convertContentDetail(content, date) {
                                     num: eSo,
                                 };
                                 errorSyntax = true;
+
+                                console.log('error quantity2');
                             }
 
                             const daiTmpContent = [...dai];
@@ -1552,6 +1554,7 @@ function convertContentDetail(content, date) {
                                     code: 'quantity2',
                                     num: eSo,
                                 };
+                                console.log('error quantity2');
                             }
 
                             const daiTmpContent = [...dai];
@@ -1605,6 +1608,7 @@ function convertContentDetail(content, date) {
                                     code: 'quantity2',
                                     num: eSo,
                                 };
+                                console.log('error quantity2');
                             }
 
                             const daiTmpContent = [...dai];
@@ -1651,6 +1655,7 @@ function convertContentDetail(content, date) {
                                     code: 'quantity2',
                                     num: eSo,
                                 };
+                                console.log('error quantity2');
                             }
 
                             const daiTmpContent = [...dai];
@@ -1695,6 +1700,7 @@ function convertContentDetail(content, date) {
                                     code: 'quantity2',
                                     num: eSo,
                                 };
+                                console.log('error quantity2');
                             }
 
                             const daiTmpContent = [...dai];

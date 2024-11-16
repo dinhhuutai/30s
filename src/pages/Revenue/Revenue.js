@@ -13,6 +13,7 @@ import noticeAdminSlice from '~/redux/slices/noticeAdminSlice';
 import payTotalSmsByDate from './component/payTotalSmsByDate';
 import HeaderPage from '../component/HeaderPage';
 import ModalWin from './component/ModalWin';
+import Select from 'react-select';
 
 let setTimeoutTmp;
 
@@ -24,6 +25,7 @@ function Revenue() {
 
     const [members, setMembers] = useState([]);
     const [idMember, setIdMember] = useState(0);
+    const [idMemberSelect, setIdMemberSelect] = useState(0);
 
     const [modalNotice, setModalNotice] = useState(false);
     const [selectorRevenue, setSelectorRevenue] = useState({});
@@ -69,8 +71,17 @@ function Revenue() {
                 `${process.env.REACT_APP_API_URL}/v1/member/findAllMemberByIdUser/${user.login.currentUser._id}`,
             );
 
-            if (resMembers.data.success) {
-                setMembers(resMembers.data.members);
+            const membersTmp = resMembers?.data?.members?.map((mem) => {
+                return {
+                    value: mem._id,
+                    label: mem.name,
+                };
+            });
+
+            membersTmp.unshift({ value: '0', label: 'Tất cả' });
+
+            if (resMembers?.data?.success) {
+                setMembers(membersTmp);
             }
         } catch (error) {}
     };
@@ -283,18 +294,34 @@ function Revenue() {
                         />
                     </div>
 
-                    <select
-                        value={idMember}
-                        onChange={handleMember}
-                        className="px-[4px] py-[4px] w-[100%] lg:w-[150px] text-[#000] font-[500] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
-                    >
-                        <option className="font-[500] w-[100%]" value={0}>
-                            Tất cả
-                        </option>
-                        {members?.map((member, index) => {
-                            return <option key={index} value={`${member._id}`}>{`${member.name}`}</option>;
-                        })}
-                    </select>
+                    <div className="w-[100%] lg:w-[150px] text-[#000] font-[500] outline-none text-[12px]">
+                        <Select
+                            options={members}
+                            value={idMemberSelect}
+                            onChange={(selectedOption) => {
+                                setIdMemberSelect(selectedOption);
+                                setIdMember(selectedOption.value);
+                            }}
+                            placeholder="Tên hoặc SĐT"
+                            isSearchable={true} // Kích hoạt ô tìm kiếm
+                            styles={{
+                                control: (provided) => ({
+                                    ...provided,
+                                    minHeight: '26px', // Chiều cao tối thiểu
+                                    height: '26px', // Chiều cao cố định
+                                    width: '150px',
+                                }),
+                                input: (provided) => ({
+                                    ...provided,
+                                    margin: '0', // Loại bỏ khoảng cách thừa
+                                }),
+                                indicatorsContainer: (provided) => ({
+                                    ...provided,
+                                    height: '26px', // Độ cao của vùng chứa các icon
+                                }),
+                            }}
+                        />
+                    </div>
 
                     <div className="flex items-center gap-[4px] lg:ml-[10px]">
                         <input

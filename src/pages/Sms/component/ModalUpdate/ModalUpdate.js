@@ -8,6 +8,7 @@ import noticeAdminSlice from '~/redux/slices/noticeAdminSlice';
 import convertContentDetail from '../../utils/convertContentDetail';
 import payBySms from '../../utils/payBySms';
 import { noticeAdminSelector } from '~/redux/selectors';
+import Select from 'react-select';
 
 let setTimeoutTmp;
 
@@ -15,6 +16,10 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
     const [smsDetails, setSmsDetails] = useState([]);
     const [selectorSms, setSelectorSms] = useState(selectorSmsTmp);
     const [selecMember, setSelecMember] = useState(selectorSmsTmp.sm.idMember?._id);
+    const [idMemberSelect, setIdMemberSelect] = useState({
+        value: selectorSmsTmp.sm.idMember?._id,
+        label: selectorSmsTmp.sm.idMember?.name,
+    });
     const [contentEdit, setContentEdit] = useState(selectorSmsTmp.sm?.contentEdit);
     const [errorLocation, setErrorLocation] = useState(selectorSmsTmp.sm?.locationError);
 
@@ -40,6 +45,8 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
 
         if (resSmsDeatils.data.success) {
             setSmsDetails(resSmsDeatils.data.smsDetails);
+
+            console.log(resSmsDeatils.data.smsDetails);
         }
     };
 
@@ -154,7 +161,7 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
             ) {
                 let revenue = resMember?.data?.member.runNumber ? 0 - (tongxac - tongtrung) : tongxac - tongtrung;
 
-                console.log('revenue: ', revenue)
+                console.log('revenue: ', revenue);
                 console.log('Tin cũ: ', selectorSms);
 
                 if (selectorSmsTmp.sm.idMember._id !== selecMember) {
@@ -350,7 +357,7 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
 
             if (resSms.data.success) {
                 smsDetailList = smsDetailList.map((e) => {
-                    return { ...e, idSms: resSms.data.sms._id };
+                    return { ...e, idSms: resSms.data.sms._id, idMember: selecMember };
                 });
 
                 setSelectorSms({
@@ -443,19 +450,33 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
                             <label className="text-[12px] font-[600]">
                                 Người chơi <span className="text-[#e92d2d] ml-[2px]">*</span>
                             </label>
-                            <select
-                                value={selecMember}
-                                onChange={(e) => setSelecMember(e.target.value)}
-                                className="px-[4px] w-full lg:ml-[8px] py-[4px] lg:w-[150px] text-[#000] font-[500] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
-                            >
-                                {members?.map((member, index) => {
-                                    return (
-                                        <option key={index} value={`${member._id}`}>
-                                            {`${member.name}`}
-                                        </option>
-                                    );
-                                })}
-                            </select>
+                            <div className="flex-1 text-[#000] font-[500] outline-none text-[12px]">
+                                <Select
+                                    options={members.slice(1)}
+                                    value={idMemberSelect}
+                                    onChange={(selectedOption) => {
+                                        setIdMemberSelect(selectedOption);
+                                        setSelecMember(selectedOption.value);
+                                    }}
+                                    placeholder="Tên hoặc SĐT"
+                                    isSearchable={true} // Kích hoạt ô tìm kiếm
+                                    styles={{
+                                        control: (provided) => ({
+                                            ...provided,
+                                            minHeight: '26px', // Chiều cao tối thiểu
+                                            height: '26px', // Chiều cao cố định
+                                        }),
+                                        input: (provided) => ({
+                                            ...provided,
+                                            margin: '0', // Loại bỏ khoảng cách thừa
+                                        }),
+                                        indicatorsContainer: (provided) => ({
+                                            ...provided,
+                                            height: '26px', // Độ cao của vùng chứa các icon
+                                        }),
+                                    }}
+                                />
+                            </div>
                         </div>
                         <div className="flex gap-[6px] mt-[10px] lg:mt-[0px]">
                             <button

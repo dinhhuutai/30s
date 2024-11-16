@@ -10,13 +10,15 @@ import axios from 'axios';
 import moment from 'moment';
 import payBySms from '../../utils/payBySms';
 import noticeAdminSlice from '~/redux/slices/noticeAdminSlice';
+import Select from 'react-select';
 
 let setTimeoutTmp;
 
 function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
     const [dateCreate, setDateCreate] = useState(date);
     const [loading, setLoading] = useState(false);
-    const [idMember, setIdMember] = useState(members[0]?._id);
+    const [idMember, setIdMember] = useState(members[1]?.value);
+    const [idMemberSelect, setIdMemberSelect] = useState(members[1]);
     const [content, setContent] = useState('');
     const [errorLocation, setErrorLocation] = useState([]);
 
@@ -135,9 +137,7 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
 
             dateTmp.setUTCHours(0, 0, 0, 0);
 
-            console.log('1111: ',
-                mb
-            );
+            console.log('1111: ', mb);
 
             if (
                 (mien === 'mn' &&
@@ -179,7 +179,7 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
                         },
                     );
 
-                    console.log('0000000000')
+                    console.log('0000000000');
                 } else if (!errorSyntax) {
                     const formRevenue = {
                         idMember,
@@ -193,11 +193,11 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
                         resultDate: formattedDate,
                     };
 
-                    console.log('11111111111')
+                    console.log('11111111111');
                     await axios.post(`${process.env.REACT_APP_API_URL}/v1/revenue/create`, formRevenue);
                 }
 
-                console.log('22222222222')
+                console.log('22222222222');
                 form = {
                     idUser: user.login.currentUser._id,
                     idMember,
@@ -213,7 +213,7 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
                     revenue,
                 };
             } else {
-                console.log('333333333333')
+                console.log('333333333333');
                 form = {
                     idUser: user.login.currentUser._id,
                     idMember,
@@ -232,7 +232,13 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
 
             if (resSms.data.success) {
                 smsDetailList = smsDetailList.map((e) => {
-                    return { ...e, idSms: resSms.data.sms._id };
+                    return {
+                        ...e,
+                        idSms: resSms.data.sms._id,
+                        idUser: user.login.currentUser._id,
+                        idMember,
+                        resultDate: dateTmp,
+                    };
                 });
 
                 console.log('SMS: ', resSms.data.sms);
@@ -311,14 +317,33 @@ function ModalCreate({ setModalCreate, handleFindSms, members, date }) {
                                 Người chơi <span className="text-[#e92d2d] ml-[2px]">*</span>
                             </label>
 
-                            <select
-                                onChange={handleMember}
-                                className="px-[4px] py-[4px] flex-1 text-[#000] outline-none border-[1px] border-[#ccc] border-solid rounded-[4px] text-[12px]"
-                            >
-                                {members?.map((member, index) => {
-                                    return <option key={index} value={`${member._id}`}>{`${member.name}`}</option>;
-                                })}
-                            </select>
+                            <div className="flex-1 text-[#000] font-[500] outline-none text-[12px]">
+                                <Select
+                                    options={members.slice(1)}
+                                    value={idMemberSelect}
+                                    onChange={(selectedOption) => {
+                                        setIdMemberSelect(selectedOption);
+                                        setIdMember(selectedOption.value);
+                                    }}
+                                    placeholder="Tên hoặc SĐT"
+                                    isSearchable={true} // Kích hoạt ô tìm kiếm
+                                    styles={{
+                                        control: (provided) => ({
+                                            ...provided,
+                                            minHeight: '26px', // Chiều cao tối thiểu
+                                            height: '26px', // Chiều cao cố định
+                                        }),
+                                        input: (provided) => ({
+                                            ...provided,
+                                            margin: '0', // Loại bỏ khoảng cách thừa
+                                        }),
+                                        indicatorsContainer: (provided) => ({
+                                            ...provided,
+                                            height: '26px', // Độ cao của vùng chứa các icon
+                                        }),
+                                    }}
+                                />
+                            </div>
                         </div>
 
                         <div className="flex flex-col gap-[4px] lg:gap-[0px] lg:flex-row lg:items-center">
