@@ -1689,8 +1689,11 @@ function findPosFirstAndTwo(content, dayOfWeek) {
 
     while (true && changeDaiBacLieu) {
         let stringChildTestTmp2 = content.slice(firstTwoPositions[0], firstTwoPositions[1]);
+        console.log(content[firstTwoPositions[1]] + content[firstTwoPositions[1] + 1]);
+        console.log(changeDaiBacLieu);
 
         if (firstTwoPositions[1] === null || firstTwoPositions[1] === undefined || firstTwoPositions[1] === '') {
+            changeDaiBacLieu = false;
             break;
         }
 
@@ -1706,6 +1709,7 @@ function findPosFirstAndTwo(content, dayOfWeek) {
             let so = '';
             let mangSo = [];
             let outW = false;
+
             for (let i = firstTwoPositions[1] - 1; i >= 0; i--) {
                 if (isFinite(Number(stringChildTestTmp2[i]))) {
                     so += stringChildTestTmp2[i];
@@ -1722,6 +1726,8 @@ function findPosFirstAndTwo(content, dayOfWeek) {
 
                 if (stringChildTestTmp2[i] === '.' && kdanh !== '' && mangSo.length >= 1) {
                     let kDanhNew = kdanh.split('').reverse().join('');
+                    console.log(kDanhNew);
+                    console.log(mangSo);
 
                     if (
                         (kDanhNew.includes('dx') ||
@@ -2195,8 +2201,42 @@ function findPosFirstAndTwo(content, dayOfWeek) {
                         mangSo.length <= 1
                     ) {
                         changeDaiBacLieu = true;
-                        outW = true;
-                        break;
+                        console.log(kDanhNew);
+                        console.log('12344');
+
+                        if (changeDaiBacLieu) {
+                            let boolCham = false;
+                        
+
+                            for (let i = firstTwoPositions[1] + 3; i < content.length - 1; i++) {
+                                if (content[i] === '.') {
+                                    boolCham = true;
+                                    let kdanhTmp = content[i + 1] + content[i + 2];
+
+                                    console.log(kdanhTmp);
+                                    if (searchChars.includes(kdanhTmp)) {
+                                        changeDaiBacLieu = false;
+                                        firstTwoPositions.splice(1, 1);
+                                        break;
+                                    }
+                                } else if (content[i] === '.' && content[i + 1] === undefined) {
+                                    changeDaiBacLieu = false;
+                                    firstTwoPositions.splice(1, 1);
+                                    break;
+                                }
+                            }
+
+                            if (!boolCham) {
+                                changeDaiBacLieu = false;
+                                firstTwoPositions.splice(1, 1);
+                            }
+                        }
+                        
+                        if(changeDaiBacLieu) {
+                            outW = true;
+                            break;
+                        }
+
                     } else if (
                         (kDanhNew.includes('dx') ||
                             kDanhNew.includes('davong') ||
@@ -2669,6 +2709,7 @@ function findPosFirstAndTwo(content, dayOfWeek) {
                         mangSo.length > 1
                     ) {
                         firstTwoPositions.splice(1, 1);
+                        changeDaiBacLieu = false;
                         break;
                     }
                 }
@@ -2678,42 +2719,19 @@ function findPosFirstAndTwo(content, dayOfWeek) {
                 }
             }
 
-            if (changeDaiBacLieu) {
-                let boolCham = false;
-
-                for (let i = firstTwoPositions[1] + 3; i < content.length - 1; i++) {
-                    if (content[i] === '.') {
-                        boolCham = true;
-                        let kdanhTmp = content[i + 1] + content[i + 2];
-
-                        if (searchChars.includes(kdanhTmp)) {
-                            changeDaiBacLieu = false;
-                            firstTwoPositions.splice(1, 1);
-                            break;
-                        }
-                    } else if (content[i] === '.' && content[i + 1] === undefined) {
-                        changeDaiBacLieu = false;
-                        firstTwoPositions.splice(1, 1);
-                        break;
-                    }
-                }
-
-                if (!boolCham) {
-                    changeDaiBacLieu = false;
-                    firstTwoPositions.splice(1, 1);
-                }
-
-                break;
-            }
-
             if (outW) {
+                changeDaiBacLieu = false;
                 break;
+            } else {
+                changeDaiBacLieu = true;
             }
         } else {
+            changeDaiBacLieu = false;
             break;
         }
     }
 
+    console.log(changeDaiBacLieu)
     if (changeDaiBacLieu && dayOfWeek !== 3) {
         changeDaiBacLieu = false;
         firstTwoPositions.splice(1, 1);

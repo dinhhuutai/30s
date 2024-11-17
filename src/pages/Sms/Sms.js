@@ -823,7 +823,7 @@ function Sms() {
                     </div>
                 </div>
 
-                <div className="mt-[26px] w-[400px] lg:w-auto gap-[6px] lg:gap-[0px] flex flex-col lg:flex-row justify-between">
+                <div className="mt-[26px] lg:w-auto gap-[6px] lg:gap-[0px] flex flex-col lg:flex-row justify-between">
                     <div className="">
                         <button
                             onClick={() => setDomain('mn')}

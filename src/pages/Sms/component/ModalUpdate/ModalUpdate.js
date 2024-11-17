@@ -357,7 +357,7 @@ function ModalUpdate({ setModalUpdate, handleFindSms, selectorSmsTmp, members })
 
             if (resSms.data.success) {
                 smsDetailList = smsDetailList.map((e) => {
-                    return { ...e, idSms: resSms.data.sms._id, idMember: selecMember };
+                    return { ...e, idSms: resSms.data.sms._id, idMember: selecMember, idUser: resSms.data.sms.idUser };
                 });
 
                 setSelectorSms({

@@ -38,6 +38,36 @@ function shortenText(content) {
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '');
 
+    let index = contentTmp.indexOf('ng');
+
+    while (index !== -1) {
+        if (isFinite(Number(contentTmp[index - 2])) && contentTmp[index - 1] === '.') {
+            contentTmp = contentTmp.slice(0, index) + contentTmp.slice(index + 2);
+        }
+
+        index = contentTmp.indexOf('ng', index + 2);
+    }
+
+    index = contentTmp.indexOf('n');
+
+    while (index !== -1) {
+        if (
+            isFinite(Number(contentTmp[index - 2])) &&
+            contentTmp[index - 1] === '.' &&
+            (contentTmp[index + 1] !== 'i' || (contentTmp[index + 1] !== '.' && contentTmp[index + 2] !== 'i')) &&
+            (contentTmp[index + 1] !== 't' || (contentTmp[index + 1] !== '.' && contentTmp[index + 2] !== 't'))
+        ) {
+            contentTmp = contentTmp.slice(0, index) + contentTmp.slice(index + 1);
+        }
+
+        index = contentTmp.indexOf('n', index + 1);
+    }
+
+    contentTmp = contentTmp
+        .replace(/nghin/g, '.')
+        .replace(/ngan/g, '.')
+        .replace(/\.{2,}/g, '.');
+
     return contentTmp;
 }
 

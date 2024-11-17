@@ -175,12 +175,15 @@ function ModalDistribute({ setModalDistribute, members, date }) {
     }, [date, idMember, domain]);
 
     const handleDistribute = async () => {
+        console.log(date);
         try {
             setLoading(true);
 
             const resSmsDetail = await axios.post(
                 `${process.env.REACT_APP_API_URL}/v1/smsDetail/findSmsDetailByIdMemberAndDomainAndDate/${user.login.currentUser?._id}?idMember=${idMember}&resultDate=${date}&domain=${domain}`,
             );
+            
+            console.log('resSmsDetail: ', resSmsDetail);
 
             const data = resSmsDetail?.data?.smsDetails?.reduce(
                 (accumulator, currentValue) => {

@@ -167,6 +167,8 @@ function convertContentDetail(content, date) {
         let cbBl = false;
         let cbBld = false;
 
+        let mangSoCbBOfXc = [];
+
         let dai = '';
 
         for (let i = bd; i < kth; i++) {
@@ -249,34 +251,35 @@ function convertContentDetail(content, date) {
                 let kdanhMain = '';
 
                 if (
-                    kdSS === 'dx' ||
-                    kdSS === 'đx' ||
-                    kdSS === 'đax' ||
-                    kdSS === 'da' ||
-                    kdSS === 'đa' ||
-                    kdSS === 'dat' ||
-                    kdSS === 'dathang' ||
-                    kdSS === 'dath' ||
-                    kdSS === 'dth' ||
-                    kdSS === 'dthang' ||
-                    kdSS === 'daxien' ||
-                    kdSS === 'dxien' ||
-                    kdSS === 'đat' ||
-                    kdSS === 'dav' ||
-                    kdSS === 'davong' ||
-                    kdSS === 'dax' ||
-                    (kdSS === 'd' &&
-                        !(
-                            cloChild[i + 1] === 'd' ||
-                            cloChild[i + 2] === 'd' ||
-                            cloChild[i + 3] === 'd' ||
-                            cloChild[i + 4] === 'd' ||
-                            cloChild[i + 5] === 'd' ||
-                            cloChild[i - Number((gtien + '').length) - Number(kdSS.length) - 2] === 'd' ||
-                            cloChild[i - Number((gtien + '').length) - Number(kdSS.length) - 3] === 'd' ||
-                            cloChild[i - Number((gtien + '').length) - Number(kdSS.length) - 4] === 'd' ||
-                            cloChild[i - Number((gtien + '').length) - Number(kdSS.length) - 5] === 'd'
-                        ))
+                    (kdSS === 'dx' ||
+                        kdSS === 'đx' ||
+                        kdSS === 'đax' ||
+                        kdSS === 'da' ||
+                        kdSS === 'đa' ||
+                        kdSS === 'dat' ||
+                        kdSS === 'dathang' ||
+                        kdSS === 'dath' ||
+                        kdSS === 'dth' ||
+                        kdSS === 'dthang' ||
+                        kdSS === 'daxien' ||
+                        kdSS === 'dxien' ||
+                        kdSS === 'đat' ||
+                        kdSS === 'dav' ||
+                        kdSS === 'davong' ||
+                        kdSS === 'dax' ||
+                        (kdSS === 'd' &&
+                            !(
+                                cloChild[i + 1] === 'd' ||
+                                cloChild[i + 2] === 'd' ||
+                                cloChild[i + 3] === 'd' ||
+                                cloChild[i + 4] === 'd' ||
+                                cloChild[i + 5] === 'd' ||
+                                cloChild[i - Number((gtien + '').length) - Number(kdSS.length) - 2] === 'd' ||
+                                cloChild[i - Number((gtien + '').length) - Number(kdSS.length) - 3] === 'd' ||
+                                cloChild[i - Number((gtien + '').length) - Number(kdSS.length) - 4] === 'd' ||
+                                cloChild[i - Number((gtien + '').length) - Number(kdSS.length) - 5] === 'd'
+                            ))) &&
+                    mangSo[0].length === 2
                 ) {
                     if (dai.length >= 2) {
                         kdanhMain = 'da(xien)';
@@ -383,8 +386,6 @@ function convertContentDetail(content, date) {
                         // eslint-disable-next-line no-loop-func
                         mangSoDa.map((soDa) => {
                             if (soDa[0].length < 2 || soDa[1].length < 2 || soDa[0] === soDa[1]) {
-                                console.log(soDa[0]);
-                                console.log(soDa[1]);
                                 errorSyntaxDetail = {
                                     code: 'da2',
                                     num: [soDa[0], soDa[1]],
@@ -443,6 +444,9 @@ function convertContentDetail(content, date) {
                         cbBl
                     ) {
                         mangSo = handleListNumComboBao(mangSo);
+                        if (mangSo[0].length === 3) {
+                            mangSoCbBOfXc = mangSo;
+                        }
                     }
 
                     if (
@@ -477,10 +481,13 @@ function convertContentDetail(content, date) {
                         cbBld
                     ) {
                         mangSo = handleListNumComboBao(mangSo);
+                        if (mangSo[0].length === 3) {
+                            mangSoCbBOfXc = mangSo;
+                        }
                     }
 
                     // eslint-disable-next-line no-loop-func
-                    mangSo.map((eSo) => {
+                    mangSo.map((eSo, index) => {
                         if (eSo.length < 2) {
                             errorSyntaxDetail = {
                                 code: 'quantity1',
@@ -906,12 +913,13 @@ function convertContentDetail(content, date) {
                         ) {
                             kdanhMain = 'xiuchu';
 
-                            if (eSo.length !== 3) {
+                            if (eSo.length !== 3 && mangSoCbBOfXc.length === 0) {
                                 errorSyntax = true;
                                 errorSyntaxDetail = {
                                     code: 'quantity3',
                                     num: eSo,
                                 };
+                                console.log(123);
                             }
 
                             const daiTmpContent = [...dai];
@@ -932,21 +940,43 @@ function convertContentDetail(content, date) {
                                 daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
                             }
 
-                            const obj = {
-                                content: `${daiTmpContent}.${eSo}.${kdanhMain}.${gtien}ngan`,
-                                domain: mien,
-                                province: dai,
-                                number: [eSo],
-                                typePlay: kdanhMain,
-                                price: gtien,
-                                resultDate: now,
-                                dayOfWeek: dayOfWeek,
-                            };
+                            if (mangSoCbBOfXc.length > 0 && index === 0) {
+                                mangSoCbBOfXc.map((eSoXc) => {
+                                    const obj = {
+                                        content: `${daiTmpContent}.${eSoXc}.${kdanhMain}.${gtien}ngan`,
+                                        domain: mien,
+                                        province: dai,
+                                        number: [eSoXc],
+                                        typePlay: kdanhMain,
+                                        price: gtien,
+                                        resultDate: now,
+                                        dayOfWeek: dayOfWeek,
+                                    };
 
-                            arr = [...arr, obj];
-                            isKD = true;
+                                    arr = [...arr, obj];
+                                    isKD = true;
 
-                            console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
+                                    console.log(`${dai}.${eSoXc}.${kdanhMain}.${gtien}ngan`);
+                                });
+                            }
+
+                            if (mangSoCbBOfXc.length === 0) {
+                                const obj = {
+                                    content: `${daiTmpContent}.${eSo}.${kdanhMain}.${gtien}ngan`,
+                                    domain: mien,
+                                    province: dai,
+                                    number: [eSo],
+                                    typePlay: kdanhMain,
+                                    price: gtien,
+                                    resultDate: now,
+                                    dayOfWeek: dayOfWeek,
+                                };
+
+                                arr = [...arr, obj];
+                                isKD = true;
+
+                                console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
+                            }
                         }
 
                         if (
@@ -974,12 +1004,13 @@ function convertContentDetail(content, date) {
                         ) {
                             kdanhMain = 'xiuchudau';
 
-                            if (eSo.length !== 3) {
+                            if (eSo.length !== 3 && mangSoCbBOfXc.length === 0) {
                                 errorSyntax = true;
                                 errorSyntaxDetail = {
                                     code: 'quantity3',
                                     num: eSo,
                                 };
+                                console.log(123);
                             }
 
                             const daiTmpContent = [...dai];
@@ -1000,21 +1031,43 @@ function convertContentDetail(content, date) {
                                 daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
                             }
 
-                            const obj = {
-                                content: `${daiTmpContent}.${eSo}.${kdanhMain}.${gtien}ngan`,
-                                domain: mien,
-                                province: dai,
-                                number: [eSo],
-                                typePlay: kdanhMain,
-                                price: gtien,
-                                resultDate: now,
-                                dayOfWeek: dayOfWeek,
-                            };
+                            if (mangSoCbBOfXc.length > 0 && index === 0) {
+                                mangSoCbBOfXc.map((eSoXc) => {
+                                    const obj = {
+                                        content: `${daiTmpContent}.${eSoXc}.${kdanhMain}.${gtien}ngan`,
+                                        domain: mien,
+                                        province: dai,
+                                        number: [eSoXc],
+                                        typePlay: kdanhMain,
+                                        price: gtien,
+                                        resultDate: now,
+                                        dayOfWeek: dayOfWeek,
+                                    };
 
-                            arr = [...arr, obj];
-                            isKD = true;
+                                    arr = [...arr, obj];
+                                    isKD = true;
 
-                            console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
+                                    console.log(`${dai}.${eSoXc}.${kdanhMain}.${gtien}ngan`);
+                                });
+                            }
+
+                            if (mangSoCbBOfXc.length === 0) {
+                                const obj = {
+                                    content: `${daiTmpContent}.${eSo}.${kdanhMain}.${gtien}ngan`,
+                                    domain: mien,
+                                    province: dai,
+                                    number: [eSo],
+                                    typePlay: kdanhMain,
+                                    price: gtien,
+                                    resultDate: now,
+                                    dayOfWeek: dayOfWeek,
+                                };
+
+                                arr = [...arr, obj];
+                                isKD = true;
+
+                                console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
+                            }
                         }
 
                         if (
@@ -1063,12 +1116,13 @@ function convertContentDetail(content, date) {
                         ) {
                             kdanhMain = 'xiuchuduoi';
 
-                            if (eSo.length !== 3) {
+                            if (eSo.length !== 3 && mangSoCbBOfXc.length === 0) {
                                 errorSyntax = true;
                                 errorSyntaxDetail = {
                                     code: 'quantity3',
                                     num: eSo,
                                 };
+                                console.log(123);
                             }
 
                             const daiTmpContent = [...dai];
@@ -1089,21 +1143,43 @@ function convertContentDetail(content, date) {
                                 daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
                             }
 
-                            const obj = {
-                                content: `${daiTmpContent}.${eSo}.${kdanhMain}.${gtien}ngan`,
-                                domain: mien,
-                                province: dai,
-                                number: [eSo],
-                                typePlay: kdanhMain,
-                                price: gtien,
-                                resultDate: now,
-                                dayOfWeek: dayOfWeek,
-                            };
+                            if (mangSoCbBOfXc.length > 0 && index === 0) {
+                                mangSoCbBOfXc.map((eSoXc) => {
+                                    const obj = {
+                                        content: `${daiTmpContent}.${eSoXc}.${kdanhMain}.${gtien}ngan`,
+                                        domain: mien,
+                                        province: dai,
+                                        number: [eSoXc],
+                                        typePlay: kdanhMain,
+                                        price: gtien,
+                                        resultDate: now,
+                                        dayOfWeek: dayOfWeek,
+                                    };
 
-                            arr = [...arr, obj];
-                            isKD = true;
+                                    arr = [...arr, obj];
+                                    isKD = true;
 
-                            console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
+                                    console.log(`${dai}.${eSoXc}.${kdanhMain}.${gtien}ngan`);
+                                });
+                            }
+
+                            if (mangSoCbBOfXc.length === 0) {
+                                const obj = {
+                                    content: `${daiTmpContent}.${eSo}.${kdanhMain}.${gtien}ngan`,
+                                    domain: mien,
+                                    province: dai,
+                                    number: [eSo],
+                                    typePlay: kdanhMain,
+                                    price: gtien,
+                                    resultDate: now,
+                                    dayOfWeek: dayOfWeek,
+                                };
+
+                                arr = [...arr, obj];
+                                isKD = true;
+
+                                console.log(`${dai}.${eSo}.${kdanhMain}.${gtien}ngan`);
+                            }
                         }
 
                         if (
@@ -1196,15 +1272,14 @@ function convertContentDetail(content, date) {
                         ) {
                             kdanhMain = 'xiuchudao';
 
-                            if (eSo.length !== 3) {
+                            if (eSo.length !== 3 && mangSoCbBOfXc.length === 0) {
                                 errorSyntax = true;
                                 errorSyntaxDetail = {
                                     code: 'quantity3',
                                     num: eSo,
                                 };
+                                console.log(123);
                             }
-
-                            let mangSoDao = findListOverturn(eSo);
 
                             const daiTmpContent = [...dai];
 
@@ -1224,23 +1299,51 @@ function convertContentDetail(content, date) {
                                 daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
                             }
 
-                            mangSoDao.map((soDao) => {
-                                const obj = {
-                                    content: `${daiTmpContent}.${soDao}.${kdanhMain}.${gtien}ngan`,
-                                    domain: mien,
-                                    province: dai,
-                                    number: [soDao],
-                                    typePlay: kdanhMain,
-                                    price: gtien,
-                                    resultDate: now,
-                                    dayOfWeek: dayOfWeek,
-                                };
+                            if (mangSoCbBOfXc.length > 0 && index === 0) {
+                                mangSoCbBOfXc.map((eSoXc) => {
+                                    let mangSoDao = findListOverturn(eSoXc);
 
-                                arr = [...arr, obj];
-                                isKD = true;
+                                    mangSoDao.map((soDao) => {
+                                        const obj = {
+                                            content: `${daiTmpContent}.${soDao}.${kdanhMain}.${gtien}ngan`,
+                                            domain: mien,
+                                            province: dai,
+                                            number: [soDao],
+                                            typePlay: kdanhMain,
+                                            price: gtien,
+                                            resultDate: now,
+                                            dayOfWeek: dayOfWeek,
+                                        };
 
-                                console.log(`${dai}.${soDao}.${kdanhMain}.${gtien}ngan`);
-                            });
+                                        arr = [...arr, obj];
+                                        isKD = true;
+
+                                        console.log(`${dai}.${soDao}.${kdanhMain}.${gtien}ngan`);
+                                    });
+                                });
+                            }
+
+                            if (mangSoCbBOfXc.length === 0) {
+                                let mangSoDao = findListOverturn(eSo);
+
+                                mangSoDao.map((soDao) => {
+                                    const obj = {
+                                        content: `${daiTmpContent}.${soDao}.${kdanhMain}.${gtien}ngan`,
+                                        domain: mien,
+                                        province: dai,
+                                        number: [soDao],
+                                        typePlay: kdanhMain,
+                                        price: gtien,
+                                        resultDate: now,
+                                        dayOfWeek: dayOfWeek,
+                                    };
+
+                                    arr = [...arr, obj];
+                                    isKD = true;
+
+                                    console.log(`${dai}.${soDao}.${kdanhMain}.${gtien}ngan`);
+                                });
+                            }
                         }
 
                         if (
@@ -1347,15 +1450,14 @@ function convertContentDetail(content, date) {
                         ) {
                             kdanhMain = 'xiuchudaudao';
 
-                            if (eSo.length !== 3) {
+                            if (eSo.length !== 3 && mangSoCbBOfXc.length === 0) {
                                 errorSyntax = true;
                                 errorSyntaxDetail = {
                                     code: 'quantity3',
                                     num: eSo,
                                 };
+                                console.log(123);
                             }
-
-                            let mangSoDao = findListOverturn(eSo);
 
                             const daiTmpContent = [...dai];
 
@@ -1375,23 +1477,51 @@ function convertContentDetail(content, date) {
                                 daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
                             }
 
-                            mangSoDao.map((soDao) => {
-                                const obj = {
-                                    content: `${daiTmpContent}.${soDao}.${kdanhMain}.${gtien}ngan`,
-                                    domain: mien,
-                                    province: dai,
-                                    number: [soDao],
-                                    typePlay: kdanhMain,
-                                    price: gtien,
-                                    resultDate: now,
-                                    dayOfWeek: dayOfWeek,
-                                };
+                            if (mangSoCbBOfXc.length > 0 && index === 0) {
+                                mangSoCbBOfXc.map((eSoXc) => {
+                                    let mangSoDao = findListOverturn(eSoXc);
 
-                                arr = [...arr, obj];
-                                isKD = true;
+                                    mangSoDao.map((soDao) => {
+                                        const obj = {
+                                            content: `${daiTmpContent}.${soDao}.${kdanhMain}.${gtien}ngan`,
+                                            domain: mien,
+                                            province: dai,
+                                            number: [soDao],
+                                            typePlay: kdanhMain,
+                                            price: gtien,
+                                            resultDate: now,
+                                            dayOfWeek: dayOfWeek,
+                                        };
 
-                                console.log(`${dai}.${soDao}.${kdanhMain}.${gtien}ngan`);
-                            });
+                                        arr = [...arr, obj];
+                                        isKD = true;
+
+                                        console.log(`${dai}.${soDao}.${kdanhMain}.${gtien}ngan`);
+                                    });
+                                });
+                            }
+
+                            if (mangSoCbBOfXc.length === 0) {
+                                let mangSoDao = findListOverturn(eSo);
+
+                                mangSoDao.map((soDao) => {
+                                    const obj = {
+                                        content: `${daiTmpContent}.${soDao}.${kdanhMain}.${gtien}ngan`,
+                                        domain: mien,
+                                        province: dai,
+                                        number: [soDao],
+                                        typePlay: kdanhMain,
+                                        price: gtien,
+                                        resultDate: now,
+                                        dayOfWeek: dayOfWeek,
+                                    };
+
+                                    arr = [...arr, obj];
+                                    isKD = true;
+
+                                    console.log(`${dai}.${soDao}.${kdanhMain}.${gtien}ngan`);
+                                });
+                            }
                         }
 
                         if (
@@ -1498,15 +1628,14 @@ function convertContentDetail(content, date) {
                         ) {
                             kdanhMain = 'xiuchuduoidao';
 
-                            if (eSo.length !== 3) {
+                            if (eSo.length !== 3 && mangSoCbBOfXc.length === 0) {
                                 errorSyntax = true;
                                 errorSyntaxDetail = {
                                     code: 'quantity3',
                                     num: eSo,
                                 };
+                                console.log(123);
                             }
-
-                            let mangSoDao = findListOverturn(eSo);
 
                             const daiTmpContent = [...dai];
 
@@ -1526,23 +1655,51 @@ function convertContentDetail(content, date) {
                                 daiTmpContent[daiTmpContent.indexOf('do')] = 'dn';
                             }
 
-                            mangSoDao.map((soDao) => {
-                                const obj = {
-                                    content: `${daiTmpContent}.${soDao}.${kdanhMain}.${gtien}ngan`,
-                                    domain: mien,
-                                    province: dai,
-                                    number: [soDao],
-                                    typePlay: kdanhMain,
-                                    price: gtien,
-                                    resultDate: now,
-                                    dayOfWeek: dayOfWeek,
-                                };
+                            if (mangSoCbBOfXc.length > 0 && index === 0) {
+                                mangSoCbBOfXc.map((eSoXc) => {
+                                    let mangSoDao = findListOverturn(eSoXc);
 
-                                arr = [...arr, obj];
-                                isKD = true;
+                                    mangSoDao.map((soDao) => {
+                                        const obj = {
+                                            content: `${daiTmpContent}.${soDao}.${kdanhMain}.${gtien}ngan`,
+                                            domain: mien,
+                                            province: dai,
+                                            number: [soDao],
+                                            typePlay: kdanhMain,
+                                            price: gtien,
+                                            resultDate: now,
+                                            dayOfWeek: dayOfWeek,
+                                        };
 
-                                console.log(`${dai}.${soDao}.${kdanhMain}.${gtien}ngan`);
-                            });
+                                        arr = [...arr, obj];
+                                        isKD = true;
+
+                                        console.log(`${dai}.${soDao}.${kdanhMain}.${gtien}ngan`);
+                                    });
+                                });
+                            }
+
+                            if (mangSoCbBOfXc.length === 0) {
+                                let mangSoDao = findListOverturn(eSo);
+
+                                mangSoDao.map((soDao) => {
+                                    const obj = {
+                                        content: `${daiTmpContent}.${soDao}.${kdanhMain}.${gtien}ngan`,
+                                        domain: mien,
+                                        province: dai,
+                                        number: [soDao],
+                                        typePlay: kdanhMain,
+                                        price: gtien,
+                                        resultDate: now,
+                                        dayOfWeek: dayOfWeek,
+                                    };
+
+                                    arr = [...arr, obj];
+                                    isKD = true;
+
+                                    console.log(`${dai}.${soDao}.${kdanhMain}.${gtien}ngan`);
+                                });
+                            }
                         }
 
                         if (kdSS === 'dau' || kdSS === 'đau' || kdSS === 'đầu' || kdSS === 'đâu') {
@@ -1765,6 +1922,7 @@ function convertContentDetail(content, date) {
 
                 if (cloChild[i] === '.' && isFinite(Number(cloChild[i + 1]))) {
                     mangSo = [];
+                    mangSoCbBOfXc = [];
                 }
             }
         }
