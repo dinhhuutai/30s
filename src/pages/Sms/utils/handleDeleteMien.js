@@ -20,7 +20,7 @@ function handleDeleteMien(content, mien) {
             .replace(/mientr/g, '')
             .replace(/m.tr/g, '')
             .replace(/mtr/g, '')
-            .replace(/m.t/g, '')
+            .replace(/(?<=\d|\.)m.t(?<=\d|\.)/g, '')
             .replace(/mt/g, '');
     } else if (mien === 'mb') {
         contentTmp = contentTmp

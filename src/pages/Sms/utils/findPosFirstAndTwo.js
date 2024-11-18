@@ -1,4 +1,4 @@
-function findPosFirstAndTwo(content, dayOfWeek) {
+function findPosFirstAndTwo(content, dayOfWeek, mien) {
     const searchChars = [
         '2d',
         'hd',
@@ -71,6 +71,18 @@ function findPosFirstAndTwo(content, dayOfWeek) {
                     (content[index + 2] === '.' || isFinite(Number(content[index + 2]))))
             ) {
                 positions.push(index);
+                if (
+                    ((dayOfWeek !== 3 || mien !== 'mn') && content[index] === 'b' && content[index + 1] === 'l') ||
+                    ((dayOfWeek !== 6 || mien !== 'mn') &&
+                        (dayOfWeek !== 5 || mien !== 'mt') &&
+                        content[index] === 'b' &&
+                        (content[index + 1] === 'u' || content[index + 1] === 'd'))
+                ) {
+                    let lastElement = positions.pop();
+                    if (content[index] === 'b' && (content[index + 1] === 'u' || content[index + 1] === 'd')) {
+                        changeBaoDao.push(lastElement);
+                    }
+                }
             }
             index = content.indexOf(char, index + 1);
         }
@@ -81,6 +93,7 @@ function findPosFirstAndTwo(content, dayOfWeek) {
     const allPositions = searchChars.flatMap((char) => findPositions(char));
 
     let firstTwoPositions = allPositions.sort((a, b) => a - b);
+    console.log(firstTwoPositions);
 
     let stringChildTestTmp = content.slice(firstTwoPositions[0], firstTwoPositions[1]);
     stringChildTestTmp = stringChildTestTmp.replace(/[.]/g, '');
@@ -577,7 +590,19 @@ function findPosFirstAndTwo(content, dayOfWeek) {
         stringChildTestTmp.includes('dbaotamlo') ||
         stringChildTestTmp.includes('daotamlo') ||
         stringChildTestTmp.includes('daobaotam') ||
-        stringChildTestTmp.includes('daobaotamlo')
+        stringChildTestTmp.includes('daobaotamlo') ||
+        stringChildTestTmp.includes('xdaudao') ||
+        stringChildTestTmp.includes('xdaud') ||
+        stringChildTestTmp.includes('xdaodau') ||
+        stringChildTestTmp.includes('xddau') ||
+        stringChildTestTmp.includes('xduidao') ||
+        stringChildTestTmp.includes('xduoidao') ||
+        stringChildTestTmp.includes('xduid') ||
+        stringChildTestTmp.includes('xduoid') ||
+        stringChildTestTmp.includes('xdaodui') ||
+        stringChildTestTmp.includes('xdaoduoi') ||
+        stringChildTestTmp.includes('xddui') ||
+        stringChildTestTmp.includes('xdduoi')
     ) {
     } else {
         firstTwoPositions.splice(1, 1);
@@ -1081,7 +1106,19 @@ function findPosFirstAndTwo(content, dayOfWeek) {
             stringChildTest.includes('dbaotamlo') ||
             stringChildTest.includes('daotamlo') ||
             stringChildTest.includes('daobaotam') ||
-            stringChildTest.includes('daobaotamlo')
+            stringChildTest.includes('daobaotamlo') ||
+            stringChildTest.includes('xdaudao') ||
+            stringChildTest.includes('xdaud') ||
+            stringChildTest.includes('xdaodau') ||
+            stringChildTest.includes('xddau') ||
+            stringChildTest.includes('xduidao') ||
+            stringChildTest.includes('xduoidao') ||
+            stringChildTest.includes('xduid') ||
+            stringChildTest.includes('xduoid') ||
+            stringChildTest.includes('xdaodui') ||
+            stringChildTest.includes('xdaoduoi') ||
+            stringChildTest.includes('xddui') ||
+            stringChildTest.includes('xdduoi')
         ) {
             if (content[firstTwoPositions[1] + 2] === '.') {
                 // la dai Bac Lieu
@@ -1134,7 +1171,6 @@ function findPosFirstAndTwo(content, dayOfWeek) {
             }
         }
     } else if (
-        !changeDaiBacLieu &&
         content[firstTwoPositions[1]] === 'b' &&
         (content[firstTwoPositions[1] + 1] === 'u' || content[firstTwoPositions[1] + 1] === 'd') &&
         (content[firstTwoPositions[1] + 2] === '.' || isFinite(Number(content[firstTwoPositions[1] + 2])))
@@ -1631,7 +1667,19 @@ function findPosFirstAndTwo(content, dayOfWeek) {
             stringChildTest.includes('dbaotamlo') ||
             stringChildTest.includes('daotamlo') ||
             stringChildTest.includes('daobaotam') ||
-            stringChildTest.includes('daobaotamlo')
+            stringChildTest.includes('daobaotamlo') ||
+            stringChildTest.includes('xdaudao') ||
+            stringChildTest.includes('xdaud') ||
+            stringChildTest.includes('xdaodau') ||
+            stringChildTest.includes('xddau') ||
+            stringChildTest.includes('xduidao') ||
+            stringChildTest.includes('xduoidao') ||
+            stringChildTest.includes('xduid') ||
+            stringChildTest.includes('xduoid') ||
+            stringChildTest.includes('xdaodui') ||
+            stringChildTest.includes('xdaoduoi') ||
+            stringChildTest.includes('xddui') ||
+            stringChildTest.includes('xdduoi')
         ) {
             if (content[firstTwoPositions[1] + 2] === '.') {
             } else {
@@ -2197,7 +2245,19 @@ function findPosFirstAndTwo(content, dayOfWeek) {
                             kDanhNew.includes('dbaotamlo') ||
                             kDanhNew.includes('daotamlo') ||
                             kDanhNew.includes('daobaotam') ||
-                            kDanhNew.includes('daobaotamlo')) &&
+                            kDanhNew.includes('daobaotamlo') ||
+                            kDanhNew.includes('xdaudao') ||
+                            kDanhNew.includes('xdaud') ||
+                            kDanhNew.includes('xdaodau') ||
+                            kDanhNew.includes('xddau') ||
+                            kDanhNew.includes('xduidao') ||
+                            kDanhNew.includes('xduoidao') ||
+                            kDanhNew.includes('xduid') ||
+                            kDanhNew.includes('xduoid') ||
+                            kDanhNew.includes('xdaodui') ||
+                            kDanhNew.includes('xdaoduoi') ||
+                            kDanhNew.includes('xddui') ||
+                            kDanhNew.includes('xdduoi')) &&
                         mangSo.length <= 1
                     ) {
                         changeDaiBacLieu = true;
@@ -2206,37 +2266,52 @@ function findPosFirstAndTwo(content, dayOfWeek) {
 
                         if (changeDaiBacLieu) {
                             let boolCham = false;
-                        
 
                             for (let i = firstTwoPositions[1] + 3; i < content.length - 1; i++) {
                                 if (content[i] === '.') {
                                     boolCham = true;
                                     let kdanhTmp = content[i + 1] + content[i + 2];
 
-                                    console.log(kdanhTmp);
+                                    console.log(kDanhNew, kdanhTmp);
                                     if (searchChars.includes(kdanhTmp)) {
                                         changeDaiBacLieu = false;
                                         firstTwoPositions.splice(1, 1);
+                                        mangSo = [];
+                                        kdanh = '';
+                                        console.log('1111111111');
+                                        break;
+                                    }
+                                } else if (!isFinite(Number(content[i]))) {
+                                    boolCham = true;
+                                    let kdanhTmp = content[i] + content[i + 1];
+
+                                    console.log(kDanhNew, kdanhTmp);
+                                    if (!searchChars.includes(kdanhTmp)) {
+                                        changeDaiBacLieu = true;
                                         break;
                                     }
                                 } else if (content[i] === '.' && content[i + 1] === undefined) {
                                     changeDaiBacLieu = false;
                                     firstTwoPositions.splice(1, 1);
+                                    mangSo = [];
+                                    kdanh = '';
                                     break;
                                 }
                             }
 
                             if (!boolCham) {
+                                console.log('cham');
                                 changeDaiBacLieu = false;
                                 firstTwoPositions.splice(1, 1);
+                                mangSo = [];
+                                kdanh = '';
                             }
                         }
-                        
-                        if(changeDaiBacLieu) {
+
+                        if (changeDaiBacLieu) {
                             outW = true;
                             break;
                         }
-
                     } else if (
                         (kDanhNew.includes('dx') ||
                             kDanhNew.includes('davong') ||
@@ -2705,7 +2780,19 @@ function findPosFirstAndTwo(content, dayOfWeek) {
                             kDanhNew.includes('dbaotamlo') ||
                             kDanhNew.includes('daotamlo') ||
                             kDanhNew.includes('daobaotam') ||
-                            kDanhNew.includes('daobaotamlo')) &&
+                            kDanhNew.includes('daobaotamlo') ||
+                            kDanhNew.includes('xdaudao') ||
+                            kDanhNew.includes('xdaud') ||
+                            kDanhNew.includes('xdaodau') ||
+                            kDanhNew.includes('xddau') ||
+                            kDanhNew.includes('xduidao') ||
+                            kDanhNew.includes('xduoidao') ||
+                            kDanhNew.includes('xduid') ||
+                            kDanhNew.includes('xduoid') ||
+                            kDanhNew.includes('xdaodui') ||
+                            kDanhNew.includes('xdaoduoi') ||
+                            kDanhNew.includes('xddui') ||
+                            kDanhNew.includes('xdduoi')) &&
                         mangSo.length > 1
                     ) {
                         firstTwoPositions.splice(1, 1);
@@ -2720,10 +2807,7 @@ function findPosFirstAndTwo(content, dayOfWeek) {
             }
 
             if (outW) {
-                changeDaiBacLieu = false;
                 break;
-            } else {
-                changeDaiBacLieu = true;
             }
         } else {
             changeDaiBacLieu = false;
@@ -2731,11 +2815,11 @@ function findPosFirstAndTwo(content, dayOfWeek) {
         }
     }
 
-    console.log(changeDaiBacLieu)
-    if (changeDaiBacLieu && dayOfWeek !== 3) {
-        changeDaiBacLieu = false;
-        firstTwoPositions.splice(1, 1);
-    }
+    // console.log(changeDaiBacLieu);
+    // if (changeDaiBacLieu && dayOfWeek !== 3) {
+    //     changeDaiBacLieu = false;
+    //     firstTwoPositions.splice(1, 1);
+    // }
 
     firstTwoPositions = allPositions.slice(0, 2);
 
@@ -2743,6 +2827,8 @@ function findPosFirstAndTwo(content, dayOfWeek) {
     while (firstTwoPositions.length < 2) {
         firstTwoPositions.push(-1);
     }
+
+    console.log(changeBaoDao);
 
     return { firstTwoPositions, changeDaiBacLieu, changeBaoDao };
 }
