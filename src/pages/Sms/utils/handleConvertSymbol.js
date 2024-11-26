@@ -94,6 +94,8 @@ function handleConvertSymbol(content, mien, dayOfWeek) {
         'soctrang',
         'strang',
         'stran',
+        'strag',
+        'soctrag',
         'soctran',
         'tayninh',
         'tninh',
@@ -161,6 +163,8 @@ function handleConvertSymbol(content, mien, dayOfWeek) {
         'qbinh',
         'binhdinh',
         'bdinh',
+        'bdi',
+        'bdih',
         'quangtri',
         'qtri',
         'gialai',
@@ -357,6 +361,8 @@ function handleConvertSymbol(content, mien, dayOfWeek) {
                 dai === 'dch' ||
                 dai === 'chanh' ||
                 dai === 'chinh' ||
+                dai === 'chah' ||
+                dai === 'chih' ||
                 dai === 'daich' ||
                 dai === 'daichinh' ||
                 dai === 'daichih' ||
@@ -410,7 +416,7 @@ function handleConvertSymbol(content, mien, dayOfWeek) {
                     daiMain = 'dn';
                 } else if (dai === 'cantho' || dai === 'ctho' || dai === 'canth' || dai === 'cth') {
                     daiMain = 'ct';
-                } else if (dai === 'soctrang' || dai === 'strang' || dai === 'stran' || dai === 'soctran') {
+                } else if (dai === 'soctrang' || dai === 'strang' || dai === 'stran' || dai === 'soctran' || dai === 'strag' || dai === 'soctrag') {
                     daiMain = 'st';
                 } else if (dai === 'tayninh' || dai === 'tninh') {
                     daiMain = 'tn';
@@ -482,7 +488,7 @@ function handleConvertSymbol(content, mien, dayOfWeek) {
                     daiMain = 'kh';
                 } else if (dai === 'quangbinh' || dai === 'qbinh') {
                     daiMain = 'qb';
-                } else if (dai === 'binhdinh' || dai === 'bdinh') {
+                } else if (dai === 'binhdinh' || dai === 'bdinh' || dai === 'bdi' || dai === 'bdih') {
                     daiMain = 'bd';
                 } else if (dai === 'quangtri' || dai === 'qtri') {
                     daiMain = 'qt';

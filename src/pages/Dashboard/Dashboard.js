@@ -8,6 +8,7 @@ import TableKqxsMT from './component/TableKqxsMT';
 import TableKqxsMB from './component/TableKqxsMB';
 import HeaderPage from '../component/HeaderPage';
 import { BsArrowClockwise } from 'react-icons/bs';
+import { Helmet } from 'react-helmet';
 
 function Dashboard() {
     const [kqxsMB, setKqxsMB] = useState([]);
@@ -29,7 +30,6 @@ function Dashboard() {
         startInterval();
     }, [date]);
 
-
     const handleFindKqxs = async () => {
         setLoading(true);
         const formattedDate = moment(date).format('DD/MM/YYYY');
@@ -37,7 +37,7 @@ function Dashboard() {
             date: formattedDate,
         });
 
-        console.log(res.data)
+        console.log(res.data);
 
         if (res.data.success) {
             const mn = [];
@@ -340,6 +340,17 @@ function Dashboard() {
 
     return (
         <div>
+            <Helmet>
+                <title>Kết Quả Xổ Số - 10s</title> {/* Cập nhật tiêu đề trang */}
+                <meta name="description" content="Đây là Website 10s ứng dụng tính tiền số." /> {/* Mô tả cho SEO */}
+                <meta property="og:title" content="Đây là Website 10s ứng dụng tính tiền số." />{' '}
+                {/* Open Graph title */}
+                <meta property="og:description" content="Trang này giúp tính tiền số tự động nhanh gọn lẹ." />
+                {/* Open Graph description */}
+                <meta property="og:image" content="https://example.com/og-image.jpg" /> {/* Open Graph image */}
+                <meta property="og:url" content="https://example.com/my-page" /> {/* URL của trang */}
+                <link rel="icon" href="" type="image/x-icon" />
+            </Helmet>
             {loading ? (
                 <div className="left-0 right-0 z-[999999] fixed top-0">
                     <div className="bg-[#259dba] h-[3px] animate-loadingSlice"></div>

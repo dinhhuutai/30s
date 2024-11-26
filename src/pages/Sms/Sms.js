@@ -29,6 +29,7 @@ import payBySms from './utils/payBySms';
 import HeaderPage from '../component/HeaderPage';
 import ModalDistribute from './component/ModalDistribute';
 import Select from 'react-select';
+import { Helmet } from 'react-helmet';
 
 let setTimeoutTmp;
 
@@ -666,6 +667,17 @@ function Sms() {
 
     return (
         <div>
+            <Helmet>
+                <title>Quản Lý Tin Nhắn - 10s</title> {/* Cập nhật tiêu đề trang */}
+                <meta name="description" content="Đây là Website 10s ứng dụng tính tiền số." /> {/* Mô tả cho SEO */}
+                <meta property="og:title" content="Đây là Website 10s ứng dụng tính tiền số." /> {/* Open Graph title */}
+                <meta property="og:description" content="Trang này giúp tính tiền số tự động nhanh gọn lẹ." />
+                {/* Open Graph description */}
+                <meta property="og:image" content="https://example.com/og-image.jpg" /> {/* Open Graph image */}
+                <meta property="og:url" content="https://example.com/my-page" /> {/* URL của trang */}
+
+                <link rel="icon" href="" type="image/x-icon" />
+            </Helmet>
             {loading ? (
                 <div className="left-0 right-0 fixed z-[999999] top-0">
                     <div className="bg-[#259dba] h-[3px] animate-loadingSlice"></div>

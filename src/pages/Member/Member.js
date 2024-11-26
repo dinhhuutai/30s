@@ -12,6 +12,8 @@ import Alert from '~/components/Alert';
 import noticeAdminSlice from '~/redux/slices/noticeAdminSlice';
 import Tippy from '@tippyjs/react';
 import HeaderPage from '../component/HeaderPage';
+import ModalChangeMember from './component/ModalChangeMember';
+import { Helmet } from 'react-helmet';
 
 let setTimeoutTmp;
 
@@ -19,12 +21,15 @@ function Member() {
     const [nameSearch, setNameSearch] = useState('');
     const [members, setMembers] = useState([]);
     const [modalCreate, setModalCreate] = useState(false);
+    const [modalChangeMember, setModalChangeMember] = useState(false);
     const [modalUpdate, setModalUpdate] = useState(false);
     const [selecterMember, setSelecterMember] = useState({});
 
     const [arrangeName, setArrangeName] = useState(true);
     const [arrangeCreateDate, setArrangeCreateDate] = useState(true);
     const [typeArrange, setTypeArrange] = useState('name');
+
+    const [btnChangeMember, setBtnChangeMember] = useState(true);
 
     const [width, setWidth] = useState(0);
 
@@ -113,15 +118,35 @@ function Member() {
 
     return (
         <div>
+            <Helmet>
+                <title>Danh Bạ - 10s</title> {/* Cập nhật tiêu đề trang */}
+                <meta name="description" content="Đây là Website 10s ứng dụng tính tiền số." /> {/* Mô tả cho SEO */}
+                <meta property="og:title" content="Đây là Website 10s ứng dụng tính tiền số." />{' '}
+                {/* Open Graph title */}
+                <meta property="og:description" content="Trang này giúp tính tiền số tự động nhanh gọn lẹ." />
+                {/* Open Graph description */}
+                <meta property="og:image" content="https://example.com/og-image.jpg" /> {/* Open Graph image */}
+                <meta property="og:url" content="https://example.com/my-page" /> {/* URL của trang */}
+                <link rel="icon" href="" type="image/x-icon" />
+            </Helmet>
             <HeaderPage pageCurr={'Danh Bạ'} />
             <div className="bg-[var(--color-white)] px-[16px] mt-[12px] py-[14px] pb-[28px] rounded-[6px]">
-                <div>
+                <div className="flex justify-between">
                     <button
                         onClick={() => setModalCreate(true)}
                         className={`hover:opacity-[.9] uppercase font-[620] text-[12px] w-[120px] h-[30px] flex justify-center items-center bg-[#2574ab] rounded-[4px] text-[#fff] active:opacity-[.7]`}
                     >
                         Thêm mới
                     </button>
+
+                    {!user?.login?.currentUser?.autoFindData && btnChangeMember && (
+                        <button
+                            onClick={() => setModalChangeMember(true)}
+                            className={`hover:opacity-[.9] uppercase font-[620] text-[12px] w-[130px] h-[30px] flex justify-center items-center bg-[#e6ad5c] rounded-[4px] text-[#fff] active:opacity-[.7]`}
+                        >
+                            Chuyển danh bạ
+                        </button>
+                    )}
                 </div>
 
                 <div className="mt-[16px] flex flex-col lg:flex-row gap-[10px]">
@@ -335,6 +360,13 @@ function Member() {
                 </div>
 
                 {modalCreate && <ModalCreate setModalCreate={setModalCreate} setMembers={setMembers} />}
+                {modalChangeMember && (
+                    <ModalChangeMember
+                        setModalChangeMember={setModalChangeMember}
+                        handleSearchMember={handleSearchMember}
+                        setBtnChangeMember={setBtnChangeMember}
+                    />
+                )}
                 {modalUpdate && (
                     <ModalUpdate
                         setModalUpdate={setModalUpdate}
