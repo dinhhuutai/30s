@@ -19,8 +19,10 @@ function ProtectedCheckUser() {
     const Token = () => {
         axiosJWT = axios.create({
             withCredentials: true, //mang theo cookie
-            //baseURL: 'http://localhost:5000/', //địa chỉ của BE
-            baseURL: 'http://13.211.159.58:5000/', //địa chỉ của BE
+            baseURL: (process.env.REACT_APP_API_ENV === 'production'
+                ? 'http://13.211.159.58:5000/'
+                : 'http://localhost:5000/'), //địa chỉ của BE
+            //baseURL: 'http://13.211.159.58:5000/', //địa chỉ của BE
         });
 
         axiosJWT.interceptors.request.use(
@@ -67,7 +69,7 @@ function ProtectedCheckUser() {
             setAuthToken(user.login.accessToken);
         }
 
-        console.log('user.login.accessToken: ', user.login.accessToken)
+        console.log('user.login.accessToken: ', user.login.accessToken);
 
         try {
             const res = await axiosJWT.get(`${process.env.REACT_APP_API_URL}/v1/user/check`, {

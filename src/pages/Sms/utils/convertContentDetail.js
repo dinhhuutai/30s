@@ -163,6 +163,7 @@ function convertContentDetail(content, date) {
         let fKdanh = true;
         let fGtienDecimal = false;
         let ddCh = true;
+        let isDuoi = false;
 
         let cbBl = false;
         let cbBld = false;
@@ -198,6 +199,7 @@ function convertContentDetail(content, date) {
                 so = '';
                 cbBl = false;
                 cbBld = false;
+                isDuoi = false;
             }
 
             if (mangSo.length > 0 && fKdanh && cloChild[i] !== '.' && !isFinite(Number(cloChild[i]))) {
@@ -267,7 +269,7 @@ function convertContentDetail(content, date) {
                         kdSS === 'dav' ||
                         kdSS === 'davong' ||
                         kdSS === 'dax' ||
-                        (kdSS === 'd' &&
+                        (kdSS === 'd' && !isDuoi &&
                             !(
                                 cloChild[i + 1] === 'd' ||
                                 cloChild[i + 2] === 'd' ||
@@ -430,6 +432,7 @@ function convertContentDetail(content, date) {
                         });
                     }
                 } else {
+                    isDuoi = false;
                     if (
                         (kdSS === 'l' ||
                             kdSS === 'lo' ||
@@ -1740,6 +1743,7 @@ function convertContentDetail(content, date) {
 
                         if (kdSS === 'dau' || kdSS === 'đau' || kdSS === 'đầu' || kdSS === 'đâu') {
                             kdanhMain = 'dau';
+                            isDuoi = true;
 
                             if (eSo.length < 2) {
                                 errorSyntax = true;
@@ -1958,6 +1962,7 @@ function convertContentDetail(content, date) {
 
                     if ((kdSS === 'd' || kdSS === 'đ') && ddCh) {
                         ddCh = false;
+                        isDuoi = true;
                     } else if ((kdSS === 'd' || kdSS === 'đ') && !ddCh) {
                         ddCh = true;
                     }
