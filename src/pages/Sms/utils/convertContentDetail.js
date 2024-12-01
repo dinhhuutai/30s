@@ -267,9 +267,11 @@ function convertContentDetail(content, date) {
                         kdSS === 'dxien' ||
                         kdSS === 'đat' ||
                         kdSS === 'dav' ||
+                        kdSS === 'dv' ||
                         kdSS === 'davong' ||
                         kdSS === 'dax' ||
-                        (kdSS === 'd' && !isDuoi &&
+                        (kdSS === 'd' &&
+                            !isDuoi &&
                             !(
                                 cloChild[i + 1] === 'd' ||
                                 cloChild[i + 2] === 'd' ||
@@ -295,12 +297,13 @@ function convertContentDetail(content, date) {
 
                     if (dai.length === 1) {
                         if (
-                            kdSS === 'dx' ||
-                            kdSS === 'đx' ||
-                            kdSS === 'đax' ||
-                            kdSS === 'daxien' ||
-                            kdSS === 'dxien' ||
-                            kdSS === 'dax'
+                            (kdSS === 'dx' ||
+                                kdSS === 'đx' ||
+                                kdSS === 'đax' ||
+                                kdSS === 'daxien' ||
+                                kdSS === 'dxien' ||
+                                kdSS === 'dax') &&
+                            mien !== 'mb'
                         ) {
                             errorSyntax = true;
                             console.log(123);
@@ -328,6 +331,7 @@ function convertContentDetail(content, date) {
                                     kdSS === 'đat' ||
                                     kdSS === 'đathang' ||
                                     kdSS === 'dav' ||
+                                    kdSS === 'dv' ||
                                     kdSS === 'davong' ||
                                     soDa[0].length < 2 ||
                                     soDa[1].length < 2 ||
@@ -1977,7 +1981,7 @@ function convertContentDetail(content, date) {
                         gtien: gtien,
                     };
 
-                    console.log(errorSyntaxDetail)
+                    console.log(errorSyntaxDetail);
                 }
 
                 fSo = true;

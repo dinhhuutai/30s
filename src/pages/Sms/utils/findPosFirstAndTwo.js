@@ -106,6 +106,7 @@ function findPosFirstAndTwo(content, dayOfWeek, mien) {
         stringChildTestTmp.includes('dx') ||
         stringChildTestTmp.includes('davong') ||
         stringChildTestTmp.includes('dav') ||
+        stringChildTestTmp.includes('dv') ||
         stringChildTestTmp.includes('đx') ||
         stringChildTestTmp.includes('đax') ||
         stringChildTestTmp.includes('da') ||
@@ -605,6 +606,13 @@ function findPosFirstAndTwo(content, dayOfWeek, mien) {
         stringChildTestTmp.includes('xdduoi')
     ) {
     } else {
+        if (
+            content[firstTwoPositions[1]] === 'b' &&
+            (content[firstTwoPositions[1] + 1] === 'u' || content[firstTwoPositions[1] + 1] === 'd') &&
+            isFinite(Number(content[firstTwoPositions[1] - 2]))
+        ) {
+            changeBaoDao.push(firstTwoPositions[1]);
+        }
         firstTwoPositions.splice(1, 1);
     }
 
@@ -622,6 +630,7 @@ function findPosFirstAndTwo(content, dayOfWeek, mien) {
             stringChildTest.includes('dx') ||
             stringChildTest.includes('đx') ||
             stringChildTest.includes('davong') ||
+            stringChildTest.includes('dv') ||
             stringChildTest.includes('dav') ||
             stringChildTest.includes('đax') ||
             stringChildTest.includes('da') ||
@@ -1185,6 +1194,7 @@ function findPosFirstAndTwo(content, dayOfWeek, mien) {
     //         stringChildTest.includes('đx') ||
     //         stringChildTest.includes('davong') ||
     //         stringChildTest.includes('dav') ||
+    //         stringChildTest.includes('dv') ||
     //         stringChildTest.includes('đax') ||
     //         stringChildTest.includes('da') ||
     //         stringChildTest.includes('đa') ||
@@ -1774,6 +1784,7 @@ function findPosFirstAndTwo(content, dayOfWeek, mien) {
                         (kDanhNew.includes('dx') ||
                             kDanhNew.includes('davong') ||
                             kDanhNew.includes('dav') ||
+                            kDanhNew.includes('dv') ||
                             kDanhNew.includes('đx') ||
                             kDanhNew.includes('đax') ||
                             kDanhNew.includes('da') ||
@@ -2305,6 +2316,7 @@ function findPosFirstAndTwo(content, dayOfWeek, mien) {
                         (kDanhNew.includes('dx') ||
                             kDanhNew.includes('davong') ||
                             kDanhNew.includes('dav') ||
+                            kDanhNew.includes('dv') ||
                             kDanhNew.includes('đx') ||
                             kDanhNew.includes('đax') ||
                             kDanhNew.includes('da') ||
@@ -2832,8 +2844,8 @@ function findPosFirstAndTwo(content, dayOfWeek, mien) {
         //     break;
         // }
 
-        console.log(content[firstTwoPositions[1]], content[firstTwoPositions[1] + 1])
-        console.log(content[firstTwoPositions[1] - 1], content[firstTwoPositions[1] - 2])
+        console.log(content[firstTwoPositions[1]], content[firstTwoPositions[1] + 1]);
+        console.log(content[firstTwoPositions[1] - 1], content[firstTwoPositions[1] - 2]);
         if (
             content[firstTwoPositions[1]] === 'b' &&
             (content[firstTwoPositions[1] + 1] === 'u' || content[firstTwoPositions[1] + 1] === 'd') &&
@@ -2882,6 +2894,7 @@ function findPosFirstAndTwo(content, dayOfWeek, mien) {
                         (kDanhNew.includes('dx') ||
                             kDanhNew.includes('davong') ||
                             kDanhNew.includes('dav') ||
+                            kDanhNew.includes('dv') ||
                             kDanhNew.includes('đx') ||
                             kDanhNew.includes('đax') ||
                             kDanhNew.includes('da') ||
@@ -3424,6 +3437,7 @@ function findPosFirstAndTwo(content, dayOfWeek, mien) {
                         (kDanhNew.includes('dx') ||
                             kDanhNew.includes('davong') ||
                             kDanhNew.includes('dav') ||
+                            kDanhNew.includes('dv') ||
                             kDanhNew.includes('đx') ||
                             kDanhNew.includes('đax') ||
                             kDanhNew.includes('da') ||
@@ -3901,7 +3915,8 @@ function findPosFirstAndTwo(content, dayOfWeek, mien) {
                             kDanhNew.includes('xdaoduoi') ||
                             kDanhNew.includes('xddui') ||
                             kDanhNew.includes('xdduoi')) &&
-                        mangSo.length > 1 && mangSo[0].length > 1
+                        mangSo.length > 1 &&
+                        mangSo[0].length > 1
                     ) {
                         console.log('5555555555555');
                         changeBaoDao.push(firstTwoPositions[1]);
