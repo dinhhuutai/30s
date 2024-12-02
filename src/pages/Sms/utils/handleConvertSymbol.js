@@ -237,7 +237,6 @@ function handleConvertSymbol(content, mien, dayOfWeek) {
         'quagngai',
         'quagng',
         'quangng',
-        'quang',
         'quangai',
         'quanngai',
         'qngai',
@@ -693,7 +692,6 @@ function handleConvertSymbol(content, mien, dayOfWeek) {
                     dai === 'quagngai' ||
                     dai === 'quagng' ||
                     dai === 'quangng' ||
-                    dai === 'quang' ||
                     dai === 'quangai' ||
                     dai === 'quangngai' ||
                     dai === 'qngai' ||

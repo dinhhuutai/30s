@@ -251,7 +251,6 @@ let listDai = [
     'quagngai',
     'quagng',
     'quangng',
-    'quang',
     'quangai',
     'quanngai',
     'qngai',
@@ -283,12 +282,37 @@ function shortenText(content) {
         .replace(/ô/g, 'o')
         .replace(/ê/g, 'e')
         .replace(/-/g, '.')
+        .replace(/_/g, '.')
+        .replace(/~/g, '.')
+        .replace(/`/g, '.')
+        .replace(/@/g, '.')
+        .replace(/#/g, '.')
+        .replace(/\$/g, '.')
+        .replace(/%/g, '.')
+        .replace(/\^/g, '.')
+        .replace(/&/g, '.')
+        .replace(/\*/g, '.')
+        .replace(/\(/g, '.')
+        .replace(/\)/g, '.')
         .replace(/\//g, '.')
         .replace(/\\/g, '.')
+        .replace(/\{/g, '.')
+        .replace(/\}/g, '.')
+        .replace(/\[/g, '.')
+        .replace(/\]/g, '.')
+        .replace(/'/g, '.')
+        .replace(/"/g, '.')
+        .replace(/</g, '.')
+        .replace(/>/g, '.')
+        .replace(/\?/g, '.')
+        .replace(/\|/g, '.')
         .replace(/₫/g, 'đ')
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')
         .replace(/dai/g, 'd')
+        .replace(/(?<!\d)2da/g, '2d')
+        .replace(/(?<!\d)3da/g, '3d')
+        .replace(/(?<!\d)4da/g, '4d')
         .replace(
             /[^a-zA-Z0-9ÀÁẢÃẠÂẤẦẬẪẨẮĂẰẴẶẲÊẾỀỆỂỄÉÈẺẼẸÓÒỎÕỌƠỚỜỞỠỢƯỨỪỮỬỰĐÌÍỊĨỈàáảãạâấầậẫẩắằẵặẳêếềệểễéèẻẽẹóòỏõọơớờởỡợưứừữửựđìíịĩỉ.,;:+=s+\r\t\s]/g,
             '',
@@ -298,8 +322,8 @@ function shortenText(content) {
         .replace(/\s+/g, '.')
         .replace(/[.,:;+= ]/g, '.')
         .replace(/-/g, '.')
-        .replace(/…/g, '')
-        .replace(/!/g, '')
+        .replace(/…/g, '.')
+        .replace(/!/g, '.')
         .replace(/(\d)\s*nghìn/g, '$1.')
         .replace(/(\d)\s*nghin/g, '$1.')
         .replace(/(\d)\s*ngàn/g, '$1.')

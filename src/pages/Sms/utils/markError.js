@@ -170,7 +170,6 @@ let listDaiError = [
     'quagngai',
     'quagng',
     'quangng',
-    'quang',
     'quangai',
     'quanngai',
     'qngai',
@@ -607,7 +606,6 @@ function markError(content, errorSyntaxDetail, mien, dayOfWeek) {
                         daiTmp.toLowerCase() === 'quagngai' ||
                         daiTmp.toLowerCase() === 'quagng' ||
                         daiTmp.toLowerCase() === 'quangng' ||
-                        daiTmp.toLowerCase() === 'quang' ||
                         daiTmp.toLowerCase() === 'quangai' ||
                         daiTmp.toLowerCase() === 'quangngai' ||
                         daiTmp.toLowerCase() === 'qngai' ||
