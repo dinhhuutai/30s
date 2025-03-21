@@ -172,6 +172,9 @@ function handleConvertSymbol(content, mien, dayOfWeek) {
         'kgi',
         'dalat',
         'dlat',
+        'phuin',
+        'phuien',
+        'pien',
         'phuy',
         'phy',
         'phuyen',
@@ -413,7 +416,7 @@ function handleConvertSymbol(content, mien, dayOfWeek) {
                 dai === 'dphu' ||
                 dai === 'daiphu' ||
                 dai === 'dph' ||
-                dai === 'phu' ||
+                (dai === 'phu' && contentTmp[i + 1] !== 'y' && contentTmp[i + 1] !== 'i') ||
                 dai === 'daiph' ||
                 dai === 'daip'
             ) {
@@ -610,7 +613,15 @@ function handleConvertSymbol(content, mien, dayOfWeek) {
                     daiMain = 'kg';
                 } else if (dai === 'dalat' || dai === 'dlat') {
                     daiMain = 'lt';
-                } else if (dai === 'phuy' || dai === 'phy' || dai === 'phuyen' || dai === 'pyen') {
+                } else if (
+                    dai === 'phuin' ||
+                    dai === 'phuien' ||
+                    dai === 'pien' ||
+                    dai === 'phuy' ||
+                    dai === 'phy' ||
+                    dai === 'phuyen' ||
+                    dai === 'pyen'
+                ) {
                     daiMain = 'py';
                 } else if (
                     dai === 'thuathienhue' ||
